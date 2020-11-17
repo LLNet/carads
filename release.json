@@ -1,0 +1,14 @@
+{
+  "name": "car-app",
+  "version": "0.1.4",
+  "last_updated": "2020-11-17 14:29",
+  "download_url": "https://plugins.indexed.dk/files/car-app-0.1.4.zip",
+  "sections": {
+    "changelog": "<strong>0.1.4</strong><ul><li>Tilføjet: Understøttelse af Plugin Update Checker</li></ul>",
+    "description": "Integration mellem WordPress og CarAds.io"
+  },
+  "requires": "5.0.0",
+  "tested": "5.5.3",
+  "author": "Indexed.dk",
+  "author_homepage": "https://indexed.dk"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "indexeddk/headless",
+  "description": "Headless wrapper to REST api",
+  "keywords": ["headless"],
+  "homepage": "https://indexed.dk",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Peter Sørensen",
+      "email": "peter@indexed.dk",
+      "homepage": "https://indexed.dk"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "ext-curl": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {"Indexed\\Headless\\": "src/"}
+  }
+}

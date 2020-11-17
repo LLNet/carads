@@ -1,0 +1,12 @@
+{
+    "name": "indexed/wp-quick-plugin",
+    "authors": [
+        {
+            "name": "Morten Bak",
+            "email": "meb@indexed.dk"
+        }
+    ],
+    "require": {
+        "indexeddk/headless": "^1"
+    }
+}

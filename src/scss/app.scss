@@ -1,0 +1,59 @@
+@import "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
+
+
+
+.button-car--back {
+  margin-top: 30px;
+  border: 1px solid black;
+  background: transparent;
+  border-radius: 0;
+  padding: 10px 15px;
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+:root {
+  --fixed-top: 61px;
+  --admin-bar-height: 0px;
+  --car-gutter: 30px;
+  @media all and (max-width: 768px) {
+    --car-gutter: 15px;
+  }
+}
+
+body.admin-bar {
+
+  --fixed-top: 93px;
+  --admin-bar-height: 32px;
+
+}
+
+
+@import "archive.scss";
+@import "single.scss";
+@import "filter.scss";
+
+.single-bil,
+.car-col-12 {
+  .container {
+    @media only screen and (max-width: 767px) {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+      max-width: calc(100% - 30px) !important;
+    }
+  }
+}
+
+
+/** Specific for Maulbiler */
+#Top_bar {
+  .top_bar_left {
+    width: 100%;
+    display: flex;
+  }
+
+  .menu > li > a span:not(.description) {
+    padding: 0 10px !important;
+  }
+}

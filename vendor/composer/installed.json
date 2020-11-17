@@ -1,0 +1,47 @@
+[
+    {
+        "name": "indexeddk/headless",
+        "version": "1.01",
+        "version_normalized": "1.01.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Indexeddk/headless.git",
+            "reference": "b09157fe0be5d09e282934be4afd0d6ce23ce868"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Indexeddk/headless/zipball/b09157fe0be5d09e282934be4afd0d6ce23ce868",
+            "reference": "b09157fe0be5d09e282934be4afd0d6ce23ce868",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-json": "*",
+            "php": ">=7.2.0"
+        },
+        "time": "2020-06-23T12:30:01+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Indexed\\Headless\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Peter Sørensen",
+                "email": "peter@indexed.dk",
+                "homepage": "https://indexed.dk"
+            }
+        ],
+        "description": "Headless wrapper to REST api",
+        "homepage": "https://indexed.dk",
+        "keywords": [
+            "headless"
+        ]
+    }
+]
