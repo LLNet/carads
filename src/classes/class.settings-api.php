@@ -10,7 +10,7 @@
  * @example example/oop-example.php How to use the class
  */
 
-class CarAds_Settings_API
+class CarAdsSettings_API
 {
 
     /**

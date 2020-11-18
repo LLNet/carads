@@ -8,7 +8,7 @@ if (!class_exists('CarAdsSettings')):
 
         function __construct()
         {
-            $this->settings_api = new CarAds_Settings_API;
+            $this->settings_api = new CarAdsSettings_API;
 
             add_action('admin_init', array($this, 'admin_init'));
             add_action('admin_menu', array($this, 'admin_menu'));
