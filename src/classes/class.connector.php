@@ -411,6 +411,19 @@ class Connector
 
     }
 
+    /**
+     * @param $fieldName
+     * @param false $includeCount
+     * @return mixed
+     */
+    public function getCustomFieldAggregation($fieldName, $includeCount = false)
+    {
+        $data = $this->headless->get("/products?aggregationMinMaxAvg=customFields.".$fieldName. ($includeCount == true ? 'aggregationCount=customFields.'.$fieldName : ''));
+
+        return $data->aggregations->global->customFields->{$fieldName};
+
+    }    
+    
     public function pre_search()
     {
 
