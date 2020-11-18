@@ -178,45 +178,57 @@ if(!is_post_type_archive('bil')) {
                                data-slider-value="[<?php echo ($sliderValue[0]) ? $sliderValue[0] : $min; ?>,<?php echo ($sliderValue[1]) ? $sliderValue[1] : $max; ?>]"
                         />
                     </div>
-                </div>
-                <script>
-                    jQuery(function () {
-
-                        const options1 = { style: 'currency', currency: 'DKK' };
-                        const numberFormat1 = new Intl.NumberFormat('da-DK', options1);
-
-                        jQuery("#pricingMinMax").slider({
-                            tooltip: 'hide',
-                        }).on("slide", function(slideEvt) {
-                            jQuery("#apricingMin").text(slideEvt.value[0].toLocaleString('da-DK'));
-                            jQuery("#apricingMax").text(slideEvt.value[1].toLocaleString('da-DK'));
+                    <script>
+                        jQuery(function () {
+                            const options1 = { style: 'currency', currency: 'DKK' };
+                            const numberFormat1 = new Intl.NumberFormat('da-DK', options1);
+                            jQuery("#pricingMinMax").slider({
+                                tooltip: 'hide',
+                            }).on("slide", function(slideEvt) {
+                                jQuery("#apricingMin").text(slideEvt.value[0].toLocaleString('da-DK'));
+                                jQuery("#apricingMax").text(slideEvt.value[1].toLocaleString('da-DK'));
+                            });
                         });
-                    });
-                </script>
+                    </script>
+                </div>
 
-                <label>
-                    <select name="properties[]" id="mileage" class="multiselect" multiple="multiple">
 
-                        <?php
-                        foreach ($connector->get_filter_options('Mileage') as $key => $option) {
-                            if ($option['count'] > 0) {
-                                ?>
-                                <option value="<?php echo $option['slug']; ?>"
-                                    <?php
-                                    if (in_array($option['slug'], $filters['properties'])) {
-                                        echo 'selected';
-                                    }
-                                    ?>
-                                >
-                                    <?php echo number_format_i18n($option['value']); ?> km
-                                    (<?php echo $option['count']; ?>)
-                                </option>
-                                <?php
-                            }
-                        }
-                        ?>
-                    </select>
-                </label>
+                <div class="pricing-container mileage-container">
+                    <?php
+                    $mileageMinMaxValues = $connector->getCustomFieldAggregation('mileage');
+
+                    $mileageMinMaxValue = (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) ? $_GET['mileageMinMax'] : '';
+                    $sliderMileage = explode(",", $mileageMinMaxValue);
+                    ?>
+                    <div style="display:flex; justify-content: space-between;">
+                        <span id="amileageMin"><?php echo number_format_i18n(($sliderMileage[0]) ? $sliderMileage[0] : $mileageMinMaxValues->min); ?></span>
+                        <span>Kilometer</span>
+                        <span id="amileageMax"><?php echo number_format_i18n(($sliderMileage[1]) ? $sliderMileage[1] : $mileageMinMaxValues->max); ?></span>
+                    </div>
+                    <div class="slider-container">
+                        <input id="mileageMinMax"
+                               name="mileageMinMax"
+                               type="text"
+                               class=""
+                               value="<?php echo $mileageMinMaxValue;?>"
+                               data-slider-min="<?php echo $mileageMinMaxValues->min; ?>"
+                               data-slider-max="<?php echo $mileageMinMaxValues->max; ?>"
+                               data-slider-step="1000"
+                               data-slider-value="[<?php echo ($sliderMileage[0]) ? $sliderMileage[0] : $mileageMinMaxValues->min; ?>,<?php echo ($sliderMileage[1]) ? $sliderMileage[1] : $mileageMinMaxValues->max; ?>]"
+                        />
+                    </div>
+                    <script>
+                        jQuery(function () {
+                            jQuery("#mileageMinMax").slider({
+                                tooltip: 'hide',
+                            }).on("slide", function(slideEvt) {
+                                jQuery("#amileageMin").text(slideEvt.value[0]);
+                                jQuery("#amileageMax").text(slideEvt.value[1]);
+                            });
+                        })
+                    </script>
+                </div>
+
                 <label>
                     <select name="properties[]" id="geartype" class="multiselect" multiple="multiple">
 
