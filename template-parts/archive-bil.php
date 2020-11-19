@@ -34,6 +34,12 @@ $availableFilters = $connector->availableFilters($products);
                                         <option value="name:desc" <?php echo 'name:desc' == $filters['sort_by'] ? 'selected' : ''; ?>>
                                             Navn Å-A
                                         </option>
+                                        <option value="customFields.mileage:asc" <?php echo 'customFields.mileage:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
+                                            Kilometer (lav til høj)
+                                        </option>
+                                        <option value="customFields.mileage:desc" <?php echo 'customFields.mileage:desc' == $filters['sort_by'] ? 'selected' : ''; ?>>
+                                            Kilometer (høj til lav)
+                                        </option>
                                     </select>
                                 </div>
                                 <div>

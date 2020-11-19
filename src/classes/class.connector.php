@@ -352,6 +352,13 @@ class Connector
                 $search .= '&pricingMax=' . $values[1];
             }
 
+            if (!empty($_GET['mileageMinMax'])) {
+                $values = explode(",", $_GET['mileageMinMax']);
+                // customFields[mileage][gte]=10000&customFields[mileage][lte]=50000
+                $search .= '&customFields[mileage][gte]=' . $values[0];
+                $search .= '&customFields[mileage][lte]=' . $values[1];
+            }
+
             // Sorting
             if (isset($_GET['sort_by']) && !empty($_GET['sort_by'])) {
                 $search .= '&sort_by='. $_GET['sort_by'];
@@ -573,7 +580,6 @@ class Connector
         return $filter_options;
 
     }
-
 
 }
 

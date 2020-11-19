@@ -61,6 +61,16 @@ if (!empty($filters)) {
             <?php
         }
 
+        if (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) {
+            $prices = explode(",", $_GET['mileageMinMax']);
+            ?>
+            <a href="#" class="btn btn-light remove-filter"
+               data-target="<?php echo $_GET['mileageMinMax']; ?>">Kilometer mellem:
+                <?php echo number_format_i18n($prices[0]); ?> &mdash; <?php echo number_format_i18n($prices[1]); ?>
+                <i class="fa fa-times"></i></a>
+            <?php
+        }
+
         if (isset($_GET['search']) && !empty($_GET['search'])) {
             ?>
             <a href="#" class="btn btn-light remove-filter"
