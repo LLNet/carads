@@ -445,6 +445,12 @@ class Connector
             $params['pricingMax'] = $parts[1];
             unset($params['pricingMinMax']);
         }
+        if(isset($params['mileageMinMax']) && !empty($params['mileageMinMax'])) {
+            $parts = explode(",", $params['mileageMinMax']);
+            $params['customFields[mileage][gte]'] = $parts[0];
+            $params['customFields[mileage][lte]'] = $parts[1];
+            unset($params['mileageMinMax']);
+        }
         $search = "";
         foreach($params as $key => $param) {
             if ("brands" == $key) {
