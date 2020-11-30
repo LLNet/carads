@@ -18,30 +18,59 @@ jQuery(document).ready(function () {
 
     });
 
-    jQuery('.main-slider').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        fade: true,
-        dots: false,
-        asNavFor: '.thumb-slider'
-    });
-    jQuery('.thumb-slider').slick({
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        asNavFor: '.main-slider',
-        dots: false,
-        focusOnSelect: true,
-        centerMode: true,
-        centerPadding: '40px',
-        nextArrow: '<button class="slick-next "><i class="fa fa-chevron-right"></i></button>',
-        prevArrow: '<button class="slick-prev "><i class="fa fa-chevron-left"></i></button>',
-    });
+
+    let viewportWidth = jQuery(window).width();
+
+    if (viewportWidth < 576) {
+
+        jQuery('.main-slider').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: true,
+            fade: true,
+            dots: false,
+            nextArrow: '<button class="slick-next "><i class="fa fa-chevron-right"></i></button>',
+            prevArrow: '<button class="slick-prev "><i class="fa fa-chevron-left"></i></button>',
+        });
+        $('.thumb-slider').hide();
+
+        let $status = jQuery('.pagingInfo');
+        let $slickElement = jQuery('.main-slider');
+
+        $slickElement.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
+            //currentSlide is undefined on init -- set it to 0 in this case (currentSlide is 0 based)
+            let i = (currentSlide ? currentSlide : 0) + 1;
+            $status.text(i + '/' + slick.slideCount);
+        });
+
+
+
+    } else {
+        jQuery('.main-slider').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            dots: false,
+            asNavFor: '.thumb-slider'
+        });
+        jQuery('.thumb-slider').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            asNavFor: '.main-slider',
+            dots: false,
+            focusOnSelect: true,
+            centerMode: true,
+            centerPadding: '40px',
+            nextArrow: '<button class="slick-next "><i class="fa fa-chevron-right"></i></button>',
+            prevArrow: '<button class="slick-prev "><i class="fa fa-chevron-left"></i></button>',
+        });
+    }
 
 
     jQuery('.toggle-filters').on('click', function (e) {
         e.preventDefault();
-        if(jQuery(window).width() > 1024) {
+        if (jQuery(window).width() > 1024) {
             scrollToTop();
         } else {
             scrollToTop();
@@ -52,7 +81,7 @@ jQuery(document).ready(function () {
     });
 
     function scrollToTop() {
-        jQuery('html,body').animate({ scrollTop: 0 }, 'slow');
+        jQuery('html,body').animate({scrollTop: 0}, 'slow');
     }
 
     if (jQuery('.multiselect').length > 0) {
@@ -62,7 +91,7 @@ jQuery(document).ready(function () {
             buttonContainer: '<div class="btn-group" />',
             nonSelectedText: "Vælg en mulighed",
             allSelectedText: "Alle valgt",
-            nSelectedText  : "valgt",
+            nSelectedText: "valgt",
             selectAllText: 'Vælg alle'
         };
         options.nonSelectedText = "Mærker";
@@ -89,7 +118,7 @@ jQuery(document).ready(function () {
         // });
     }
 
-    jQuery('#sort_by').on('change', function(e) {
+    jQuery('#sort_by').on('change', function (e) {
         e.preventDefault();
         jQuery(this).closest('form').submit();
     });
@@ -121,7 +150,7 @@ jQuery(document).ready(function () {
         }, 100);
     });
 
-    if(jQuery('#update-filters').length > 0) {
+    if (jQuery('#update-filters').length > 0) {
         jQuery(window).scroll(function () {
             if (jQuery(window).scrollTop() >= 350) {
                 jQuery('#update-filters').addClass('fixed');
@@ -130,7 +159,6 @@ jQuery(document).ready(function () {
             }
         });
     }
-
 
 
 });

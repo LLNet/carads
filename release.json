@@ -1,10 +1,10 @@
 {
   "name": "car-app",
-  "version": "0.1.5",
-  "last_updated": "2020-11-19",
-  "download_url": "https://plugins.indexed.dk/files/car-app-0.1.5.zip",
+  "version": "0.1.7",
+  "last_updated": "2020-11-30",
+  "download_url": "https://plugins.indexed.dk/files/car-app-0.1.7.zip",
   "sections": {
-    "changelog": "<strong>0.1.5</strong><ul><li>Tilføjet: Filtrering, aktive filtre og sortinger for Kilometerstand</li></ul><strong>0.1.4</strong><ul><li>Tilføjet: Understøttelse af Plugin Update Checker</li></ul>",
+    "changelog": "<strong>0.1.6</strong><ul><li>Rettet: Tilføjet korrekt formatering af kilometer tal.</li></ul><strong>0.1.5</strong><ul><li>Tilføjet: Filtrering, aktive filtre og sortinger for Kilometerstand</li></ul><strong>0.1.4</strong><ul><li>Tilføjet: Understøttelse af Plugin Update Checker</li></ul>",
     "description": "Integration mellem WordPress og CarAds.io"
   },
   "requires": "5.0.0",

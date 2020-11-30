@@ -264,6 +264,11 @@
 
 
       .slick-slider {
+
+        @media all and (max-width: 576px) {
+            margin-bottom: 65px;
+        }
+
         .slick-next,
         .slick-prev {
           position: absolute;
@@ -275,21 +280,60 @@
           background-color: white;
           color: #00b4ef;
           border-radius: 25px;
-          width: 45px;
+          width: 45px !important;
           height: 45px;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 12px;
+          padding: 0 !important;
+
+          @media all and (max-width: 576px) {
+            transform: translateY(calc(100% + 9px));
+            bottom:0;
+            top:unset;
+          }
+
         }
 
         .slick-next {
           right: 0;
           left: unset;
         }
+
+        @media all and (max-width: 576px) {
+
+          .slick-prev {
+            left: 50px;
+          }
+          .slick-next {
+            right: 50px;
+          }
+
+        }
+      }
+
+      .pagingInfo {
+
+        display: none;
+
+        @media all and (max-width: 576px) {
+          display: flex;
+          justify-content: center;
+          transform: translateY(-45px);
+          height: 1px;
+          color: #00b4ef;
+          font-size: 1.2rem;
+        }
+
       }
 
       .thumb-slider {
+
+        @media all and (max-width: 768px) {
+            display: none;
+        }
+
         margin-top: var(--car-gutter);
         margin-bottom: var(--car-gutter);
 

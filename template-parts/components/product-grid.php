@@ -122,7 +122,8 @@
             <div class="car--info--content__price">
                 <?php
                 echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
-                if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth')) {
+                $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+                if (!empty($santanderPrice) && $santanderPrice != "-") {
                     ?>
                     <small class="leasing">
                         Fra. <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
@@ -132,9 +133,7 @@
                 }
                 ?>
             </div>
-
         </div>
-
 
     </figcaption>
 </div>

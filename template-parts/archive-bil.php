@@ -19,7 +19,8 @@ $availableFilters = $connector->availableFilters($products);
                         if (is_post_type_archive('bil')) {
                             ?>
                             <div class="car-sorting">
-                                <div>
+                                <div class="car-sorting--sort_by">
+                                    <label for="sort_by">Sorter efter:</label>
                                     <select name="sort_by" id="sort_by">
                                         <option disabled unselectable="">Sorter efter</option>
                                         <option value="price:asc" <?php echo 'price:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
@@ -42,15 +43,15 @@ $availableFilters = $connector->availableFilters($products);
                                         </option>
                                     </select>
                                 </div>
-                                <div>
+                                <div class="car-sorting--summary">
                                     <?php
                                     if (property_exists($products, 'summary')) {
-                                        echo "<span>" . $products->summary->totalItems . " " . __('biler', 'car-ads') . "</span>";
-                                        echo "&nbsp;" . __('matcher din søgning', 'car-ads');
+                                        echo "<span>" . $products->summary->totalItems . " " . __('biler', 'car-ads') . "</span> ";
+                                        echo "<span>" . __('matcher din søgning', 'car-ads'). "</span>";
                                     }
                                     ?>
                                 </div>
-                                <div>
+                                <div class="car-sorting--grid-toggle">
 
                                 </div>
                             </div>

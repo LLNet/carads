@@ -80,13 +80,25 @@ class Connector
         }
         // Setup Headless API object
         $headless = new \Indexed\Headless\Request($this->ck, $this->cs, $this->pt);
-        $headless->useCache(true);
+//        $headless->useCache(true);
         $headless->setUrl($this->api_endpoint);
         $this->headless = $headless;
 
         // Add actions on cronjob action
         add_action('car-ads', [$this, 'synchronize']);
         add_action('car-ads', [$this, 'clean_up_non_existing_cars']);
+
+
+        if ($_REQUEST['syncmanual'] == "1") {
+
+            add_action('init', [$this, 'synchronize']);
+
+            print "<pre>";
+            print_r("Done");
+            print "</pre>";
+
+        }
+
 
         add_action('wp_ajax_nopriv_pre_search', [$this, 'pre_search']);
         add_action('wp_ajax_pre_search', [$this, 'pre_search']);
@@ -140,34 +152,53 @@ class Connector
      */
     public function synchronize()
     {
+        // Set timelimits
+        ini_set('max_execution_time', 900);
+        set_time_limit(900);
 
-        $products = $this->headless->get('/products?size=1000&updated[gte]=' . urlencode(date('Y-m-d H:i:s', strtotime("-60 minutes"))));
+        $offset  = "?size=50";
 
-        if (property_exists($products, 'error')) {
-            return false;
+        if (get_option('_carads_last_updated')) {
+            $offset .= "&updated[gte]=" . urlencode(get_option('_carads_last_updated'));
+        } else {
+            $offset .= "&created[lte]=" . urlencode(date("Y-m-d H:i:s"));
         }
 
-        foreach ($products->items as $key => $product) {
+        do {
 
-            $post_id = $this->get_product_by_external_id($product->id);
+            $products = $this->headless->get("/products" . $offset);
+            $offset   = $products->navigation->next ?? '';
 
-            // if car does not exist
-            if ($post_id) {
-                $car = get_post($post_id);
-
-                try {
-                    if (new DateTime($product->updated) > new DateTime($car->post_modified)) {
-                        $this->update($car->ID, $product);
-                    }
-                } catch (\Exception $e) {
-                    error_log($e->getMessage());
-                }
-
-            } else {
-                $this->create($product);
+            if (property_exists($products, 'error')) {
+                return false;
             }
 
-        }
+            foreach ($products->items as $key => $product) {
+
+                $post_id = $this->get_product_by_external_id($product->id);
+
+                // if car does not exist
+                if ($post_id) {
+                    $car = get_post($post_id);
+
+                    try {
+                        if (new DateTime($product->updated) > new DateTime($car->post_modified)) {
+                            $this->update($car->ID, $product);
+                        }
+                    } catch (\Exception $e) {
+                        error_log($e->getMessage());
+                    }
+
+                } else {
+                    $this->create($product);
+                }
+
+            }
+
+        } while (!empty($offset));
+
+        // Update last updated timestamp
+        update_option('_carads_last_updated', date("Y-m-d H:i:s"));
 
     }
 
@@ -361,7 +392,7 @@ class Connector
 
             // Sorting
             if (isset($_GET['sort_by']) && !empty($_GET['sort_by'])) {
-                $search .= '&sort_by='. $_GET['sort_by'];
+                $search .= '&sort_by=' . $_GET['sort_by'];
             }
         }
 
@@ -425,12 +456,12 @@ class Connector
      */
     public function getCustomFieldAggregation($fieldName, $includeCount = false)
     {
-        $data = $this->headless->get("/products?aggregationMinMaxAvg=customFields.".$fieldName. ($includeCount == true ? 'aggregationCount=customFields.'.$fieldName : ''));
+        $data = $this->headless->get("/products?aggregationMinMaxAvg=customFields." . $fieldName . ($includeCount == true ? 'aggregationCount=customFields.' . $fieldName : ''));
 
         return $data->aggregations->global->customFields->{$fieldName};
 
-    }    
-    
+    }
+
     public function pre_search()
     {
 
@@ -439,41 +470,39 @@ class Connector
         $params = array();
         parse_str($data, $params);
 
-        if(isset($params['pricingMinMax']) && !empty($params['pricingMinMax'])) {
-            $parts = explode(",", $params['pricingMinMax']);
+        if (isset($params['pricingMinMax']) && !empty($params['pricingMinMax'])) {
+            $parts                = explode(",", $params['pricingMinMax']);
             $params['pricingMin'] = $parts[0];
             $params['pricingMax'] = $parts[1];
             unset($params['pricingMinMax']);
         }
-        if(isset($params['mileageMinMax']) && !empty($params['mileageMinMax'])) {
-            $parts = explode(",", $params['mileageMinMax']);
+        if (isset($params['mileageMinMax']) && !empty($params['mileageMinMax'])) {
+            $parts                                = explode(",", $params['mileageMinMax']);
             $params['customFields[mileage][gte]'] = $parts[0];
             $params['customFields[mileage][lte]'] = $parts[1];
             unset($params['mileageMinMax']);
         }
         $search = "";
-        foreach($params as $key => $param) {
+        foreach ($params as $key => $param) {
             if ("brands" == $key) {
                 foreach ($param as $slug) {
                     $search .= '&brands[]=' . $slug;
                 }
-            }
-            elseif ("categories" == $key) {
+            } elseif ("categories" == $key) {
                 foreach ($param as $slug) {
                     $search .= '&categories[]=' . $slug;
                 }
-            }
-            elseif ("properties" == $key) {
+            } elseif ("properties" == $key) {
                 foreach ($param as $slug) {
                     $search .= '&properties[]=' . $slug;
                 }
             } else {
-                $search .= "&".$key."=".$param;
+                $search .= "&" . $key . "=" . $param;
             }
 
         }
 
-        $products = $this->headless->get("/products?size=1".$search);
+        $products = $this->headless->get("/products?size=1" . $search);
         if (property_exists($products, 'error')) {
             print $products->error;
         } else {

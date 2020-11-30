@@ -218,12 +218,15 @@ if(!is_post_type_archive('bil')) {
                         />
                     </div>
                     <script>
+                        function numberWithDots(x) {
+                            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
                         jQuery(function () {
                             jQuery("#mileageMinMax").slider({
                                 tooltip: 'hide',
                             }).on("slide", function(slideEvt) {
-                                jQuery("#amileageMin").text(slideEvt.value[0]);
-                                jQuery("#amileageMax").text(slideEvt.value[1]);
+                                jQuery("#amileageMin").text(numberWithDots(slideEvt.value[0]));
+                                jQuery("#amileageMax").text(numberWithDots(slideEvt.value[1]));
                             });
                         })
                     </script>

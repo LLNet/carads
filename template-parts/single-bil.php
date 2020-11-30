@@ -56,6 +56,11 @@ $currency  = $connector->getCurrency();
                         }
                         ?>
                     </div>
+                    <div class="pagingInfo">
+                        <?php
+                        echo "1/".count($product->images);
+                        ?>
+                    </div>
                     <div class="thumb-slider">
                         <?php
                         if (property_exists($product, 'images')) {

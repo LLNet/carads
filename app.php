@@ -88,7 +88,7 @@ if (!class_exists('CarAdsApp')) {
         public function cronstarter_activation()
         {
             if (!wp_next_scheduled('car-ads')) {
-                wp_schedule_event(time(), 'twicedaily', 'car-ads');
+                wp_schedule_event(time(), 'hourly', 'car-ads');
             }
         }
 
