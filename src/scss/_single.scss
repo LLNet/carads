@@ -51,6 +51,7 @@
     margin-bottom: var(--car-gutter);
     background: #fff;
     border: 1px solid #eeeeee;
+
     h3 {
       font-weight: bold;
     }
@@ -120,9 +121,6 @@
         @media all and (max-width: 768px) {
           padding: 15px 0;
         }
-        @media all and (max-width: 667px) {
-          padding: 0;
-        }
 
 
         h3,
@@ -155,6 +153,7 @@
             display: none;
           }
         }
+
         .mobile {
           @media all and (min-width: 668px) {
             display: none;
@@ -178,7 +177,13 @@
               align-items: center;
               justify-content: center;
               font-size: 1.4rem;
+
+
+              i {
+                color: #ffffff !important;
+              }
             }
+
             span {
               color: #00b4ef;
               font-weight: bold
@@ -257,6 +262,7 @@
         display: none;
       }
     }
+
     .mobile {
       @media all and (min-width: 668px) {
         display: none;
@@ -319,17 +325,17 @@
       .slick-slide {
         margin: 0 10px;
       }
+
       /* the parent */
       .slick-list {
         margin: 0 -10px;
       }
 
 
-
       .slick-slider {
 
         @media all and (max-width: 576px) {
-            margin-bottom: 65px;
+          margin-bottom: 65px;
         }
 
         .slick-next,
@@ -353,8 +359,8 @@
 
           @media all and (max-width: 576px) {
             transform: translateY(calc(100% + 9px));
-            bottom:0;
-            top:unset;
+            bottom: 0;
+            top: unset;
             background-color: transparent;
           }
 
@@ -396,7 +402,7 @@
       .thumb-slider {
 
         @media all and (max-width: 768px) {
-            display: none;
+          display: none;
         }
 
         margin-top: var(--car-gutter);
@@ -435,9 +441,11 @@
       }
 
       .accordion {
+        display: block !important;
         > div {
           margin-bottom: 10px;
         }
+
         .card-header {
           display: flex;
           justify-content: space-between;
@@ -447,9 +455,10 @@
 
       h1 {
         @media all and (max-width: 667px) {
-            font-size: 1.8rem;
+          font-size: 1.4rem;
         }
       }
+
       .price {
         width: 100%;
         justify-content: space-between;
@@ -519,7 +528,6 @@
       }
 
 
-
     }
 
     .santander {
@@ -536,9 +544,11 @@
         h4 {
           color: #ffffff !important;
         }
+
         ul {
           margin-bottom: 15px;
         }
+
         button {
           background-color: #ffffff;
           color: #ed1817;
@@ -550,6 +560,7 @@
       #scbdkdealerexternalcalc.calculator {
         width: 100% !important;
       }
+
       #scbdkdealerexternalcalc .calcRow .unitValuta {
         width: 15px !important;
       }

@@ -5,7 +5,7 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') > 
     <div class="card santander">
 
         <div class="santander--content">
-            <img src="<?php echo plugin_dir_url(__FILE__); ?>../assets/santander-logo.png">
+            <img src="<?php echo plugin_dir_url(__FILE__); ?>../../assets/santander-logo.png">
             <h4>Finansier med Santander</h4>
             <ul style="list-style-type: none;">
                 <li>Lån til lav fast eller variabel rente</li>

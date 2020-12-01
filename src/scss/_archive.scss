@@ -73,11 +73,13 @@
     }
 
     &--sort_by {
+
       text-align: left;
       label {
         display: none;
       }
       @media all and (max-width: 768px) {
+        width: 50%;
         order: 2;
         text-align: right;
         display: flex;
@@ -88,6 +90,7 @@
           display: block;
           text-align: left;
           font-weight: normal;
+          font-size: 1.2rem;
         }
 
       }
@@ -119,8 +122,9 @@
           font-weight: bold;
         }
         span:last-child {
-          font-size: 2.4rem;
-          font-weight: normal;
+          margin-top: 5px;
+          font-size: 1.6rem;
+          font-weight: 400;
         }
 
       }
@@ -268,13 +272,15 @@
               width: 100%;
               margin-top: 2rem;
               align-items: center;
-              font-size: 2.4rem;
+              font-size: 2.8rem;
             }
 
             .leasing {
               opacity: 0.5;
               @media all and (max-width: 768px) {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
+                margin-top: 5px;
+                font-weight: normal;
               }
 
             }
