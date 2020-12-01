@@ -35,7 +35,11 @@ if (!class_exists('CarAdsSettings')):
             $sections = array(
                 array(
                     'id' => 'car-ads',
-                    'title' => __('CarAds Settings', 'car-ads')
+                    'title' => __('Generelt', 'car-ads')
+                ),
+                array(
+                    'id' => 'car-ads-single-car',
+                    'title' => __('Single Car', 'car-ads')
                 ),
             );
             return $sections;
@@ -96,29 +100,33 @@ if (!class_exists('CarAdsSettings')):
                         'default' => 'biler',
                         'sanitize_callback' => 'sanitize_text_field'
                     ],
-//                    [
-//                        'name'    => 'synchronize_interval',
-//                        'label'   => __( 'Synkroniserings interval', 'car-ads' ),
-//                        'desc'    => __( '<strong>Not Yet Implemented</strong>: Vælg hvor tit der skal synkroniseres biler', 'car-ads' ),
-//                        'type'    => 'select',
-//                        'default' => 'twicedaily',
-//                        'options' => [
-//                            'hourly' => __('En gang i timen', 'car-ads'),
-//                            'twicedaily'  => __('To gange dagligt', 'car-ads'),
-//                            'daily'  => __('En gang om dagen', 'car-ads'),
-//                            'weekly'  => __('En gang ugentligt', 'car-ads'),
-//                        ]
-//                    ],
-//                    [
-//                        'name'    => 'currency',
-//                        'label'   => __( 'Valuta', 'car-ads' ),
-//                        'desc'    => __( 'Vælg valuta', 'car-ads' ),
-//                        'type'    => 'select',
-//                        'default' => 'DKK',
-//                        'options' => [
-//                            'DKK' => __('Dansk Krone', 'car-ads'),
-//                        ]
-//                    ],
+                ],
+                'car-ads-single-car' => [
+                    [
+                        'name' => 'phonenumber',
+                        'label' => __('Telefonnummer til kontakt', 'car-ads'),
+                        'desc' => __('Skriv dit telefonnummer. Kun tal og uden "+45" foran.', 'car-ads'),
+                        'placeholder' => __('', 'car-ads'),
+                        'type' => 'text',
+                        'sanitize_callback' => 'sanitize_number_field',
+                    ],
+                    [
+                        'name' => 'contactform_shortcode',
+                        'label' => __('Kontakt formular shortcode', 'car-ads'),
+                        'desc' => __('Skriv din Kontaktformular shortcode her', 'car-ads'),
+                        'placeholder' => __('[contact-form-7 id=\'5066\' title=\'Skriv besked til os\']', 'car-ads'),
+                        'type' => 'textarea',
+                        'default' => '',
+                    ],
+                    [
+                        'name' => 'testdrive_shortcode',
+                        'label' => __('Bestil prøvetur shortcode', 'car-ads'),
+                        'desc' => __('Skriv din Bestil prøvetur shortcode her', 'car-ads'),
+                        'placeholder' => __('[contact-form-7 id=\'5066\' title=\'Book prøvetur\']', 'car-ads'),
+                        'type' => 'textarea',
+                        'default' => '',
+                    ],
+
                 ]
             ];
         }

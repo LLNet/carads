@@ -120,6 +120,9 @@
         @media all and (max-width: 768px) {
           padding: 15px 0;
         }
+        @media all and (max-width: 667px) {
+          padding: 0;
+        }
 
 
         h3,
@@ -129,15 +132,61 @@
 
         h3 {
           font-weight: bold;
+
+          @media all and (max-width: 667px) {
+            font-size: 1.4rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
 
       }
 
       .header--right {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
+
+        .desktop {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          width: 100%;
+
+          @media all and (max-width: 667px) {
+            display: none;
+          }
+        }
+        .mobile {
+          @media all and (min-width: 668px) {
+            display: none;
+          }
+
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+
+          > div {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .btn {
+              width: 45px;
+              height: 45px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.4rem;
+            }
+            span {
+              color: #00b4ef;
+              font-weight: bold
+            }
+          }
+
+        }
+
         @media all and (max-width: 667px) {
           flex-direction: column;
         }
@@ -145,6 +194,7 @@
           flex-direction: row;
           justify-content: space-between;
         }
+
 
         .btn {
 
@@ -183,12 +233,14 @@
       width: 100%;
       z-index: 700;
 
-      @media all and (max-width: 768px) {
-        top: 0;
-      }
       @media all and (max-width: 1024px) and (orientation: landscape) {
         top: 32px;
       }
+
+      @media all and (max-width: 768px) {
+        top: 0;
+      }
+
     }
   }
 
@@ -198,6 +250,17 @@
     h4 {
       font-weight: bold;
       font-size: 18px;
+    }
+
+    .desktop {
+      @media all and (max-width: 667px) {
+        display: none;
+      }
+    }
+    .mobile {
+      @media all and (min-width: 668px) {
+        display: none;
+      }
     }
 
     display: flex;
@@ -292,6 +355,7 @@
             transform: translateY(calc(100% + 9px));
             bottom:0;
             top:unset;
+            background-color: transparent;
           }
 
         }
@@ -324,6 +388,7 @@
           height: 1px;
           color: #00b4ef;
           font-size: 1.2rem;
+          font-weight: bold;
         }
 
       }
@@ -368,6 +433,49 @@
           grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
         }
       }
+
+      .accordion {
+        > div {
+          margin-bottom: 10px;
+        }
+        .card-header {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+
+
+      h1 {
+        @media all and (max-width: 667px) {
+            font-size: 1.8rem;
+        }
+      }
+      .price {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+
+        @media all and (max-width: 768px) {
+          flex-direction: column;
+        }
+
+        &--label {
+          font-weight: bold;
+          font-size: 16px;
+          @media all and (max-width: 768px) {
+            margin-bottom: 0;
+          }
+        }
+
+        &--value {
+          font-weight: bold;
+          font-size: 30px;
+          line-height: 50px;
+          letter-spacing: 0px;
+
+        }
+      }
+
     }
 
     .content--col-2 {
@@ -410,40 +518,42 @@
         }
       }
 
-      .santander {
-        background: #ed1817;
-        padding: var(--car-gutter);
-        display: flex;
-        text-align: center;
-        justify-content: center;
 
 
-        &--content {
+    }
+
+    .santander {
+      background: #ed1817;
+      padding: var(--car-gutter);
+      display: flex;
+      text-align: center;
+      justify-content: center;
+
+
+      &--content {
+        color: #ffffff !important;
+
+        h4 {
           color: #ffffff !important;
-
-          h4 {
-            color: #ffffff !important;
-          }
-          ul {
-            margin-bottom: 15px;
-          }
-          button {
-            background-color: #ffffff;
-            color: #ed1817;
-            font-weight: bold;
-          }
-
         }
-
-        #scbdkdealerexternalcalc.calculator {
-          width: 100% !important;
+        ul {
+          margin-bottom: 15px;
         }
-        #scbdkdealerexternalcalc .calcRow .unitValuta {
-          width: 15px !important;
+        button {
+          background-color: #ffffff;
+          color: #ed1817;
+          font-weight: bold;
         }
-
 
       }
+
+      #scbdkdealerexternalcalc.calculator {
+        width: 100% !important;
+      }
+      #scbdkdealerexternalcalc .calcRow .unitValuta {
+        width: 15px !important;
+      }
+
 
     }
 

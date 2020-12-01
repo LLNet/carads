@@ -22,14 +22,59 @@ $currency  = $connector->getCurrency();
                     </p>
                 </div>
                 <div class="header--right cta">
-                    <a href="" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalByttepris"><i
-                                class="fa fa-fw fa-calculator"></i> Beregn byttepris</a>
-                    <a href="" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalBestil"><i
-                                class="fa fa-fw fa-car"></i> Bestil prøvetur</a>
-                    <a href="" class="btn btn-primary btn-block js-phone-switch" data-href="tel:+4586520033">
-                        <span class="text-cta"><i class="fa fa-fw fa-phone"></i> Ring til os</span>
-                        <span class="text-value"><i class="fa fa-fw fa-phone"></i> Tlf 86 52 00 33</span>
-                    </a>
+                    <div class="desktop">
+                        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalByttepris">
+                            <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-ads'); ?>
+                        </a>
+                        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalBestil">
+                            <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-ads'); ?>
+                        </a>
+                        <?php
+                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
+                            ?>
+                            <a href="#" class="btn btn-primary btn-block js-phone-switch"
+                               data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
+                                <span class="text-cta"><i
+                                            class="fa fa-fw fa-phone"></i> <?php echo __('Ring til os', 'car-ads'); ?></span>
+                                <span class="text-value"><i
+                                            class="fa fa-fw fa-phone"></i> Tlf <?php echo get_option('car-ads-single-car')['phonenumber']; ?></span>
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="mobile">
+                        <div>
+                            <a href="#" class="btn btn-primary btn-block" data-toggle="modal"
+                               data-target="#modalByttepris">
+                                <i class="fa fa-fw fa-calculator"></i>
+                            </a>
+                            <span><?php echo __('Beregn byttepris', 'car-ads'); ?></span>
+                        </div>
+                        <?php
+                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
+                            ?>
+                            <div>
+                                <a href="#" class="btn btn-primary btn-block" data-toggle="modal"
+                                   data-target="#modalBestil">
+                                    <i class="fa fa-fw fa-car"></i>
+                                </a>
+                                <span><?php echo __('Bestil prøvetur', 'car-ads'); ?></span>
+                            </div>
+                            <?php
+                        }
+                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
+                            ?>
+                            <div>
+                                <a href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>" class="btn btn-primary btn-block">
+                                    <i class="fa fa-fw fa-phone"></i>
+                                </a>
+                                <span><?php echo __('Ring til os', 'car-ads'); ?></span>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,9 +93,7 @@ $currency  = $connector->getCurrency();
                         if (property_exists($product, 'images')) {
                             foreach ($product->images as $key => $image) {
                                 ?>
-
                                 <img src="<?php echo $image->sizes->i1024x768 ?>">
-
                                 <?php
                             }
                         }
@@ -58,7 +101,7 @@ $currency  = $connector->getCurrency();
                     </div>
                     <div class="pagingInfo">
                         <?php
-                        echo "1/".count($product->images);
+                        echo "1/" . count($product->images);
                         ?>
                     </div>
                     <div class="thumb-slider">
@@ -66,420 +109,68 @@ $currency  = $connector->getCurrency();
                         if (property_exists($product, 'images')) {
                             foreach ($product->images as $key => $image) {
                                 ?>
-
                                 <img src="<?php echo str_replace('i1024x768', 'i768x400', $image->sizes->i1024x768) ?>">
-
                                 <?php
                             }
                         }
                         ?>
                     </div>
 
-                    <div class="card-header">Beskrivelse</div>
-                    <div class="card">
-
-                        <?php echo $product->description; ?>
-
+                    <div class="mobile">
+                        <?php include("components/single-car-quick-details-card.php"); ?>
+                    </div>
+                    <div class="mobile">
+                        <?php include("components/single-car-santander.php"); ?>
                     </div>
 
-                    <div class="card-header">Specifikationer</div>
-                    <div class="card">
-
-                        <h4>Model</h4>
-                        <div class="quick-specs">
-                            <dl>
-                                <dt><?php _e('HK', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Effect') . " ";
-                                    echo __("hk", 'PLUGIN_NAME');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Model', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'ModelSeries');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Årgang', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Year');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Registreringsår', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'RegistrationDate');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Kilometertal', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-
-                                    if ($connector->get_field($product->properties, 'Mileage') != '-') {
-                                        echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
-                                        echo " " . __("km.", 'PLUGIN_NAME');
-                                    } else {
-                                        _e('-', 'PLUGIN_NAME');
-                                    }
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Farve', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Color');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Drivmiddel', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Propellant');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Polstring', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Upholstery');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Polstring farve', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'UpholsteryColor');
-                                    ?>
-                                </dd>
-                            </dl>
-
-                        </div>
-                        <hr>
-
-                        <h4>Teknik</h4>
-                        <div class="quick-specs">
-                            <dl>
-                                <dt><?php _e('Acceleration 0 til 100', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Acceleration0To100') . " sek.";
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Gearkasse', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    switch ($connector->get_field($product->properties, 'GearType')) {
-                                        case 'A':
-                                            _e('Automatisk', 'PLUGIN_NAME');
-                                            break;
-                                        case 'M':
-                                            _e('Manuel', 'PLUGIN_NAME');
-                                            break;
-                                        default:
-                                            _e('-', 'PLUGIN_NAME');
-                                            break;
-                                    }
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Topfart', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'TopSpeed') . " km/t";
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Virkning i nm', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'EffectInNm');
-                                    ?>
-                                </dd>
-                            </dl>
-
-                            <dl>
-                                <dt><?php _e('HK', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Effect') . " ";
-                                    echo __("hk", 'PLUGIN_NAME');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Max. påhæng', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'TrailerWeight') ? $connector->get_field($product->properties, 'TrailerWeight') : '-';
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Cylindre', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Cylinders');
-                                    ?>
-                                </dd>
-                            </dl>
-
-                        </div>
-                        <hr>
-                        <h4>Miljø</h4>
-                        <div class="quick-specs">
-
-                            <dl>
-                                <?php
-                                if ("El" === $connector->get_field($product->properties, 'Propellant')) {
-                                    ?>
-
-                                    <dt><?php _e('Rækkevidde', 'PLUGIN_NAME'); ?></dt>
-                                    <dd>
-                                        <?php
-                                        echo $connector->get_field($product->properties, 'Range') . " ";
-                                        echo __("km", 'PLUGIN_NAME');
-                                        ?>
-                                    </dd>
-
-                                    <?php
-                                } else {
-                                    ?>
-
-                                    <dt><?php _e('Forbrug', 'PLUGIN_NAME'); ?></dt>
-                                    <dd>
-                                        <?php
-                                        echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
-                                        echo __("km/l", 'PLUGIN_NAME');
-                                        ?>
-                                    </dd>
-
-                                    <?php
-                                }
-                                ?>
-                            </dl>
-
-                            <dl>
-                                <dt><?php _e('Vægtafgift', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php echo $connector->get_field($product->properties, 'WeightTax'); ?>
-                                    <?php
-                                    if ($connector->get_field($product->properties, 'WeightTaxPeriod')) {
-                                        echo "kr. / " . $connector->get_field($product->properties, 'WeightTaxPeriod') . ". måned";
-                                    }
-                                    ?>
-                                </dd>
-                            </dl>
-
+                    <div class="accordion" id="Accordion">
+                        <div>
+                            <div class="card-header" id="Beskrivelse" data-toggle="collapse" data-target="#beskrivelse"
+                                 aria-expanded="false" aria-controls="beskrivelse">
+                                <span><?php echo __('Beskrivelse', 'car-ads'); ?></span>
+                                <i class="fa fa-chevron-down"></i>
+                            </div>
+                            <div id="beskrivelse" class="card collapse show" aria-labelledby="Beskrivelse"
+                                 data-parent="#Accordion">
+                                <?php echo $product->description; ?>
+                            </div>
                         </div>
 
+                        <div>
+                            <div class="card-header" id="specifications" data-toggle="collapse"
+                                 data-target="#Specifikationer" aria-expanded="false" aria-controls="Specifikationer">
+                                <span><?php echo __('Specifikationer', 'car-ads'); ?></span>
+                                <i class="fa fa-chevron-down"></i>
+                            </div>
+                            <div id="Specifikationer" class="card collapse" aria-labelledby="specifications"
+                                 data-parent="#Accordion">
+                                <?php include("components/single-car-specifications.php"); ?>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
                 <div class="content--col-2">
-                    <div class="card">
-
-                        <h1><?php echo $product->name; ?></h1>
-                        <hr>
-
-                        <div class="quick-specs">
-                            <dl>
-                                <dt><?php _e('Kilometer', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-
-                                    if ($connector->get_field($product->properties, 'Mileage') != '-') {
-                                        echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
-                                        echo " " . __("km.", 'PLUGIN_NAME');
-                                    } else {
-                                        _e('-', 'PLUGIN_NAME');
-                                    }
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Årgang', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Year');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Drivmiddel', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Propellant');
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <?php
-                                if ("El" === $connector->get_field($product->properties, 'Propellant')) {
-                                    ?>
-
-                                    <dt><?php _e('Rækkevidde', 'PLUGIN_NAME'); ?></dt>
-                                    <dd>
-                                        <?php
-                                        echo $connector->get_field($product->properties, 'Range') . " ";
-                                        echo __("km", 'PLUGIN_NAME');
-                                        ?>
-                                    </dd>
-
-                                    <?php
-                                } else {
-                                    ?>
-
-                                    <dt><?php _e('Forbrug', 'PLUGIN_NAME'); ?></dt>
-                                    <dd>
-                                        <?php
-                                        echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
-                                        echo __("km/l", 'PLUGIN_NAME');
-                                        ?>
-                                    </dd>
-
-                                    <?php
-                                }
-                                ?>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('Gearkasse', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    switch ($connector->get_field($product->properties, 'GearType')) {
-                                        case 'A':
-                                            _e('Automatisk', 'PLUGIN_NAME');
-                                            break;
-                                        case 'M':
-                                            _e('Manuel', 'PLUGIN_NAME');
-                                            break;
-                                        default:
-                                            _e('-', 'PLUGIN_NAME');
-                                            break;
-                                    }
-                                    ?>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt><?php _e('HK', 'PLUGIN_NAME'); ?></dt>
-                                <dd>
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Effect') . " ";
-                                    echo __("hk", 'PLUGIN_NAME');
-                                    ?>
-                                </dd>
-                            </dl>
-                        </div>
-                        <hr>
-                        <div class="price d-flex">
-                            <p class="price--label">Kontantpris</p>
-                            <p class="price--value">
-                                <?php
-                                echo number_format_i18n($product->pricing->{$currency}->price, 0);
-                                echo " " . $currency;
-                                ?>
-                            </p>
-                        </div>
-
-                        <div class="cta">
-                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#modalByttepris"><i
-                                        class="fa fa-fw fa-calculator"></i> Beregn
-                                byttepris</a>
-                            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#modalBestil"><i
-                                        class="fa fa-fw fa-car"></i> Bestil prøvetur</a>
-                            <a href="#" data-href="tel:+4586520033" class="btn btn-primary js-phone-switch">
-                                <span class="text-cta"><i class="fa fa-fw fa-phone"></i> Ring til os</span>
-                                <span class="text-value"><i class="fa fa-fw fa-phone"></i> Telefon: 86 52 00 33</span>
-                            </a>
-                        </div>
-
+                    <div class="desktop">
+                        <?php include("components/single-car-quick-details-card.php"); ?>
+                    </div>
+                    <div class="desktop car-order-1">
+                        <?php include("components/single-car-santander.php"); ?>
                     </div>
                     <?php
-                    // Only show santander is car has a santanderPaymentPerMonth value
-                    if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') > 0) {
+                    if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['contactform_shortcode'])) {
                         ?>
-                        <div class="card santander">
-
-                            <div class="santander--content">
-                                <img src="<?php echo plugin_dir_url(__FILE__); ?>../assets/santander-logo.png">
-                                <h4>Finansier med Santander</h4>
-                                <ul>
-                                    <li>Lån til lav fast eller variabel rente</li>
-                                    <li>Fornuftige etableringsomkostninger</li>
-                                    <li>Ingen gebyr ved indfrielse af lån</li>
-                                </ul>
-                                <button class="btn btn-light" data-toggle="modal" data-target="#modalSantander">
-                                    <i class="fa fa-calculator"></i> Beregn finansiering
-                                </button>
-
-                                <div class="modal fade" id="modalSantander" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Beregn
-                                                    finansiering</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div id="scbdkdealerexternalcalc"
-                                                     partnerExternalDealerId="<?php echo $connector->getCustomField('santanderExternalPartnerId'); ?>"
-                                                     publicApiKey=""
-                                                     objectType="1"
-                                                     make="<?php echo get_the_terms(get_the_ID(), 'car_brand')[0]->name; ?>"
-                                                     model="<?php echo get_the_terms(get_the_ID(), 'car_model')[0]->name; ?>"
-                                                     variant="<?php echo $connector->get_field($product->properties, 'ModelSeries'); ?>s"
-                                                     mileage="<?php echo $connector->get_field($product->properties, 'Mileage'); ?>"
-                                                     firstregistrationdate="<?php echo $connector->get_field($product->properties, 'RegistrationDate'); ?>"
-                                                     objectPrice="<?php echo $product->pricing->{$currency}->price; ?>"
-                                                     showaspricelabel="false">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
+                        <div class="card">
+                            <?php echo do_shortcode(get_option('car-ads-single-car')['contactform_shortcode']); ?>
                         </div>
                         <?php
                     }
                     ?>
-
-                    <div class="card">
-                        <?php echo do_shortcode('[contact-form-7 id="5066" title="Skriv besked til os"]'); ?>
-                    </div>
-
                 </div>
 
 
             </div>
         </div>
-
-        <div class="single-bil--related">
-
-        </div>
-
 
         <div class="single-bil--content car d-none">
             <div class="car-row no-gutters">
@@ -623,7 +314,7 @@ $currency  = $connector->getCurrency();
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Byttepris</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"><?php echo __('Byttepris', 'car-ads'); ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -634,23 +325,30 @@ $currency  = $connector->getCurrency();
             </div>
         </div>
     </div>
+<?php
+if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
+    ?>
     <div class="modal fade" id="modalBestil" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Bestil prøvetur</h5>
+                    <h5 class="modal-title"
+                        id="exampleModalLongTitle"><?php echo __('Bestil prøvetur', 'car-ads'); ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?php echo do_shortcode('[contact-form-7 id="4075" title="Book en prøvetur"]'); ?>
+                    <?php echo do_shortcode(get_option('car-ads-single-car')['testdrive_shortcode']); ?>
                 </div>
             </div>
         </div>
     </div>
 
+    <?php
+}
+?>
 
     <script>
         jQuery(function ($) {

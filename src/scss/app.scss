@@ -38,9 +38,13 @@ body.admin-bar {
 .car-col-12 {
   .container {
     @media only screen and (max-width: 767px) {
-      padding-left: 15px !important;
-      padding-right: 15px !important;
-      max-width: calc(100% - 30px) !important;
+      //padding-left: 15px !important;
+      //padding-right: 15px !important;
+      //max-width: calc(100% - 30px) !important;
+    }
+
+    @media all and (max-width: 667px) {
+        padding: 0 !important;
     }
   }
 }
