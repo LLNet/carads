@@ -107,6 +107,7 @@ $currency  = $connector->getCurrency();
                         ?>
                     </div>
                     <div class="thumb-slider">
+                        <img src="<?php echo $product->image->sizes->i1024x768 ?>">
                         <?php
                         if (property_exists($product, 'images')) {
                             foreach ($product->images as $key => $image) {
@@ -187,7 +188,6 @@ $currency  = $connector->getCurrency();
                                     <?php
                                 }
                                 ?>
-
                             </div>
                         </div>
                         <div class="thumbs-wrap">
