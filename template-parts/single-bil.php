@@ -66,7 +66,8 @@ $currency  = $connector->getCurrency();
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
                             ?>
                             <div>
-                                <a href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>" class="btn btn-primary btn-block">
+                                <a href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>"
+                                   class="btn btn-primary btn-block">
                                     <i class="fa fa-fw fa-phone"></i>
                                 </a>
                                 <span><?php echo __('Ring til os', 'car-ads'); ?></span>
@@ -89,6 +90,7 @@ $currency  = $connector->getCurrency();
                     }
                     ?>
                     <div class="main-slider">
+                        <img src="<?php echo $product->image->sizes->i1024x768 ?>">
                         <?php
                         if (property_exists($product, 'images')) {
                             foreach ($product->images as $key => $image) {
@@ -101,7 +103,7 @@ $currency  = $connector->getCurrency();
                     </div>
                     <div class="pagingInfo">
                         <?php
-                        echo "1/" . count($product->images);
+                        echo "1/" . (count($product->images) + 1);
                         ?>
                     </div>
                     <div class="thumb-slider">
@@ -193,7 +195,7 @@ $currency  = $connector->getCurrency();
                             if (property_exists($product, 'images')) {
                                 foreach ($product->images as $key => $image) {
                                     ?>
-                                    <a href="!#" class="item-thumb">
+                                    <a href="!#" class="item-thumb" style="object-fit: contain">
                                         <img src="<?php echo $image->sizes->i150x150 ?>"
                                              onclick="jQuery('#image').attr('src', jQuery(this).data('src'));return false;"
                                              data-src="<?php echo $image->sizes->i1024x768 ?>">
@@ -320,7 +322,11 @@ $currency  = $connector->getCurrency();
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <?php
+                    if (get_option('car-ads-single-car')['byttepris_shortcode']) {
+                        echo do_shortcode(get_option('car-ads-single-car')['byttepris_shortcode']);
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -340,7 +346,11 @@ if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-sing
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?php echo do_shortcode(get_option('car-ads-single-car')['testdrive_shortcode']); ?>
+                    <?php
+                    if(get_option('car-ads-single-car')['testdrive_shortcode']) {
+                        echo do_shortcode(get_option('car-ads-single-car')['testdrive_shortcode']);
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -359,8 +369,10 @@ if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-sing
             $(window).scroll(function () {
                 if ($(window).scrollTop() >= 250) {
                     $('.single-bil--header').addClass('fixed-header');
+                    jQuery('.single-bil--content').addClass('fixed');
                 } else {
                     $('.single-bil--header').removeClass('fixed-header');
+                    jQuery('.single-bil--content').removeClass('fixed');
                 }
             });
 

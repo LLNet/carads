@@ -133,6 +133,42 @@ if(!is_post_type_archive('bil')) {
                         ?>
                     </select>
                 </label>
+
+                <label>
+                    <select name="properties[]" id="geartype" class="multiselect" multiple="multiple">
+
+                        <?php
+                        foreach ($connector->get_filter_options('GearType') as $key => $option) {
+
+                            if ($option['count'] > 0) {
+                                ?>
+                                <option value="<?php echo $option['slug']; ?>"
+                                    <?php
+                                    if (in_array($option['slug'], $filters['properties'])) {
+                                        echo 'selected';
+                                    }
+                                    ?>
+                                >
+                                    <?php
+                                    switch ($option['value']) {
+                                        case 'A':
+                                            echo "Automatisk";
+                                            break;
+                                        case 'M':
+                                            echo "Manuel";
+                                            break;
+                                    }
+                                    ?>
+                                    (<?php echo $option['count']; ?>)
+                                </option>
+                                <?php
+                            }
+
+                        }
+                        ?>
+                    </select>
+                </label>
+
                 <?php
                 /*
                 ?>
@@ -232,40 +268,6 @@ if(!is_post_type_archive('bil')) {
                     </script>
                 </div>
 
-                <label>
-                    <select name="properties[]" id="geartype" class="multiselect" multiple="multiple">
-
-                        <?php
-                        foreach ($connector->get_filter_options('GearType') as $key => $option) {
-
-                            if ($option['count'] > 0) {
-                                ?>
-                                <option value="<?php echo $option['slug']; ?>"
-                                    <?php
-                                    if (in_array($option['slug'], $filters['properties'])) {
-                                        echo 'selected';
-                                    }
-                                    ?>
-                                >
-                                    <?php
-                                    switch ($option['value']) {
-                                        case 'A':
-                                            echo "Automatisk";
-                                            break;
-                                        case 'M':
-                                            echo "Manuel";
-                                            break;
-                                    }
-                                    ?>
-                                    (<?php echo $option['count']; ?>)
-                                </option>
-                                <?php
-                            }
-
-                        }
-                        ?>
-                    </select>
-                </label>
 
                 <?php
                 if (!empty($filters)) {

@@ -126,6 +126,14 @@ if (!class_exists('CarAdsSettings')):
                         'type' => 'textarea',
                         'default' => '',
                     ],
+                    [
+                        'name' => 'byttepris_shortcode',
+                        'label' => __('Beregn byttepris shortcode', 'car-ads'),
+                        'desc' => __('Skriv din Beregn byttepris shortcode her', 'car-ads'),
+                        'placeholder' => __('[contact-form-7 id=\'5066\' title=\'Beregn byttepris\']', 'car-ads'),
+                        'type' => 'textarea',
+                        'default' => '',
+                    ],
 
                 ]
             ];

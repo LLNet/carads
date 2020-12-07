@@ -49,10 +49,12 @@ jQuery(document).ready(function () {
         jQuery('.main-slider').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
-            arrows: false,
+            arrows: true,
             fade: true,
             dots: false,
-            asNavFor: '.thumb-slider'
+            asNavFor: '.thumb-slider',
+            nextArrow: '<button class="slick-next "><i class="fa fa-chevron-right"></i></button>',
+            prevArrow: '<button class="slick-prev "><i class="fa fa-chevron-left"></i></button>',
         });
         jQuery('.thumb-slider').slick({
             slidesToShow: 4,
@@ -152,7 +154,7 @@ jQuery(document).ready(function () {
 
     if (jQuery('#update-filters').length > 0) {
         jQuery(window).scroll(function () {
-            if (jQuery(window).scrollTop() >= 350) {
+            if (jQuery(window).scrollTop() >= 250) {
                 jQuery('#update-filters').addClass('fixed');
             } else {
                 jQuery('#update-filters').removeClass('fixed');

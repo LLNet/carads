@@ -10,12 +10,12 @@
         <?php
     }
     ?>
-
+    <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo $product->slug; ?>"
+       class="car--info__title">
     <figcaption class="car--info">
-        <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo $product->slug; ?>"
-           class="car--info__title">
+
             <?php echo $product->name; ?>
-        </a>
+
 
         <div class="car--info--content">
             <div class="car--info--content__specs">
@@ -23,7 +23,6 @@
                     <dt><?php _e('Kilometer', 'PLUGIN_NAME'); ?></dt>
                     <dd>
                         <?php
-
                         if ($connector->get_field($product->properties, 'Mileage') != '-') {
                             echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
                             echo " " . __("km.", 'PLUGIN_NAME');
@@ -136,4 +135,5 @@
         </div>
 
     </figcaption>
+    </a>
 </div>
