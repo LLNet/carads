@@ -25,35 +25,7 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
                 <i class="fa fa-calculator"></i> Beregn finansiering
             </button>
 
-            <div class="modal fade" id="modalSantander" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">
-                                Beregn finansiering
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="scbdkdealerexternalcalc"
-                                 partnerExternalDealerId="<?php echo $connector->getCustomField('santanderExternalPartnerId'); ?>"
-                                 publicApiKey=""
-                                 objectType="1"
-                                 make="<?php echo get_the_terms(get_the_ID(), 'car_brand')[0]->name; ?>"
-                                 model="<?php echo get_the_terms(get_the_ID(), 'car_model')[0]->name; ?>"
-                                 variant="<?php echo $connector->get_field($product->properties, 'ModelSeries'); ?>s"
-                                 mileage="<?php echo $connector->get_field($product->properties, 'Mileage'); ?>"
-                                 firstregistrationdate="<?php echo $connector->get_field($product->properties, 'RegistrationDate'); ?>"
-                                 objectPrice="<?php echo $product->pricing->{$currency}->price; ?>"
-                                 showaspricelabel="false">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
 
