@@ -19,7 +19,7 @@ if(!is_post_type_archive('bil')) {
 
             <label class="free-search-label" for="search">
                 <input type="text" name="search" id="search" value="<?php echo $_GET['search'] ?? ''; ?>"
-                       placeholder="Fritekst søgning. Eks: 'Audi A3'" class="free-search">
+                       placeholder="Fritekst søgning. Eks: 'Audi A3'" class="free-search" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
             </label>
 
             <div class="attributes">
