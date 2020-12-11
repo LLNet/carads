@@ -52,23 +52,41 @@ if (!empty($filters)) {
         }
 
         if (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) {
-            $prices = explode(",", $_GET['pricingMinMax']);
-            ?>
-            <a href="#" class="btn btn-light remove-filter"
-               data-target="<?php echo $_GET['pricingMinMax']; ?>">Pris mellem:
-                <?php echo number_format_i18n($prices[0]); ?> &mdash; <?php echo number_format_i18n($prices[1]); ?>
-                <i class="fa fa-times"></i></a>
-            <?php
+            // Make sure mileage has indeed been set, before sending to api.
+            $min = $connector->getMinMaxPrice()->aggregations->global->pricing->{$connector->getCurrency()}->min;
+            $max = $connector->getMinMaxPrice()->aggregations->global->pricing->{$connector->getCurrency()}->max;
+
+            $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
+
+            $prices = explode(",", $pricingMinMaxValue);
+            if ($min != $prices[0] || $max != $prices[1]) {
+
+                ?>
+                <a href="#" class="btn btn-light remove-filter"
+                   data-target="<?php echo $_GET['pricingMinMax']; ?>">Pris mellem:
+                    <?php echo number_format_i18n($prices[0]); ?> &mdash; <?php echo number_format_i18n($prices[1]); ?>
+                    <i class="fa fa-times"></i></a>
+                <?php
+            }
+
         }
 
         if (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) {
-            $prices = explode(",", $_GET['mileageMinMax']);
-            ?>
-            <a href="#" class="btn btn-light remove-filter"
-               data-target="<?php echo $_GET['mileageMinMax']; ?>">Kilometer mellem:
-                <?php echo number_format_i18n($prices[0]); ?> &mdash; <?php echo number_format_i18n($prices[1]); ?>
-                <i class="fa fa-times"></i></a>
-            <?php
+
+            $mileageMinMaxValues = $connector->getCustomFieldAggregation('mileage');
+            $mileageMinMaxValue  = (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) ? $_GET['mileageMinMax'] : '';
+
+            $sliderMileage = explode(",", $mileageMinMaxValue);
+            if ($mileageMinMaxValues->min != $sliderMileage[0] || $mileageMinMaxValues->max != $sliderMileage[1]) {
+
+                ?>
+                <a href="#" class="btn btn-light remove-filter"
+                   data-target="<?php echo $mileageMinMaxValue; ?>">Kilometer mellem:
+                    <?php echo number_format_i18n($sliderMileage[0]); ?>
+                    &mdash; <?php echo number_format_i18n($sliderMileage[1]); ?>
+                    <i class="fa fa-times"></i></a>
+                <?php
+            }
         }
 
         if (isset($_GET['search']) && !empty($_GET['search'])) {

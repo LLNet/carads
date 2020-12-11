@@ -156,7 +156,7 @@ class Connector
         ini_set('max_execution_time', 900);
         set_time_limit(900);
 
-        $offset  = "?size=50";
+        $offset = "?size=50";
 
         if (get_option('_carads_last_updated')) {
             $offset .= "&updated[gte]=" . urlencode(get_option('_carads_last_updated'));
@@ -377,17 +377,31 @@ class Connector
 
             // Min Max Pricing
             if (!empty($_GET['pricingMinMax'])) {
-                $values = explode(",", $_GET['pricingMinMax']);
+                // Make sure mileage has indeed been set, before sending to api.
+                $min = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->min;
+                $max = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->max;
 
-                $search .= '&pricingMin=' . $values[0];
-                $search .= '&pricingMax=' . $values[1];
+                $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
+
+                $values = explode(",", $pricingMinMaxValue);
+                if ($min != $values[0] || $max != $values[1]) {
+                    $search .= '&pricingMin=' . $values[0];
+                    $search .= '&pricingMax=' . $values[1];
+                }
             }
 
             if (!empty($_GET['mileageMinMax'])) {
-                $values = explode(",", $_GET['mileageMinMax']);
-                // customFields[mileage][gte]=10000&customFields[mileage][lte]=50000
-                $search .= '&customFields[mileage][gte]=' . $values[0];
-                $search .= '&customFields[mileage][lte]=' . $values[1];
+                // Make sure mileage has indeed been set, before sending to api.
+                $mileageMinMaxValues = $this->getCustomFieldAggregation('mileage');
+                $mileageMinMaxValue  = (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) ? $_GET['mileageMinMax'] : '';
+                $sliderMileage       = explode(",", $mileageMinMaxValue);
+
+                if ($mileageMinMaxValues->min != $sliderMileage[0] || $mileageMinMaxValues->max != $sliderMileage[1]) {
+
+                    // Syntax: customFields[mileage][gte]=10000&customFields[mileage][lte]=50000
+                    $search .= '&customFields[mileage][gte]=' . $sliderMileage[0];
+                    $search .= '&customFields[mileage][lte]=' . $sliderMileage[1];
+                }
             }
 
             // Sorting
@@ -422,9 +436,6 @@ class Connector
         if (isset($_GET['pricingMax']) && !empty($_GET['pricingMax']) && $_GET['pricingMax'] != '-1') {
             $filters['pricingMax'] = $_GET['pricingMax'];
         }
-        if (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) {
-            $filters['pricingMinMax'] = $_GET['pricingMinMax'];
-        }
         if (isset($_GET['brands']) && !empty($_GET['brands']) && $_GET['brands'][0] != '-1') {
             $filters['brands'] = $_GET['brands'];
         }
@@ -441,12 +452,19 @@ class Connector
         if (isset($_GET['search']) && !empty($_GET['search'])) {
             $filters['search'] = $_GET['search'];
         }
-        if (isset($_GET['sort_by']) && !empty($_GET['sort_by'])) {
-            $filters['sort_by'] = $_GET['sort_by'];
-        }
 
         return $filters;
 
+    }
+
+    public function getMinMaxPrice()
+    {
+        $products = $this->headless->get("/products?size=1");
+        if (isset($products->error)) {
+            throw new \Exception($products->items);
+        }
+
+        return $products;
     }
 
     /**
@@ -470,19 +488,44 @@ class Connector
         $params = array();
         parse_str($data, $params);
 
+
+        /* Pricing Min/Max */
         if (isset($params['pricingMinMax']) && !empty($params['pricingMinMax'])) {
-            $parts                = explode(",", $params['pricingMinMax']);
-            $params['pricingMin'] = $parts[0];
-            $params['pricingMax'] = $parts[1];
+            $min = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->min;
+            $max = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->max;
+
+            $pricingMinMaxValue = (isset($params['pricingMinMax']) && !empty($params['pricingMinMax'])) ? $params['pricingMinMax'] : '';
+
+            $values = explode(",", $pricingMinMaxValue);
+            if ($min != $values[0] || $max != $values[1]) {
+
+                $params['pricingMin'] = $values[0];
+                $params['pricingMax'] = $values[1];
+            }
+
             unset($params['pricingMinMax']);
         }
+
+        /* Milage Min/Max */
         if (isset($params['mileageMinMax']) && !empty($params['mileageMinMax'])) {
-            $parts                                = explode(",", $params['mileageMinMax']);
-            $params['customFields[mileage][gte]'] = $parts[0];
-            $params['customFields[mileage][lte]'] = $parts[1];
+
+            // Make sure mileage has indeed been set, before sending to api.
+            $mileageMinMaxValues = $this->getCustomFieldAggregation('mileage');
+            $mileageMinMaxValue  = (isset($params['mileageMinMax']) && !empty($params['mileageMinMax'])) ? $params['mileageMinMax'] : '';
+            $parts               = explode(",", $mileageMinMaxValue);
+
+            if ($mileageMinMaxValues->min != $parts[0] || $mileageMinMaxValues->max != $parts[1]) {
+
+                $params['customFields[mileage][gte]'] = $parts[0];
+                $params['customFields[mileage][lte]'] = $parts[1];
+
+            }
+
             unset($params['mileageMinMax']);
         }
         $search = "";
+
+
         foreach ($params as $key => $param) {
             if ("brands" == $key) {
                 foreach ($param as $slug) {
@@ -508,12 +551,12 @@ class Connector
         } else {
             print $products->summary->totalItems;
         }
-
         wp_die();
 
     }
 
-    public function availableFilters($products)
+    public
+    function availableFilters($products)
     {
         $availableFilters = [];
         foreach ($products->aggregations->filtered->brands as $key => $data) {
@@ -565,7 +608,8 @@ class Connector
      * @param $name
      * @return string
      */
-    public function get_field(&$properties, $name)
+    public
+    function get_field(&$properties, $name)
     {
 
         foreach ($properties as $key => $property) {
@@ -583,7 +627,8 @@ class Connector
      * @return array
      * @throws \Exception
      */
-    public function get_filter_options($name)
+    public
+    function get_filter_options($name)
     {
         $filter_options = [];
         foreach ($this->search()->aggregations->filtered->properties as $key => $groupItems) {
