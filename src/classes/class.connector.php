@@ -80,7 +80,7 @@ class Connector
         }
         // Setup Headless API object
         $headless = new \Indexed\Headless\Request($this->ck, $this->cs, $this->pt);
-//        $headless->useCache(true);
+        $headless->useCache(true);
         $headless->setUrl($this->api_endpoint);
         $this->headless = $headless;
 
@@ -435,6 +435,33 @@ class Connector
         }
         if (isset($_GET['pricingMax']) && !empty($_GET['pricingMax']) && $_GET['pricingMax'] != '-1') {
             $filters['pricingMax'] = $_GET['pricingMax'];
+        }
+        if (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax']) && $_GET['pricingMinMax'] != '-1') {
+
+            // Make sure mileage has indeed been set, before sending to api.
+            $min = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->min;
+            $max = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->max;
+
+            $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
+
+            $values = explode(",", $pricingMinMaxValue);
+            if ($min != $values[0] || $max != $values[1]) {
+                $filters['pricingMinMax'] = $_GET['pricingMinMax'];
+            }
+
+        }
+        if (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax']) && $_GET['mileageMinMax'] != '-1') {
+            // Make sure mileage has indeed been set, before sending to api.
+            $mileageMinMaxValues = $this->getCustomFieldAggregation('mileage');
+            $mileageMinMaxValue  = (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) ? $_GET['mileageMinMax'] : '';
+            $sliderMileage       = explode(",", $mileageMinMaxValue);
+
+            if ($mileageMinMaxValues->min != $sliderMileage[0] || $mileageMinMaxValues->max != $sliderMileage[1]) {
+
+                $filters['mileageMinMax'] = $_GET['mileageMinMax'];
+            }
+
+
         }
         if (isset($_GET['brands']) && !empty($_GET['brands']) && $_GET['brands'][0] != '-1') {
             $filters['brands'] = $_GET['brands'];

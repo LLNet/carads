@@ -109,20 +109,22 @@ if (!class_exists('CarAdsApp')) {
          */
         public function add_styles_and_scripts()
         {
-            wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
-            wp_enqueue_style('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", '', '');
-            wp_enqueue_script('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js", array('jquery'), '', true);
+
 
             if(is_single(get_the_ID()) && get_post_type(get_the_ID())) {
+                wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
                 wp_enqueue_style('car-santander', "//api.scb.nu/SCBDK.Dealer.ExternalCalc/v2/Content/scbdk.dealer.externalcalc.css", '', '');
                 wp_enqueue_script('car-santander', "//api.scb.nu/SCBDK.Dealer.ExternalCalc/v2/Scripts/scbdk.dealer.externalcalc.js", array('jquery'), '', true);
 
                 wp_enqueue_script('car-popper', "//cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js", array('jquery'), '', true);
                 wp_enqueue_style('car-bootstrap', "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css", '', '');
                 wp_enqueue_script('car-bootstrap', "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js", array('jquery'), '', true);
+                wp_enqueue_style('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", '', '');
+                wp_enqueue_script('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js", array('jquery'), '', true);
             }
 
             if(is_post_type_archive('bil')) {
+                wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
                 wp_enqueue_style('car-bootstrap', "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css", '', '');
                 wp_enqueue_script('car-bootstrap', "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js", array('jquery'), '', true);
                 wp_enqueue_style('car-slider', "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css", '', '');
@@ -131,6 +133,7 @@ if (!class_exists('CarAdsApp')) {
                 wp_enqueue_script('car-multiselect', "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js", array('jquery'), '', true);
 
             }
+
 
             wp_enqueue_style('car', plugin_dir_url( __FILE__ ) . "assets/css/app.css", '', '');
             wp_enqueue_script('car', plugin_dir_url( __FILE__ ) . "assets/js/app.js", array('jquery'), '', true);

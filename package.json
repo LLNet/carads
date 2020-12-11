@@ -1,6 +1,6 @@
 {
   "name": "car-app",
-  "version": "0.1.18",
+  "version": "0.1.22",
   "description": "Integration mellem WordPress og CarAds.io",
   "title": "Car Ads Integration",
   "main": "index.js",
