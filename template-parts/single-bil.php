@@ -385,7 +385,7 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
                          variant="<?php echo $connector->get_field($product->properties, 'ModelSeries'); ?>s"
                          mileage="<?php echo $connector->get_field($product->properties, 'Mileage'); ?>"
                          firstregistrationdate="<?php echo $connector->get_field($product->properties, 'RegistrationDate'); ?>"
-                         objectPrice="<?php echo $product->pricing->{$currency}->price; ?>"
+                         objectPrice="<?php echo $product->pricing->{$connector->getCurrency()}->price; ?>"
                          showaspricelabel="false">
                     </div>
                 </div>
