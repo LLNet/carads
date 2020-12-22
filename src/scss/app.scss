@@ -1,6 +1,8 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 @import "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
-
-
 
 
 .button-car--back {
@@ -29,42 +31,153 @@ body.admin-bar {
 
 }
 
+//
+//@import "archive.scss";
+//@import "single.scss";
+//@import "filter.scss";
+//
+//.single-bil,
+//.car-col-12 {
+//  .container {
+//    @media only screen and (max-width: 767px) {
+//      padding-left: 15px !important;
+//      padding-right: 15px !important;
+//      max-width: calc(100% - 30px) !important;
+//    }
+//
+//    @media all and (max-width: 667px) {
+//        padding: 0 !important;
+//    }
+//  }
+//  hr {
+//    margin-top: 1rem;
+//    margin-bottom: 1rem;
+//    border: 0;
+//    border-top: 1px solid #eeeeee;
+//  }
+//}
 
-@import "archive.scss";
-@import "single.scss";
-@import "filter.scss";
 
-.single-bil,
-.car-col-12 {
-  .container {
-    @media only screen and (max-width: 767px) {
-      padding-left: 15px !important;
-      padding-right: 15px !important;
-      max-width: calc(100% - 30px) !important;
+//
+///** Specific for Maulbiler */
+//#Top_bar {
+//  .top_bar_left {
+//    width: 100%;
+//    display: flex;
+//  }
+//
+//  .menu > li > a span:not(.description) {
+//    padding: 0 10px !important;
+//  }
+//}
+
+
+/* Filters */
+
+span.multiselect-native-select .btn-group {
+  @apply ca-w-full ca-relative;
+}
+
+button.multiselect.dropdown-toggle {
+  @apply ca-h-14 ca-py-0 ca-px-4 ca-bg-white ca-rounded ca-text-text ca-flex ca-items-center ca-transition ca-duration-300 ca-ease-in-out;
+
+  &:hover {
+    @apply ca-bg-lightgrey;
+  }
+
+  span.multiselect-selected-text {
+    @apply ca-relative ca-w-full;
+    &:before {
+      @apply ca-flex ca-absolute ca-right-0 ca-h-8 ca-w-8 ca-top-0 ca-items-center ca-justify-center;
+      content: "\f078";
+      font-family: "FontAwesome";
     }
 
-    @media all and (max-width: 667px) {
-        padding: 0 !important;
+  }
+}
+
+.multiselect-container.dropdown-menu {
+  @apply ca-hidden ca-absolute ca-bg-white ca-shadow ca-z-10 ca-p-2 ca-grid-cols-2 ca-w-full;
+
+  &.active {
+    @apply ca-grid;
+  }
+
+  /** Buttons within dropdown */
+  button.dropdown-item {
+    @apply ca-flex ca-items-center ca-justify-start ca-h-8 ca-text-left ca-p-1 ca-text-sm;
+
+    &:hover {
+      @apply ca-bg-primary ca-text-white
     }
   }
-  hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid #eeeeee;
+}
+
+select.multiselect {
+  @apply ca-hidden;
+}
+
+/* Sliders */
+.slider {
+  &.slider-horizontal {
+    @apply ca-w-full;
+    .slider-track {
+      .slider-selection {
+        background-image: linear-gradient(to bottom, #00b4ef, #00b4ef);
+      }
+    }
+
+  }
+
+}
+
+/* Free text search */
+label.free-search-label {
+  &:after {
+    @apply ca-flex ca-h-10 ca-w-10 ca-items-center ca-justify-center ca-right-0 ca-top-0 ca-absolute text-primary;
+    content: "\f002";
+    font-family: "FontAwesome";
   }
 }
 
 
+/**
+Single car
+ */
 
-/** Specific for Maulbiler */
-#Top_bar {
-  .top_bar_left {
-    width: 100%;
-    display: flex;
-  }
 
-  .menu > li > a span:not(.description) {
-    padding: 0 10px !important;
+// Santander
+ul.santander {
+  @apply ca-mb-4 ca-list-none;
+
+  li {
+    &:before {
+      content: '\f058';
+      font-family: "FontAwesome";
+      @apply ca-text-white ca-mr-2;
+    }
   }
 }
+
+// Slider
+.thumb-slider {
+  // Thumb slider arrows
+  .slick-prev,
+  .slick-next {
+    @media all and (max-width: 1023px) {
+      display: none !important;
+    }
+  }
+
+  // Thumbnail slider items have to have space between them
+  /* the slides */
+  .slick-slide {
+    margin: 0 8px;
+  }
+  /* the parent */
+  .slick-list {
+    margin: 0 -8px;
+  }
+
+}
+

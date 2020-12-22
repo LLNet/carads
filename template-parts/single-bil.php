@@ -10,67 +10,76 @@ $product   = $connector->get_single($post->post_name);
 $currency  = $connector->getCurrency();
 ?>
     <div class="outer-wrapper">
-        <div class="single-bil--header sticky">
-            <div class="container">
-                <div class="header--left">
-                    <h3 class="name car_name"><?php echo $product->name; ?></h3>
-                    <p class="price">
-                        <?php
-                        echo __('Kontantpris', 'PLUGIN_NAME') . " " . number_format_i18n($product->pricing->{$currency}->price, 0);
-                        echo " " . $currency;
-                        ?>
-                    </p>
+        <div class="single-bil--header ca-bg-secondary ca-sticky ca-top-0 ca-z-30">
+            <div class="ca-container lg:ca-flex">
+                <div class="header--left ca-p-2 lg:ca-w-1/2 lg:ca-flex lg:ca-flex-col lg:ca-justify-center">
+                    <div>
+                        <h3 class="name car_name ca-text-2xl ca-font-bold ca-leading-5 ca-overflow-ellipsis ca-overflow-hidden"><?php echo $product->name; ?></h3>
+                        <p class="price ca-text-sm">
+                            <?php
+                            echo __('Kontantpris', 'car-ads') . " " . number_format_i18n($product->pricing->{$currency}->price, 0);
+                            echo " " . $currency;
+                            ?>
+                        </p>
+                    </div>
                 </div>
-                <div class="header--right cta">
-                    <div class="desktop">
-                        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalByttepris">
+                <div class="header--right ca-p-2 lg:ca-w-1/2">
+                    <div class="ca-hidden md:ca-grid md:ca-grid-cols-3 ca-gap-2">
+                        <a href="#"
+                           class="ca-col-span-1 ca-bg-primary ca-rounded ca-h-10 lg:ca-h-14 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
+                           data-target="modalByttepris">
                             <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-ads'); ?>
                         </a>
-                        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalBestil">
+                        <a href="#"
+                           class="ca-col-span-1 ca-bg-primary ca-rounded ca-h-10 lg:ca-h-14 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
+                           data-target="modalBestil">
                             <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-ads'); ?>
                         </a>
                         <?php
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
                             ?>
-                            <a href="#" class="btn btn-primary btn-block js-phone-switch"
+                            <a href="#"
+                               class="ca-col-span-1 ca-bg-primary ca-rounded ca-h-10 lg:ca-h-14 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
                                data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
-                                <span class="text-cta"><i
-                                            class="fa fa-fw fa-phone"></i> <?php echo __('Ring til os', 'car-ads'); ?></span>
-                                <span class="text-value"><i
+                                <span class="text-cta ca-block" id="cta_before"><i
+                                            class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-ads'); ?></span>
+                                <span class="text-value ca-hidden" id="cta_after"><i
                                             class="fa fa-fw fa-phone"></i> Tlf <?php echo get_option('car-ads-single-car')['phonenumber']; ?></span>
                             </a>
                             <?php
                         }
                         ?>
                     </div>
-                    <div class="mobile">
-                        <div>
-                            <a href="#" class="btn btn-primary btn-block" data-toggle="modal"
-                               data-target="#modalByttepris">
+                    <div class="ca-flex ca-justify-between md:ca-hidden">
+                        <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
+                            <a href="#"
+                               class="ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+                               data-target="modalByttepris">
                                 <i class="fa fa-fw fa-calculator"></i>
                             </a>
-                            <span><?php echo __('Beregn byttepris', 'car-ads'); ?></span>
+                            <span class="ca-text-primary ca-font-bold"><?php echo __('Beregn byttepris', 'car-ads'); ?></span>
                         </div>
                         <?php
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
                             ?>
-                            <div>
-                                <a href="#" class="btn btn-primary btn-block" data-toggle="modal"
-                                   data-target="#modalBestil">
+                            <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
+                                <a href="#"
+                                   class="ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+                                   data-target="modalBestil">
                                     <i class="fa fa-fw fa-car"></i>
                                 </a>
-                                <span><?php echo __('Bestil prøvetur', 'car-ads'); ?></span>
+                                <span class="ca-text-primary ca-font-bold"><?php echo __('Bestil prøvetur', 'car-ads'); ?></span>
                             </div>
                             <?php
                         }
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
                             ?>
-                            <div>
+                            <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>"
-                                   class="btn btn-primary btn-block">
+                                   class="ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white ">
                                     <i class="fa fa-fw fa-phone"></i>
                                 </a>
-                                <span><?php echo __('Ring til os', 'car-ads'); ?></span>
+                                <span class="ca-text-primary ca-font-bold"><?php echo __('Ring til os', 'car-ads'); ?></span>
                             </div>
                             <?php
                         }
@@ -80,16 +89,16 @@ $currency  = $connector->getCurrency();
             </div>
         </div>
 
-        <div class="container">
-            <div class="single-bil--content">
+        <div class="ca-container">
+            <div class="ca-block lg:ca-grid lg:ca-grid-cols-6 ca-gap-4">
 
-                <div class="content--col-1">
+                <div class="content--col-1 ca-col-span-4 ca-overflow-x-hidden">
                     <?php
                     if (function_exists('yoast_breadcrumb')) {
                         yoast_breadcrumb('<p id="breadcrumbs">', '</p>');
                     }
                     ?>
-                    <div class="main-slider">
+                    <div class="main-slider ca-relative ca-min-h-64 ca-mt-4">
                         <img src="<?php echo $product->image->sizes->i1024x768 ?>">
                         <?php
                         if (property_exists($product, 'images')) {
@@ -101,12 +110,20 @@ $currency  = $connector->getCurrency();
                         }
                         ?>
                     </div>
-                    <div class="pagingInfo">
-                        <?php
-                        echo "1/" . (count($product->images) + 1);
-                        ?>
+                    <div class="ca-h-14 ca-my-4 ca-text-primary ca-font-bold ca-text-center ca-flex ca-items-center ca-justify-between">
+                        <button class="main-slider-prev slick-prev slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full
+                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary"><i
+                                    class="fa fa-chevron-left"></i></button>
+                        <div class="pagingInfo">
+                            <?php
+                            echo "1/" . (count($product->images) + 1);
+                            ?>
+                        </div>
+                        <button class="main-slider-next slick-next slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full
+                        ca-flex ca-items-center  ca-justify-center ca-text-primary  ca-transform focus:ca-bg-primary"><i
+                                    class="fa fa-chevron-right"></i></button>
                     </div>
-                    <div class="thumb-slider">
+                    <div class="thumb-slider ca-mb-4">
                         <img src="<?php echo $product->image->sizes->i1024x768 ?>">
                         <?php
                         if (property_exists($product, 'images')) {
@@ -117,53 +134,69 @@ $currency  = $connector->getCurrency();
                             }
                         }
                         ?>
-                    </div>
 
-                    <div class="mobile">
+                    </div>
+                    <!--                    <div class="ca-z-50 ca-relative ca-transform ca-transition ca-justify-between ca-items-center ca-ease-in-out-->
+                    <!--                    ca-duration-300 ca-opacity-0 lg:ca-opacity-100 ca--translate-y-20 pointer-events-none lg:ca-hidden">-->
+                    <!--                        <button id="thumb-prev"-->
+                    <!--                                class="slick-prev slick-arrow ca-absolute ca-top-0 ca-left-0 ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border-->
+                    <!--                                ca-border-primary ca-rounded-full ca-flex-->
+                    <!--                                ca-items-center ca-justify-center ca-text-primary ca-translate ca-transform lg:ca--translate-y-1 xl:ca--translate-y-3 focus:ca-bg-primary lg:ca-flex">-->
+                    <!--                            <i class="fa fa-chevron-left"></i></button>-->
+                    <!--                        <button id="thumb-next"-->
+                    <!--                                class="slick-next slick-arrow ca-absolute ca-top-0 ca-right-0 ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border-->
+                    <!--                                ca-border-primary ca-rounded-full ca-flex-->
+                    <!--                                ca-items-center ca-justify-center ca-text-primary ca-translate ca-transform lg:ca--translate-y-1 xl:ca--translate-y-3 focus:ca-bg-primary lg:ca-flex">-->
+                    <!--                            <i class="fa fa-chevron-right"></i></button>-->
+                    <!--                    </div>-->
+
+                    <div class="ca-block">
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
-                    <div class="mobile">
+                    <div class="ca-block">
                         <?php include("components/single-car-santander.php"); ?>
                     </div>
 
-                    <div class="accordion" id="Accordion">
-                        <div>
-                            <div class="card-header" id="Beskrivelse" data-toggle="collapse" data-target="#beskrivelse"
-                                 aria-expanded="false" aria-controls="beskrivelse">
+                    <div class="accordion" x-data="{selected:1}">
+                        <div class="ca-mb-4">
+                            <div class="ca-bg-gray-600 ca-rounded-t ca-py-2 ca-px-4 ca-text-xl ca-text-white ca-font-bold ca-flex ca-justify-between ca-items-center"
+                                 id="Beskrivelse" @click="selected !== 1 ? selected = 1 : selected = null">
                                 <span><?php echo __('Beskrivelse', 'car-ads'); ?></span>
-                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-down" x-show="selected != 1"></i>
+                                <i class="fa fa-chevron-up" x-show="selected == 1"></i>
                             </div>
-                            <div id="beskrivelse" class="card collapse show" aria-labelledby="Beskrivelse"
-                                 data-parent="#Accordion">
+                            <div class="ca-bg-white ca-border-solid ca-border ca-border-l ca-border-r ca-border-b ca-border-lightgrey ca-p-4 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700"
+                                 x-show="selected == 1">
                                 <?php echo $product->description; ?>
                             </div>
                         </div>
 
-                        <div>
-                            <div class="card-header" id="specifications" data-toggle="collapse"
-                                 data-target="#Specifikationer" aria-expanded="false" aria-controls="Specifikationer">
+                        <div class="ca-mb-4">
+                            <div class="ca-bg-gray-600 ca-rounded-t ca-py-2 ca-px-4 ca-text-xl ca-text-white ca-font-bold ca-flex ca-justify-between ca-items-center"
+                                 id="specifications" @click="selected !== 2 ? selected = 2 : selected = null">
                                 <span><?php echo __('Specifikationer', 'car-ads'); ?></span>
-                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-down" x-show="selected != 2"></i>
+                                <i class="fa fa-chevron-up" x-show="selected == 2"></i>
                             </div>
-                            <div id="Specifikationer" class="card collapse" aria-labelledby="specifications"
-                                 data-parent="#Accordion">
+                            <div class="ca-bg-white ca-border-solid ca-border ca-border-l ca-border-r ca-border-b ca-border-lightgrey ca-p-4 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700"
+                                 x-show="selected == 2">
                                 <?php include("components/single-car-specifications.php"); ?>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <div class="content--col-2">
-                    <div class="desktop">
+                <div class="content--col-2 ca-col-span-2">
+                    <div class="ca-hidden lg:ca-flex lg:ca-mt-4">
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
-                    <div class="desktop car-order-1">
+                    <div class="ca-hidden lg:ca-flex car-order-1">
                         <?php include("components/single-car-santander.php"); ?>
                     </div>
                     <?php
                     if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['contactform_shortcode'])) {
                         ?>
-                        <div class="card">
+                        <div class="ca-bg-white ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
                             <?php echo do_shortcode(get_option('car-ads-single-car')['contactform_shortcode']); ?>
                         </div>
                         <?php
@@ -175,219 +208,87 @@ $currency  = $connector->getCurrency();
             </div>
         </div>
 
-        <div class="single-bil--content car d-none">
-            <div class="car-row no-gutters">
-                <aside class="car-col-6">
-                    <article class="gallery-wrap">
-                        <div class="img-big-wrap">
-                            <div>
-                                <?php
-                                if (property_exists($product, 'image')) {
-                                    ?>
-                                    <img id="image" src="<?php echo $product->image->sizes->i1024x768 ?>">
-                                    <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        <div class="thumbs-wrap">
-                            <?php
-                            if (property_exists($product, 'images')) {
-                                foreach ($product->images as $key => $image) {
-                                    ?>
-                                    <a href="!#" class="item-thumb" style="object-fit: contain">
-                                        <img src="<?php echo $image->sizes->i150x150 ?>"
-                                             onclick="jQuery('#image').attr('src', jQuery(this).data('src'));return false;"
-                                             data-src="<?php echo $image->sizes->i1024x768 ?>">
-                                    </a>
-                                    <?php
-                                }
-                            }
-                            ?>
-
-                        </div> <!-- slider-nav.// -->
-                    </article> <!-- gallery-wrap .end// -->
-                </aside>
-                <main class="car-col-6 border-left">
-                    <article class="content-body">
-
-                        <h1 class="title" id="title"><?php echo $product->name; ?></h1>
-
-                        <div class="mb-3">
-                            <var class="price h4" id="price">
-                                <?php
-                                $currency = get_option('car-ads')['currency'];
-                                echo number_format_i18n($product->pricing->$currency->price, 2);
-                                ?>
-                            </var>
-                        </div> <!-- price-detail-wrap .// -->
-
-                        <div>
-                            <a class="badge badge-info badge-pill"
-                               href="/biler/<?php echo $product->brand->slug; ?>">
-                                <?php echo $product->brand->name; ?>
-                            </a>
-                            <a class="badge badge-info badge-pill"
-                               href="/biler/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>">
-                                <?php echo $product->category->name; ?>
-                            </a>
-                        </div>
-
-                        <p id="snippet">
-                            <?php echo $product->snippet; ?>
-                        </p>
-
-                        <p id="description">
-                            <?php echo $product->description; ?>
-                        </p>
-                    </article> <!-- product-info-aside .// -->
-                </main> <!-- col.// -->
-            </div>
-            <div class="row">
-                <div class="col">
-
-                    <?php
-                    $groups = [
-                        'specifications' => 'Specifications',
-                        'equipent'       => 'Equipment',
-                        'leasing'        => 'Leasing',
-                        'pricing'        => 'Pricing',
-                        'dealer_pricing' => 'Dealer pricing',
-                        'tax'            => 'Tax',
-                    ];
-                    ?>
-
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <?php
-                        $active = true;
-                        foreach ($groups as $key => $group) {
-                            ?>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link <?php echo $active == true ? 'active' : ''; ?>"
-                                   id="<?php echo $key; ?>-tab" data-toggle="tab" href="#<?php echo $key; ?>"
-                                   role="tab" aria-controls="<?php echo $key; ?>"
-                                   aria-selected="true"><?php echo __($group, 'car-ads'); ?></a>
-                            </li>
-                            <?php
-                            $active = false;
-                        }
-                        ?>
-                    </ul>
-                    <div class="tab-content" id="myTabContent" style="padding:30px;">
-
-                        <?php
-                        $active = true;
-                        foreach ($groups as $key => $group) {
-                            ?>
-                            <div class="tab-pane fade show <?php echo $active == true ? 'active' : ''; ?>"
-                                 id="<?php echo $key; ?>" role="tabpanel"
-                                 aria-labelledby="<?php echo $key; ?>-tab">
-                                <dl class="row">
-                                    <?php
-                                    if (property_exists($product, 'properties')) {
-
-                                        foreach ($product->properties as $property_key => $property) {
-                                            if ($property->private == false and $property->group == $group) {
-                                                ?>
-                                                <dt class="col-sm-4"><?php echo __($property->name, 'car-ads'); ?></dt>
-                                                <dd class="col-sm-8"><?php echo $property->value; ?></dd>
-                                                <?php
-                                            }
-                                        }
-
-                                    }
-                                    ?>
-
-                                </dl>
-                            </div>
-                            <?php
-                            $active = false;
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
 
-    <div class="modal fade" id="modalByttepris" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"><?php echo __('Byttepris', 'car-ads'); ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <?php
-                    if (get_option('car-ads-single-car')['byttepris_shortcode']) {
-                        echo do_shortcode(get_option('car-ads-single-car')['byttepris_shortcode']);
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
+
 <?php
+/**
+ * Byttepris Modal
+ */
+?>
+    <div id="modalByttepris"
+         class="modal ca-h-screen ca-w-full ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
+        <!-- modal -->
+        <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-full">
+            <!-- modal header -->
+            <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
+                <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Byttepris', 'car-ads'); ?></h3>
+                <button class="ca-text-black close-modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- modal body -->
+            <div class="ca-p-3">
+                <?php
+                if (get_option('car-ads-single-car')['byttepris_shortcode']) {
+                    echo do_shortcode(get_option('car-ads-single-car')['byttepris_shortcode']);
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+
+<?php
+/**
+ * Bestil prøvetur modal
+ */
 if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
     ?>
-    <div class="modal fade" id="modalBestil" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"
-                        id="exampleModalLongTitle"><?php echo __('Bestil prøvetur', 'car-ads'); ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <?php
-                    if(get_option('car-ads-single-car')['testdrive_shortcode']) {
-                        echo do_shortcode(get_option('car-ads-single-car')['testdrive_shortcode']);
-                    }
-                    ?>
-                </div>
+    <div id="modalBestil"
+         class="modal ca-h-screen ca-w-full ca-transition ca-duration-300 ca-ease-in-out ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
+        <!-- modal -->
+        <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-xl ca-w-full ca-transition ca-duration-300 ca-ease-in-out">
+            <!-- modal header -->
+            <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
+                <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Bestil prøvetur', 'car-ads'); ?></h3>
+                <button class="ca-text-black close-modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- modal body -->
+            <div class="ca-p-3">
+                <?php
+                if (get_option('car-ads-single-car')['testdrive_shortcode']) {
+                    echo do_shortcode(get_option('car-ads-single-car')['testdrive_shortcode']);
+                }
+                ?>
             </div>
         </div>
     </div>
-
     <?php
 }
-?>
-<?php
 // Only show santander is car has a santanderPaymentPerMonth value
 if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') != '-' && $connector->get_field($product->customFields, 'santanderPaymentPerMonth') >= 0) {
     ?>
-    <div class="modal fade" id="modalSantander" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">
-                        Beregn finansiering
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="scbdkdealerexternalcalc"
-                         partnerExternalDealerId="<?php echo $connector->getCustomField('santanderExternalPartnerId'); ?>"
-                         publicApiKey=""
-                         objectType="1"
-                         make="<?php echo get_the_terms(get_the_ID(), 'car_brand')[0]->name; ?>"
-                         model="<?php echo get_the_terms(get_the_ID(), 'car_model')[0]->name; ?>"
-                         variant="<?php echo $connector->get_field($product->properties, 'ModelSeries'); ?>s"
-                         mileage="<?php echo $connector->get_field($product->properties, 'Mileage'); ?>"
-                         firstregistrationdate="<?php echo $connector->get_field($product->properties, 'RegistrationDate'); ?>"
-                         objectPrice="<?php echo $product->pricing->{$connector->getCurrency()}->price; ?>"
-                         showaspricelabel="false">
-                    </div>
+    <div id="modalSantander"
+         class="modal ca-h-screen ca-w-full ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
+        <!-- modal -->
+        <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-full">
+            <!-- modal header -->
+            <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
+                <h3 class="ca-font-semibold ca-text-lg"><?php echo __(' Beregn finansiering', 'car-ads'); ?></h3>
+                <button class="ca-text-black close-modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- modal body -->
+            <div class="ca-p-3">
+                <div id="scbdkdealerexternalcalc"
+                     partnerExternalDealerId="<?php echo $connector->getCustomField('santanderExternalPartnerId'); ?>"
+                     publicApiKey=""
+                     objectType="1"
+                     make="<?php echo get_the_terms(get_the_ID(), 'car_brand')[0]->name; ?>"
+                     model="<?php echo get_the_terms(get_the_ID(), 'car_model')[0]->name; ?>"
+                     variant="<?php echo $connector->get_field($product->properties, 'ModelSeries'); ?>s"
+                     mileage="<?php echo $connector->get_field($product->properties, 'Mileage'); ?>"
+                     firstregistrationdate="<?php echo $connector->get_field($product->properties, 'RegistrationDate'); ?>"
+                     objectPrice="<?php echo $product->pricing->{$connector->getCurrency()}->price; ?>"
+                     showaspricelabel="false">
                 </div>
             </div>
         </div>
@@ -395,11 +296,29 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
     <?php
 }
 ?>
-
 
     <script>
         jQuery(function ($) {
 
+            /**
+             Modals
+             */
+            jQuery('.show-modal').on('click', function (e) {
+                e.preventDefault();
+                let target = jQuery(this).data('target');
+                jQuery('#' + target).removeClass('ca-hidden');
+            });
+
+            jQuery('.close-modal').on('click', function (e) {
+                e.preventDefault();
+                jQuery(this).closest('.modal').addClass('ca-hidden');
+            });
+
+
+            /**
+             * TODO: Make sure car name is being more dynamic filled
+             * Contactform 7 stuff
+             */
             let car_name = jQuery('.car_name').text();
             jQuery('[name="text-601"]').val(car_name);
 
@@ -415,13 +334,14 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
 
             jQuery('.js-phone-switch').on('click', function (e) {
                 e.preventDefault();
-                if (jQuery(this).hasClass('active')) {
+                if (jQuery(this).find('#cta_after').hasClass('ca-block')) {
 
                     window.location.href = jQuery(this).data('href');
                     return false;
 
                 } else {
-                    jQuery(this).addClass('active');
+                    jQuery(this).find('#cta_before').removeClass('ca-block').addClass('ca-hidden');
+                    jQuery(this).find('#cta_after').removeClass('ca-hidden').addClass('ca-block');
                 }
             });
 

@@ -3,8 +3,8 @@ if(!is_post_type_archive('bil')) {
     return false;
 }
 ?>
-<div class="update-filters" id="update-filters">
-    <div class="container">
+<div class="update-filters ca-bg-primary ca-z-20 ca-h-14 ca-py-0 ca-px-4 ca-flex ca-fixed ca-top-0 ca-left-0 ca-w-full ca-items-center ca-justify-center ca-text-white ca-font-bold" id="update-filters">
+    <div class="ca-container ca-mx-auto">
         <a href="#top" class="toggle-filters"><i class="fa fa-sliders"></i> Opdater søgning</a>
     </div>
 </div>
@@ -14,15 +14,16 @@ if(!is_post_type_archive('bil')) {
 //    print "</pre>";
 
 ?>
-<div class="car-filters" id="car-filters">
-    <div class="container">
+<div class="car-filters ca-bg-secondary ca-p-4 md:ca-p-8" id="car-filters">
+    <div class="ca-container ca-mx-auto">
 
-            <label class="free-search-label" for="search">
+            <label class="free-search-label ca-w-full" for="search">
                 <input type="text" name="search" id="search" value="<?php echo $_GET['search'] ?? ''; ?>"
-                       placeholder="Fritekst søgning. Eks: 'Audi A3'" class="free-search" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
+                       placeholder="Fritekst søgning. Eks: 'Audi A3'" class="free-search ca-w-full ca-mb-4 ca-py-0 ca-px-4 ca-h-14 ca-border-0 ca-rounded " onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }"
+               >
             </label>
 
-            <div class="attributes">
+            <div class="attributes ca-grid ca-grid-cols-1 sm:ca-grid-cols-2 md:ca-grid-cols-3 lg:ca-grid-cols-4 ca-gap-4">
                 <label for="brands">
                     <select id="brands" name="brands[]" class="multiselect" multiple="multiple">
                         <?php
@@ -133,8 +134,7 @@ if(!is_post_type_archive('bil')) {
                         ?>
                     </select>
                 </label>
-
-                <label>
+                <label for="geartype">
                     <select name="properties[]" id="geartype" class="multiselect" multiple="multiple">
 
                         <?php
@@ -189,7 +189,7 @@ if(!is_post_type_archive('bil')) {
                 </label>
                 */
                 ?>
-                <div class="pricing-container">
+                <div class="ca-bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4">
                     <?php
                     $min = $products->aggregations->global->pricing->DKK->min;
                     $max = $products->aggregations->global->pricing->DKK->max;
@@ -197,10 +197,10 @@ if(!is_post_type_archive('bil')) {
                     $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
                     $sliderValue = explode(",", $pricingMinMaxValue);
                     ?>
-                    <div style="display:flex; justify-content: space-between;">
-                        <span id="apricingMin"><?php echo number_format_i18n(($sliderValue[0]) ? $sliderValue[0] : $min); ?></span>
-                        <span>Pris</span>
-                        <span id="apricingMax"><?php echo number_format_i18n(($sliderValue[1]) ? $sliderValue[1] : $max); ?></span>
+                    <div class="ca-flex ca-justify-between ca-text-sm">
+                        <span class="ca-w-1/3 ca-text-left" id="apricingMin"><?php echo number_format_i18n(($sliderValue[0]) ? $sliderValue[0] : $min); ?></span>
+                        <span class="ca-w-1/3 ca-text-center">Pris</span>
+                        <span class="ca-w-1/3 ca-text-right" id="apricingMax"><?php echo number_format_i18n(($sliderValue[1]) ? $sliderValue[1] : $max); ?></span>
                     </div>
                     <div class="slider-container">
                         <input id="pricingMinMax"
@@ -229,17 +229,17 @@ if(!is_post_type_archive('bil')) {
                 </div>
 
 
-                <div class="pricing-container mileage-container">
+                <div class="ca-bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4 mileage-container">
                     <?php
                     $mileageMinMaxValues = $connector->getCustomFieldAggregation('mileage');
 
                     $mileageMinMaxValue = (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) ? $_GET['mileageMinMax'] : '';
                     $sliderMileage = explode(",", $mileageMinMaxValue);
                     ?>
-                    <div style="display:flex; justify-content: space-between;">
-                        <span id="amileageMin"><?php echo number_format_i18n(($sliderMileage[0]) ? $sliderMileage[0] : $mileageMinMaxValues->min); ?></span>
-                        <span>Kilometer</span>
-                        <span id="amileageMax"><?php echo number_format_i18n(($sliderMileage[1]) ? $sliderMileage[1] : $mileageMinMaxValues->max); ?></span>
+                    <div class="ca-flex ca-justify-between ca-text-sm">
+                        <span class="ca-w-1/3 ca-text-left" id="amileageMin"><?php echo number_format_i18n(($sliderMileage[0]) ? $sliderMileage[0] : $mileageMinMaxValues->min); ?></span>
+                        <span class="ca-w-1/3 ca-text-center">Kilometer</span>
+                        <span class="ca-w-1/3 ca-text-right" id="amileageMax"><?php echo number_format_i18n(($sliderMileage[1]) ? $sliderMileage[1] : $mileageMinMaxValues->max); ?></span>
                     </div>
                     <div class="slider-container">
                         <input id="mileageMinMax"
@@ -276,7 +276,7 @@ if(!is_post_type_archive('bil')) {
                     $buttonText = "Søg";
                 }
                 ?>
-                <button type="submit" class="filter"><?php echo $buttonText; ?></button>
+                <button type="submit" class="filter ca-bg-primary ca-h-14 ca-text-white ca-font-bold ca-transition ca-duration-300 ca-ease-in-out hover:ca-bg-primary-dark"><?php echo $buttonText; ?></button>
 
             </div>
 
@@ -286,8 +286,8 @@ if(!is_post_type_archive('bil')) {
 
 </div>
 
-<div class="car-active-filters">
-    <div class="container">
+<div class="car-active-filters ca-bg-secondary  ca-p-4 md:ca-p-8 ca-mb-8">
+    <div class="ca-container ca-mx-auto">
         <?php include("activeFilters.php"); ?>
     </div>
 </div>
