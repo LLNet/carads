@@ -150,7 +150,7 @@ $currency  = $connector->getCurrency();
                     <!--                            <i class="fa fa-chevron-right"></i></button>-->
                     <!--                    </div>-->
 
-                    <div class="ca-block">
+                    <div class="ca-block lg:ca-hidden">
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
                     <div class="ca-block">
