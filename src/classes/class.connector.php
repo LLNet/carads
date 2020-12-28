@@ -257,7 +257,7 @@ class Connector
         try {
             $page = wp_insert_post([
                 'post_type'         => $this->post_type,
-                'post_title'        => $product->name,
+                'post_title'        => $product->slug . "-" . $this->get_field($product->properties, 'Id'),
                 'post_name'         => $product->slug,
                 'post_modified'     => $product->updated,
                 'post_modified_gmt' => $product->updated,
@@ -288,7 +288,7 @@ class Connector
         try {
             $updated = wp_update_post([
                 'ID'         => $post_id,
-                'post_name'  => $data->slug,
+                'post_name'  => $data->slug . "-" . $this->get_field($data->properties, 'Id'),
                 'post_title' => $data->name,
                 'meta_input' => [
                     'carads_id' => $data->id
