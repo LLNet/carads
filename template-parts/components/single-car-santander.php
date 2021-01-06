@@ -21,7 +21,7 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
                     <li>Ingen gebyr ved indfrielse af lån</li>
                 </ul>
             </div>
-            <button class="ca-bg-white ca-text-santander ca-font-bold ca-rounded ca-p-2 ca-mt-2" data-toggle="modal" data-target="#modalSantander">
+            <button class="ca-bg-white ca-text-santander ca-font-bold ca-rounded ca-p-2 ca-mt-2 show-modal" data-target="modalSantander">
                 <i class="fa fa-calculator"></i> Beregn finansiering
             </button>
 

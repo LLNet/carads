@@ -79,29 +79,34 @@ class Connector
             $this->pt = get_option('car-ads')['public_token'];
         }
         // Setup Headless API object
-        $headless = new \Indexed\Headless\Request($this->ck, $this->cs, $this->pt);
+        $headless = new Request($this->ck, $this->cs, $this->pt);
         $headless->useCache(true);
         $headless->setUrl($this->api_endpoint);
         $this->headless = $headless;
 
         // Add actions on cronjob action
         add_action('car-ads', [$this, 'synchronize']);
-        add_action('car-ads', [$this, 'clean_up_non_existing_cars']);
+        //add_action('car-ads', [$this, 'clean_up_non_existing_cars']);
 
 
         if ($_REQUEST['syncmanual'] == "1") {
-
             add_action('init', [$this, 'synchronize']);
-
-            print "<pre>";
-            print_r("Done");
-            print "</pre>";
-
+            add_action('admin_notices', [$this, 'admin_notice']);
+        }
+        if ($_REQUEST['syncmanual'] == "2") {
+            add_action('car-ads', [$this, 'clean_up_non_existing_cars']);
+            add_action('admin_notices', [$this, 'admin_notice']);
         }
 
 
         add_action('wp_ajax_nopriv_pre_search', [$this, 'pre_search']);
         add_action('wp_ajax_pre_search', [$this, 'pre_search']);
+    }
+
+    public function admin_notice(){
+            echo '<div class="notice notice-info is-dismissible">
+             <p>CarAds.io: Done!</p>
+         </div>';
     }
 
     public function getCurrency()
@@ -226,11 +231,18 @@ class Connector
     public function clean_up_non_existing_cars()
     {
         // Get all slugs
-        $products = $this->headless->get('/products?size=1000');
+        $offset = "?size=50";
         $slugs    = [];
-        foreach ($products->items as $key => $product) {
-            $slugs[] = $product->slug;
-        }
+        do {
+
+            $products = $this->headless->get("/products" . $offset);
+            $offset   = $products->navigation->next ?? '';
+
+            foreach ($products->items as $key => $product) {
+                $slugs[] = $product->slug;
+            }
+
+        } while (!empty($offset));
 
         // Loop through local cars and delete cars that are not in CarAds.io
         global $wpdb;
@@ -241,11 +253,18 @@ class Connector
                 AND (`post_status` = 'draft' OR `post_status` = 'publish' OR `post_status` = 'trash')", ARRAY_A);
 
         foreach ($cars as $key => $car) {
-            if (!in_array($car['post_name'], $slugs)) {
+            print_r(get_post_meta($car['ID'], 'slug', true));
+            print " = ";
+            var_dump(in_array(get_post_meta($car['ID'], 'slug', true), $slugs));
+            print "<br>";
+            if(in_array(get_post_meta($car['ID'], 'slug', true), $slugs)) {
+                continue;
+            } else {
                 $this->remove($car['ID']);
             }
 
         }
+        die();
     }
 
     /**
@@ -255,15 +274,18 @@ class Connector
     public function create($product)
     {
         try {
-            $page = wp_insert_post([
+
+            $variant = str_replace('variant-', '', $this->get_field($product->properties, 'Variant'));
+            $page    = wp_insert_post([
                 'post_type'         => $this->post_type,
-                'post_title'        => $product->slug . "-" . $this->get_field($product->properties, 'Id'),
-                'post_name'         => $product->slug,
+                'post_title'        => $product->name,
+                'post_name'         => $variant . "-" . $this->get_field($product->properties, 'Id'),
                 'post_modified'     => $product->updated,
                 'post_modified_gmt' => $product->updated,
                 'post_status'       => 'publish',
                 'meta_input'        => [
-                    'carads_id' => $product->id
+                    'carads_id' => $product->id,
+                    'slug'      => $product->slug,
                 ]
             ]);
             // Add brand and model
@@ -286,12 +308,14 @@ class Connector
     public function update($post_id, $data)
     {
         try {
+            $variant = str_replace('variant-', '', $this->get_field($data->properties, 'Variant'));
             $updated = wp_update_post([
                 'ID'         => $post_id,
-                'post_name'  => $data->slug . "-" . $this->get_field($data->properties, 'Id'),
+                'post_name'  => $variant . "-" . $this->get_field($data->properties, 'Id'),
                 'post_title' => $data->name,
                 'meta_input' => [
-                    'carads_id' => $data->id
+                    'carads_id' => $data->id,
+                    'slug'      => $product->slug,
                 ]
             ]);
 
@@ -313,7 +337,7 @@ class Connector
      */
     public function remove($post_id)
     {
-        wp_delete_post($post_id, true);
+        wp_trash_post($post_id);
     }
 
     /**

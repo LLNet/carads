@@ -151,16 +151,16 @@ if (!class_exists('CarAdsApp')) {
         public function single_car_template($template)
         {
             global $post;
-            $theme_files = array('single-' . $this->post_type . '.php', 'car-ads/single-' . $this->post_type . '.php');
-            if ($this->post_type === $post->post_type && locate_template($theme_files, false) !== $template) {
-                /**
-                 * This is a 'car' post
-                 * AND a 'single car template' is not found on
-                 * theme or child theme directories, so load it
-                 * from our plugin directory.
-                 */
+            $theme_files     = array('single-' . $this->post_type . '.php', 'car-ads/single-' . $this->post_type . '.php');
 
-                return plugin_dir_path(__FILE__) . 'template-parts/single-' . $this->post_type . '.php';
+            if ($this->post_type === $post->post_type) {
+
+                $exists_in_theme = locate_template($theme_files, false);
+                if ($exists_in_theme != '') {
+                    return $exists_in_theme;
+                } else {
+                    return plugin_dir_path(__FILE__) . 'template-parts/single-' . $this->post_type . '.php';
+                }
             }
 
             return $template;
@@ -218,7 +218,7 @@ if (!class_exists('CarAdsApp')) {
             }
 
             // merge with global rules
-            $wp_rewrite->rules = $rules + $wp_rewrite->rules;
+            return $wp_rewrite->rules = $rules + $wp_rewrite->rules;
         }
 
 

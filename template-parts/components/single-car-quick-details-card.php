@@ -5,21 +5,21 @@
 
     <div class="ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4">
         <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Kilometer', 'PLUGIN_NAME'); ?></dt>
+            <dt class="ca-font-normal ca-leading-5"><?php _e('Kilometer', 'car-ads'); ?></dt>
             <dd class="ca-font-bold ca-leading-5 ca-mb-1">
                 <?php
 
                 if ($connector->get_field($product->properties, 'Mileage') != '-') {
                     echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
-                    echo " " . __("km.", 'PLUGIN_NAME');
+                    echo " " . __("km.", 'car-ads');
                 } else {
-                    _e('-', 'PLUGIN_NAME');
+                    _e('-', 'car-ads');
                 }
                 ?>
             </dd>
         </dl>
         <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Årgang', 'PLUGIN_NAME'); ?></dt>
+            <dt class="ca-font-normal ca-leading-5"><?php _e('Årgang', 'car-ads'); ?></dt>
             <dd class="ca-font-bold ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'Year');
@@ -27,7 +27,7 @@
             </dd>
         </dl>
         <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Drivmiddel', 'PLUGIN_NAME'); ?></dt>
+            <dt class="ca-font-normal ca-leading-5"><?php _e('Drivmiddel', 'car-ads'); ?></dt>
             <dd class="ca-font-bold ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'Propellant');
@@ -39,11 +39,11 @@
             if ("El" === $connector->get_field($product->properties, 'Propellant')) {
                 ?>
 
-                <dt class="ca-font-normal ca-leading-5"><?php _e('Rækkevidde', 'PLUGIN_NAME'); ?></dt>
+                <dt class="ca-font-normal ca-leading-5"><?php _e('Rækkevidde', 'car-ads'); ?></dt>
                 <dd class="ca-font-bold ca-leading-5 ca-mb-1">
                     <?php
                     echo $connector->get_field($product->properties, 'Range') . " ";
-                    echo __("km", 'PLUGIN_NAME');
+                    echo __("km", 'car-ads');
                     ?>
                 </dd>
 
@@ -51,11 +51,11 @@
             } else {
                 ?>
 
-                <dt class="ca-font-normal ca-leading-5"><?php _e('Forbrug', 'PLUGIN_NAME'); ?></dt>
+                <dt class="ca-font-normal ca-leading-5"><?php _e('Forbrug', 'car-ads'); ?></dt>
                 <dd class="ca-font-bold ca-leading-5 ca-mb-1">
                     <?php
                     echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
-                    echo __("km/l", 'PLUGIN_NAME');
+                    echo __("km/l", 'car-ads');
                     ?>
                 </dd>
 
@@ -64,29 +64,29 @@
             ?>
         </dl>
         <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Gearkasse', 'PLUGIN_NAME'); ?></dt>
+            <dt class="ca-font-normal ca-leading-5"><?php _e('Gearkasse', 'car-ads'); ?></dt>
             <dd class="ca-font-bold ca-leading-5 ca-mb-1">
                 <?php
                 switch ($connector->get_field($product->properties, 'GearType')) {
                     case 'A':
-                        _e('Automatisk', 'PLUGIN_NAME');
+                        _e('Automatisk', 'car-ads');
                         break;
                     case 'M':
-                        _e('Manuel', 'PLUGIN_NAME');
+                        _e('Manuel', 'car-ads');
                         break;
                     default:
-                        _e('-', 'PLUGIN_NAME');
+                        _e('-', 'car-ads');
                         break;
                 }
                 ?>
             </dd>
         </dl>
         <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('HK', 'PLUGIN_NAME'); ?></dt>
+            <dt class="ca-font-normal ca-leading-5"><?php _e('HK', 'car-ads'); ?></dt>
             <dd class="ca-font-bold ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'Effect') . " ";
-                echo __("hk", 'PLUGIN_NAME');
+                echo __("hk", 'car-ads');
                 ?>
             </dd>
         </dl>
@@ -103,15 +103,37 @@
     </div>
 
     <div class="cta ca-hidden lg:ca-block">
-        <a href="" class="ca-bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal" data-target="modalByttepris"><i
-                class="fa fa-fw fa-calculator"></i> Beregn
+        <?php
+        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
+        ?>
+        <a href=""
+           class="ca-bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+           data-target="modalByttepris"><i
+                    class="fa fa-fw fa-calculator"></i> Beregn
             byttepris</a>
-        <a href="" class="ca-bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal" data-target="modalBestil"><i
-                class="fa fa-fw fa-car"></i> Bestil prøvetur</a>
-        <a href="#" data-href="tel:+4586520033" class="ca-bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white js-phone-switch">
-            <span class="text-cta"><i class="fa fa-fw fa-phone"></i> Ring til os</span>
-            <span class="text-value"><i class="fa fa-fw fa-phone"></i> Telefon: 86 52 00 33</span>
-        </a>
+        <?php
+        }
+        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
+        ?>
+        <a href=""
+           class="ca-bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+           data-target="modalBestil"><i
+                    class="fa fa-fw fa-car"></i> Bestil prøvetur</a>
+        <?php
+        }
+        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
+            ?>
+            <a href="#"
+               class="ca-col-span-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
+               data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
+                                <span class="text-cta ca-block" id="cta_before"><i
+                                            class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-ads'); ?></span>
+                <span class="text-value ca-hidden" id="cta_after"><i
+                            class="fa fa-fw fa-phone"></i> Tlf <?php echo get_option('car-ads-single-car')['phonenumber']; ?></span>
+            </a>
+            <?php
+        }
+        ?>
     </div>
 
 </div>

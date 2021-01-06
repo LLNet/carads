@@ -66,9 +66,9 @@ jQuery(document).ready(function () {
     if (jQuery('#update-filters').length > 0) {
         jQuery(window).scroll(function () {
             if (jQuery(window).scrollTop() >= 250) {
-                jQuery('#update-filters').addClass('fixed');
+                jQuery('#update-filters').addClass('ca-fixed').removeClass('ca-hidden');
             } else {
-                jQuery('#update-filters').removeClass('fixed');
+                jQuery('#update-filters').removeClass('ca-fixed').addClass('ca-hidden');
             }
         });
     }
@@ -192,5 +192,86 @@ jQuery(document).ready(function () {
     });
 
 
-});
+    /**
+     * Car view mode
+     */
+    jQuery('.car_view_change').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
 
+        let view_mode = jQuery(this).data('view');
+
+        // remove active state on all
+        jQuery('.car_view_change')
+            .addClass('ca-bg-white ca-text-text')
+            .addClass('ca-bg-white ca-text-text')
+            .removeClass('ca-bg-primary')
+            .removeClass('ca-text-white');
+
+        // add active state on $this
+        jQuery(this)
+            .removeClass('ca-bg-white ca-text-text')
+            .removeClass('ca-bg-white ca-text-text')
+            .addClass('ca-bg-primary')
+            .addClass('ca-text-white');
+
+        // set cookie
+        setCookie('car_view', view_mode);
+
+        // Reload to make changes take effect
+        window.location.reload();
+
+    });
+
+    /**
+     * Cookie handling
+     */
+    function checkCookie() {
+        let cookie = getCookie("car_view");
+        if (cookie === undefined) {
+            setCookie("car_view", "list");
+        }
+    }
+
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    function setCookie(name, value, options = {}) {
+        let date = new Date();
+        date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
+
+        options = {
+            path: '/',
+            expires: date.toUTCString(),
+            'max-age': 3600,
+            ...options
+        };
+        if(process.env.NODE_ENV === 'production') {
+            options.secure = true;
+        }
+
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+        for (let optionKey in options) {
+            updatedCookie += "; " + optionKey;
+            let optionValue = options[optionKey];
+            if (optionValue !== true) {
+                updatedCookie += "=" + optionValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
+
+
+
+    checkCookie();
+
+
+
+
+});
