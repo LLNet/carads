@@ -41,10 +41,10 @@ if (!class_exists('CarAdsSettings')):
                     'id' => 'car-ads-single-car',
                     'title' => __('Single Car', 'car-ads')
                 ),
-                array(
-                    'id' => 'car-ads-theming',
-                    'title' => __('Theme Colors', 'car-ads')
-                ),
+//                array(
+//                    'id' => 'car-ads-theming',
+//                    'title' => __('Theme Colors', 'car-ads')
+//                ),
             );
             return $sections;
         }
