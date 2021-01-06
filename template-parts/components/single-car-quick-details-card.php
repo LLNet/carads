@@ -4,9 +4,9 @@
     <hr class="ca-my-2 ca-bg-lightgrey">
 
     <div class="ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4">
-        <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Kilometer', 'car-ads'); ?></dt>
-            <dd class="ca-font-bold ca-leading-5 ca-mb-1">
+        <dl class="ca-flex ca-flex-col">
+            <dt class="ca-font-thin ca-leading-5"><?php _e('Kilometer', 'car-ads'); ?></dt>
+            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
 
                 if ($connector->get_field($product->properties, 'Mileage') != '-') {
@@ -18,29 +18,29 @@
                 ?>
             </dd>
         </dl>
-        <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Årgang', 'car-ads'); ?></dt>
-            <dd class="ca-font-bold ca-leading-5 ca-mb-1">
+         <dl class="ca-flex ca-flex-col">
+            <dt class="ca-font-thin ca-leading-5"><?php _e('Årgang', 'car-ads'); ?></dt>
+            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'Year');
                 ?>
             </dd>
         </dl>
-        <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Drivmiddel', 'car-ads'); ?></dt>
-            <dd class="ca-font-bold ca-leading-5 ca-mb-1">
+         <dl class="ca-flex ca-flex-col">
+            <dt class="ca-font-thin ca-leading-5"><?php _e('Drivmiddel', 'car-ads'); ?></dt>
+            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'Propellant');
                 ?>
             </dd>
         </dl>
-        <dl>
+         <dl class="ca-flex ca-flex-col">
             <?php
             if ("El" === $connector->get_field($product->properties, 'Propellant')) {
                 ?>
 
-                <dt class="ca-font-normal ca-leading-5"><?php _e('Rækkevidde', 'car-ads'); ?></dt>
-                <dd class="ca-font-bold ca-leading-5 ca-mb-1">
+                <dt class="ca-font-thin ca-leading-5"><?php _e('Rækkevidde', 'car-ads'); ?></dt>
+                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                     <?php
                     echo $connector->get_field($product->properties, 'Range') . " ";
                     echo __("km", 'car-ads');
@@ -51,8 +51,8 @@
             } else {
                 ?>
 
-                <dt class="ca-font-normal ca-leading-5"><?php _e('Forbrug', 'car-ads'); ?></dt>
-                <dd class="ca-font-bold ca-leading-5 ca-mb-1">
+                <dt class="ca-font-thin ca-leading-5"><?php _e('Forbrug', 'car-ads'); ?></dt>
+                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                     <?php
                     echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
                     echo __("km/l", 'car-ads');
@@ -63,9 +63,9 @@
             }
             ?>
         </dl>
-        <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('Gearkasse', 'car-ads'); ?></dt>
-            <dd class="ca-font-bold ca-leading-5 ca-mb-1">
+         <dl class="ca-flex ca-flex-col">
+            <dt class="ca-font-thin ca-leading-5"><?php _e('Gearkasse', 'car-ads'); ?></dt>
+            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
                 switch ($connector->get_field($product->properties, 'GearType')) {
                     case 'A':
@@ -81,9 +81,9 @@
                 ?>
             </dd>
         </dl>
-        <dl>
-            <dt class="ca-font-normal ca-leading-5"><?php _e('HK', 'car-ads'); ?></dt>
-            <dd class="ca-font-bold ca-leading-5 ca-mb-1">
+         <dl class="ca-flex ca-flex-col">
+            <dt class="ca-font-thin ca-leading-5"><?php _e('HK', 'car-ads'); ?></dt>
+            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'Effect') . " ";
                 echo __("hk", 'car-ads');

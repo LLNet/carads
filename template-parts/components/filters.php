@@ -3,7 +3,7 @@ if(!is_post_type_archive('bil')) {
     return false;
 }
 ?>
-<div class="update-filters ca-hidden ca-bg-primary ca-z-20 ca-h-14 ca-py-0 ca-px-4 ca-flex ca-fixed ca-top-0 ca-left-0 ca-w-full ca-items-center ca-justify-center ca-text-white ca-font-bold" id="update-filters">
+<div class="update-filters ca-hidden ca-bg-primary ca-z-20 ca-h-14 ca-py-0 ca-px-4 ca-flex ca-fixed ca-top-0 ca-left-0 ca-w-full ca-items-center ca-justify-center ca-text-white ca-font-medium" id="update-filters">
     <div class="ca-container ca-mx-auto ca-flex ca-justify-center ca-items-center">
         <a href="#top" class="toggle-filters"><i class="fa fa-sliders"></i> Opdater søgning</a>
     </div>
@@ -13,6 +13,7 @@ if(!is_post_type_archive('bil')) {
 
             <label class="free-search-label ca-flex ca-mb-4 ca-w-full ca-h-14 ca-relative" for="search">
                 <input type="text" name="search" id="search" value="<?php echo $_GET['search'] ?? ''; ?>"
+                       style="max-width: none !important; width: 100% !important;"
                        placeholder="Fritekst søgning. Eks: 'Audi A3'" class="free-search ca-w-full ca-mb-4 ca-py-0 ca-px-4 ca-h-14 ca-border-0 ca-rounded " onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }"
                >
             </label>
@@ -270,7 +271,7 @@ if(!is_post_type_archive('bil')) {
                     $buttonText = "Søg";
                 }
                 ?>
-                <button type="submit" class="filter ca-bg-primary ca-h-14 ca-text-white ca-font-medium ca-transition ca-duration-300 ca-ease-in-out hover:ca-bg-primary-dark"><?php echo $buttonText; ?></button>
+                <button type="submit" class="filter ca-rounded ca-bg-primary ca-h-14 ca-text-white ca-font-medium ca-transition ca-duration-300 ca-ease-in-out hover:ca-bg-primary-dark"><?php echo $buttonText; ?></button>
 
             </div>
 
@@ -280,7 +281,7 @@ if(!is_post_type_archive('bil')) {
 
 </div>
 
-<div class="car-active-filters ca-bg-secondary  ca-p-4 md:ca-p-8 ca-mb-8">
+<div class="car-active-filters ca-bg-secondary  ca-p-4 md:ca-p-8">
     <div class="ca-container ca-mx-auto">
         <?php include("activeFilters.php"); ?>
     </div>

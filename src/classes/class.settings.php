@@ -41,6 +41,10 @@ if (!class_exists('CarAdsSettings')):
                     'id' => 'car-ads-single-car',
                     'title' => __('Single Car', 'car-ads')
                 ),
+                array(
+                    'id' => 'car-ads-theming',
+                    'title' => __('Theme Colors', 'car-ads')
+                ),
             );
             return $sections;
         }
@@ -135,6 +139,16 @@ if (!class_exists('CarAdsSettings')):
                         'default' => '',
                     ],
 
+                ],
+                'car-ads-theming' => [
+                    [
+                        'name' => 'byttepris_shortcode',
+                        'label' => __('Beregn byttepris shortcode', 'car-ads'),
+                        'desc' => __('Skriv din Beregn byttepris shortcode her', 'car-ads'),
+                        'placeholder' => '',
+                        'type' => 'color',
+                        'default' => '',
+                    ],
                 ]
             ];
         }

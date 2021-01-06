@@ -1,6 +1,6 @@
 <article class="filter-group">
     <header class="card-header">
-        <a href="#" data-toggle="collapse" data-target="#collapse_aside3">
+        <a href="#" data-toggle="collapse" data-target="#collapse_aside3" class="ca-no-underline ">
             <i class="icon-control fa fa-chevron-down"></i>
             <h6 class="title"><?php _e('Price', 'car-ads'); ?></h6>
         </a>

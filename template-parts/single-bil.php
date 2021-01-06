@@ -30,7 +30,7 @@ $currency  = $connector->getCurrency();
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
                             ?>
                             <a href="#"
-                               class="ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
+                               class="ca-no-underline ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
                                data-target="modalByttepris">
                                 <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-ads'); ?>
                             </a>
@@ -39,7 +39,7 @@ $currency  = $connector->getCurrency();
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
                             ?>
                             <a href="#"
-                               class="ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
+                               class="ca-no-underline ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
                                data-target="modalBestil">
                                 <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-ads'); ?>
                             </a>
@@ -48,7 +48,7 @@ $currency  = $connector->getCurrency();
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
                             ?>
                             <a href="#"
-                               class="ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
+                               class="ca-no-underline ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
                                data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
                                 <span class="text-cta ca-block" id="cta_before"><i
                                             class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-ads'); ?></span>
@@ -62,7 +62,7 @@ $currency  = $connector->getCurrency();
                     <div class="ca-flex ca-justify-between md:ca-hidden">
                         <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                             <a href="#"
-                               class="ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+                               class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
                                data-target="modalByttepris">
                                 <i class="fa fa-fw fa-calculator"></i>
                             </a>
@@ -73,7 +73,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="#"
-                                   class="ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+                                   class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
                                    data-target="modalBestil">
                                     <i class="fa fa-fw fa-car"></i>
                                 </a>
@@ -85,7 +85,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>"
-                                   class="ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white ">
+                                   class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white ">
                                     <i class="fa fa-fw fa-phone"></i>
                                 </a>
                                 <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Ring til os', 'car-ads'); ?></span>

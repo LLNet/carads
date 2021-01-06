@@ -2,7 +2,8 @@
 $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
 ?>
 <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
-   class="ca-w-full ca-relative ca-bg-lightgrey ca-flex ca-flex-col"
+   class="ca-w-full ca-relative ca-bg-lightgrey ca-flex ca-flex-col ca-ca-no-underline"
+   style="color: unset; text-decoration: none !important;"
    title="Se flere detaljer om <?php echo $product->name; ?>">
     <?php
     if ($product->image->sizes->i1024x768) {
@@ -12,7 +13,7 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
             <?php
             if (!empty($santanderPrice) && $santanderPrice != "-") {
                 ?>
-                <div class="ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+                <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
                     Fra. <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
                     DKK. /md.
                 </div>
@@ -43,11 +44,11 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
 
     <figcaption class="car--info ca-flex-grow ca-bg-white">
         <div class="ca-p-4">
-            <h2 class="ca-text-center ca-font-medium ca-text-xl"><?php echo $product->brand->name; ?><?php echo $product->category->name; ?></h2>
-            <h3 class="ca-text-center ca-mb-2"><?php echo $connector->get_field($product->properties, 'Variant'); ?></h3>
+            <h2 class="ca-text-center ca-font-medium ca-text-xl"><?php echo $product->brand->name . " " . $product->category->name; ?></h2>
+            <h3 class="ca-text-center ca-mb-2 ca-text-lg"><?php echo $connector->get_field($product->properties, 'Variant'); ?></h3>
 
             <p class="ca-text-center ca-font-medium ca-text-2xl"><?php echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency(); ?></p>
-            <p class="ca-text-sm ca-text-center ca-font-thin ca-mb-2">kontantpris inkl. moms</p>
+            <p class="ca-text-sm ca-text-center ca-font-thin font-thin ca-mb-2"><?php _e('kontantpris inkl. moms', 'car-app'); ?></p>
 
 
             <?php
@@ -66,7 +67,7 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
     <div class="car--grid--specs ca-bg-primary-dark ca-p-4 ca-flex-none ca-flex ca-justify-evenly ca-text-center ca-text-white ca-text-sm">
 
         <div>
-            <p class="ca-leading-none ca-font-thin"><?php _e('Årgang', 'car-app'); ?></p>
+            <p class="ca-leading-none ca-font-thin font-thin"><?php _e('Årgang', 'car-app'); ?></p>
             <p class="ca-leading-none ca-font-medium">
                 <?php
                 echo $connector->get_field($product->properties, 'Year');
@@ -74,7 +75,7 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
             </p>
         </div>
         <div>
-            <p class="ca-leading-none ca-font-thin"><?php _e('Kilometer', 'car-app'); ?></p>
+            <p class="ca-leading-none ca-font-thin font-thin"><?php _e('Kilometer', 'car-app'); ?></p>
             <p class="ca-leading-none ca-font-medium">
                 <?php
                 if ($connector->get_field($product->properties, 'Mileage') != '-') {
@@ -90,7 +91,7 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
             <?php
             if ("El" === $connector->get_field($product->properties, 'Propellant')) {
                 ?>
-                <p class="ca-leading-none ca-font-thin"><?php _e('Rækkevidde', 'car-app'); ?></p>
+                <p class="ca-leading-none ca-font-thin font-thin"><?php _e('Rækkevidde', 'car-app'); ?></p>
                 <p class="ca-leading-none ca-font-medium">
                     <?php
                     echo $connector->get_field($product->properties, 'Range') . " ";
@@ -100,7 +101,7 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
                 <?php
             } else {
                 ?>
-                <p class="ca-leading-none ca-font-thin"><?php _e('Forbrug', 'car-app'); ?></p>
+                <p class="ca-leading-none ca-font-thin font-thin"><?php _e('Forbrug', 'car-app'); ?></p>
                 <p class="ca-leading-none ca-font-medium">
                     <?php
                     echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
@@ -112,7 +113,7 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
             ?>
         </div>
         <div>
-            <p class="ca-leading-none ca-font-thin"><?php _e('Drivmiddel', 'car-app'); ?></p>
+            <p class="ca-leading-none ca-font-thin font-thin"><?php _e('Drivmiddel', 'car-app'); ?></p>
             <p class="ca-leading-none ca-font-medium">
                 <?php
                 echo $connector->get_field($product->properties, 'Propellant');
