@@ -42,7 +42,7 @@ if (!class_exists('CarAdsApp')) {
             require __DIR__ . '/src/classes/class.connector.php';
 
             // Scripts
-            add_action('wp_enqueue_scripts', [$this, 'add_styles_and_scripts'], 99);
+            add_action('wp_enqueue_scripts', [$this, 'add_styles_and_scripts']);
 
             // Activation
             register_activation_hook(__FILE__, [$this, 'plugin_activate']);
@@ -77,6 +77,12 @@ if (!class_exists('CarAdsApp')) {
                 $this->single_slug = "bil";
             }
 
+            // Include elementor modules if elementor is installed and active
+            if(in_array('elementor/elementor.php', apply_filters('active_plugins', get_option('active_plugins'))) || in_array('elementor-pro/elementor-pro.php', apply_filters('active_plugins', get_option('active_plugins'))) ){
+
+                require __DIR__ . '/elementor/custom_widgets.php';
+            }
+
         }
 
         public function cronstarter_deactivate()
@@ -109,10 +115,13 @@ if (!class_exists('CarAdsApp')) {
          */
         public function add_styles_and_scripts()
         {
+            wp_enqueue_style('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", '', '');
+            wp_enqueue_script('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js", array('jquery'), '', true);
+            wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
 
 
             if(is_single(get_the_ID()) && get_post_type(get_the_ID()) == "bil") {
-                wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
+
                 wp_enqueue_style('car-santander', "//api.scb.nu/SCBDK.Dealer.ExternalCalc/v2/Content/scbdk.dealer.externalcalc.css", '', '');
                 wp_enqueue_script('car-santander', "//api.scb.nu/SCBDK.Dealer.ExternalCalc/v2/Scripts/scbdk.dealer.externalcalc.js", array('jquery'), '', true);
 
@@ -127,7 +136,7 @@ if (!class_exists('CarAdsApp')) {
             }
 
             if(is_post_type_archive('bil')) {
-                wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
+
 //                wp_enqueue_style('car-bootstrap', "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css", '', '');
 //                wp_enqueue_script('car-bootstrap', "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js", array('jquery'), '', true);
                 wp_enqueue_style('car-slider', "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css", '', '');
