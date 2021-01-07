@@ -4,10 +4,10 @@ get_header();
 
 <?php
 global $post;
-$slug = get_post_meta($post->ID, 'slug', true);
+$car_ads_id = get_post_meta($post->ID, 'carads_id', true);
 
 $connector = new CarAds\Connector();
-$product   = $connector->get_single($slug);
+$product   = $connector->get_single($car_ads_id);
 $currency  = $connector->getCurrency();
 ?>
     <div class="outer-wrapper">
