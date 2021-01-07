@@ -103,8 +103,9 @@ class Connector
         add_action('wp_ajax_pre_search', [$this, 'pre_search']);
     }
 
-    public function admin_notice(){
-            echo '<div class="notice notice-info is-dismissible">
+    public function admin_notice()
+    {
+        echo '<div class="notice notice-info is-dismissible">
              <p>CarAds.io: Done!</p>
          </div>';
     }
@@ -117,6 +118,9 @@ class Connector
         return $this->currency;
     }
 
+    /**
+     * TODO: Cache resultat i mindst 1 døgn.
+     */
     public function setLocalizedApi()
     {
         $locale = substr(get_locale(), 0, 2);
@@ -139,6 +143,11 @@ class Connector
 
     }
 
+    /**
+     * TODO Cache resultat i mindst 1 døgn.
+     * @param $name
+     * @return mixed
+     */
     public function getCustomField($name)
     {
         $settings     = $this->headless->get("/settings");
@@ -187,9 +196,9 @@ class Connector
                     $car = get_post($post_id);
 
                     try {
-                        if (new DateTime($product->updated) > new DateTime($car->post_modified)) {
-                            $this->update($car->ID, $product);
-                        }
+                        //if (new DateTime($product->updated) > new DateTime($car->post_modified)) { @FIXME Skip modified check
+                        $this->update($car->ID, $product);
+                        //}
                     } catch (\Exception $e) {
                         error_log($e->getMessage());
                     }
@@ -232,7 +241,7 @@ class Connector
     {
         // Get all slugs
         $offset = "?size=50";
-        $slugs    = [];
+        $slugs  = [];
         do {
 
             $products = $this->headless->get("/products" . $offset);
@@ -257,7 +266,7 @@ class Connector
             print " = ";
             var_dump(in_array(get_post_meta($car['ID'], 'slug', true), $slugs));
             print "<br>";
-            if(in_array(get_post_meta($car['ID'], 'slug', true), $slugs)) {
+            if (in_array(get_post_meta($car['ID'], 'slug', true), $slugs)) {
                 continue;
             } else {
                 $this->remove($car['ID']);
@@ -313,11 +322,10 @@ class Connector
                 'ID'         => $post_id,
                 'post_name'  => $variant . "-" . $this->get_field($data->properties, 'Id'),
                 'post_title' => $data->name,
-                'meta_input' => [
-                    'carads_id' => $data->id,
-                    'slug'      => $product->slug,
-                ]
             ]);
+
+            update_post_meta($post_id, 'carads_id', $data->id);
+            update_post_meta($post_id, 'slug', $data->slug);
 
             // Add brand and model
             wp_set_object_terms($post_id, $data->brand->name, 'car_brand');
@@ -341,12 +349,12 @@ class Connector
     }
 
     /**
-     * @param $slug
+     * @param $carads_id
      * @return mixed
      */
-    public function get_single($slug)
+    public function get_single($carads_id)
     {
-        return $this->headless->get('/products/' . $slug);
+        return $this->headless->get('/products/' . $carads_id);
     }
 
     /**
@@ -606,8 +614,7 @@ class Connector
 
     }
 
-    public
-    function availableFilters($products)
+    public function availableFilters($products)
     {
         $availableFilters = [];
         foreach ($products->aggregations->filtered->brands as $key => $data) {
@@ -620,13 +627,6 @@ class Connector
             }
         }
 
-//        foreach ($products->aggregations->filtered->pricingMin as $key => $data) {
-//            $availableFilters[$data->item->slug] = $data->item->name;
-//        }
-//        foreach ($products->aggregations->filtered->pricingMax as $key => $data) {
-//            $availableFilters[$data->item->slug] = $data->item->name;
-//        }
-
         foreach ($products->aggregations->filtered->properties as $key => $propGroup) {
             foreach ($propGroup->groupItems as $k => $group) {
                 foreach ($group->items as $data) {
@@ -635,23 +635,20 @@ class Connector
                     }
                 }
             }
-
         }
 
         foreach ($products->aggregations->filtered->properties as $key => $propGroup) {
             foreach ($propGroup->groupItems as $k => $group) {
                 foreach ($group->items as $data) {
-
                     $availableFilters[$data->item->slug] = $data->item->value;
-
                 }
             }
-
         }
 
         return $availableFilters;
 
     }
+
 
     /**
      * Gets a single field from properties with the name = $name
@@ -659,8 +656,7 @@ class Connector
      * @param $name
      * @return string
      */
-    public
-    function get_field(&$properties, $name)
+    public function get_field(&$properties, $name)
     {
 
         foreach ($properties as $key => $property) {
@@ -678,8 +674,7 @@ class Connector
      * @return array
      * @throws \Exception
      */
-    public
-    function get_filter_options($name)
+    public function get_filter_options($name)
     {
         $filter_options = [];
         foreach ($this->search()->aggregations->filtered->properties as $key => $groupItems) {
@@ -710,6 +705,81 @@ class Connector
 
         return $filter_options;
 
+    }
+
+    public function getDropdownValuesForElementor($products)
+    {
+        $getDropdownValuesForElementor = [];
+        foreach ($products->aggregations->filtered->brands as $key => $data) {
+            $getDropdownValuesForElementor['brands'][$data->item->slug] = $data->item->name;
+        }
+
+        foreach ($products->aggregations->filtered->categories as $key => $data) {
+            if (!empty($data->item->slug)) {
+                $getDropdownValuesForElementor['categories'][$data->item->slug] = $data->item->name;
+            }
+        }
+
+
+//
+//        foreach ($products->aggregations->filtered->properties as $key => $propGroup) {
+//            foreach ($propGroup->groupItems as $k => $group) {
+//                foreach ($group->items as $data) {
+//                    if (!empty($data->item->slug)) {
+//                        $getDropdownValuesForElementor[$data->item->slug] = $data->item->value;
+//                    }
+//                }
+//            }
+//        }
+//
+//        foreach ($products->aggregations->filtered->properties as $key => $propGroup) {
+//            foreach ($propGroup->groupItems as $k => $group) {
+//                foreach ($group->items as $data) {
+//                    $getDropdownValuesForElementor[$data->item->slug] = $data->item->value;
+//                }
+//            }
+//        }
+        ksort($getDropdownValuesForElementor['brands']);
+        ksort($getDropdownValuesForElementor['categories']);
+        return $getDropdownValuesForElementor;
+
+    }
+
+    public function getCarsFromElementor($params = null)
+    {
+
+        $search = "?filter";
+        if (!empty($params)) {
+
+            if (isset($params['brands']) && !empty($params['brands'])) {
+
+                foreach ($params['brands'] as $key => $slug) {
+                    $search .= '&brands[]=' . $slug;
+                }
+            }
+
+            // Categories
+            if (isset($params['categories']) && !empty($params['categories'])) {
+                foreach ($params['categories'] as $key => $slug) {
+                    $search .= '&categories[]=' . $slug;
+                }
+            }
+            if (isset($params['size']) && !empty($params['size'])) {
+
+                    $search .= '&size=' . $params['size'];
+
+            }
+
+        }
+
+        $products = $this->headless->get('/products?' . $search);
+
+
+        if (isset($products->error)) {
+            throw new \Exception($products->items);
+        }
+
+        return $products;
     }
 
 }
