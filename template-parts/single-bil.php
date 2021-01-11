@@ -24,13 +24,13 @@ $currency  = $connector->getCurrency();
                         </p>
                     </div>
                 </div>
-                <div class="header--right ca-p-2 lg:ca-w-1/2">
+                <div class="header--right ca-p-2 lg:ca-w-1/2 ca-flex ca-items-center ca-justify-end">
                     <div class="ca-hidden md:ca-flex md:ca-justify-end">
                         <?php
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
                             ?>
                             <a href="#"
-                               class="ca-no-underline ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
+                               class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
                                data-target="modalByttepris">
                                 <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-ads'); ?>
                             </a>
@@ -39,7 +39,7 @@ $currency  = $connector->getCurrency();
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
                             ?>
                             <a href="#"
-                               class="ca-no-underline ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
+                               class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
                                data-target="modalBestil">
                                 <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-ads'); ?>
                             </a>
@@ -48,7 +48,7 @@ $currency  = $connector->getCurrency();
                         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
                             ?>
                             <a href="#"
-                               class="ca-no-underline ca-w-1/3 ca-ml-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
+                               class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
                                data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
                                 <span class="text-cta ca-block" id="cta_before"><i
                                             class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-ads'); ?></span>
@@ -85,7 +85,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>"
-                                   class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white ">
+                                   class="single-car--call-us ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white ">
                                     <i class="fa fa-fw fa-phone"></i>
                                 </a>
                                 <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Ring til os', 'car-ads'); ?></span>
@@ -205,7 +205,7 @@ $currency  = $connector->getCurrency();
                     <?php
                     if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['contactform_shortcode'])) {
                         ?>
-                        <div class="ca-bg-white ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
+                        <div class="single-car--contact-us ca-bg-white ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
                             <?php echo do_shortcode(get_option('car-ads-single-car')['contactform_shortcode']); ?>
                         </div>
                         <?php
@@ -229,7 +229,7 @@ $currency  = $connector->getCurrency();
     <div id="modalByttepris"
          class="modal ca-h-screen ca-w-full ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
         <!-- modal -->
-        <div class="ca-mx-10  ca-container ca-bg-white ca-rounded ca-shadow-lg ca-w-full">
+        <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-auto">
             <!-- modal header -->
             <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
                 <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Byttepris', 'car-ads'); ?></h3>
@@ -255,7 +255,7 @@ if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-sing
     <div id="modalBestil"
          class="modal ca-h-screen ca-w-full ca-transition ca-duration-300 ca-ease-in-out ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
         <!-- modal -->
-        <div class="ca-mx-10 ca-container ca-bg-white ca-rounded ca-shadow-xl ca-w-full ca-transition ca-duration-300 ca-ease-in-out">
+        <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-xl ca-w-auto ca-transition ca-duration-300 ca-ease-in-out">
             <!-- modal header -->
             <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
                 <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Bestil prøvetur', 'car-ads'); ?></h3>
@@ -279,7 +279,7 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
     <div id="modalSantander"
          class="modal ca-h-screen ca-w-full ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
         <!-- modal -->
-        <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-full md:ca-w-96">
+        <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-auto md:ca-w-96">
             <!-- modal header -->
             <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
                 <h3 class="ca-font-semibold ca-text-lg"><?php echo __(' Beregn finansiering', 'car-ads'); ?></h3>
