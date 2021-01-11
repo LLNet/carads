@@ -1,16 +1,16 @@
 <h4 class="ca-text-xl ca-font-medium">Model</h4>
 <div class="quick-specs ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4 ca-border-b ca-border-solid ca-border-lightgrey ca-pb-4">
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('HK', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('HK', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Effect') . " ";
-            echo __("hk", 'PLUGIN_NAME');
+            echo __("hk", 'car-ads');
             ?>
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Model', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Model', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'ModelSeries');
@@ -18,7 +18,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Årgang', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Årgang', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Year');
@@ -26,7 +26,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Registreringsår', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Registreringsår', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'RegistrationDate');
@@ -34,21 +34,21 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Kilometertal', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Kilometertal', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
 
             if ($connector->get_field($product->properties, 'Mileage') != '-') {
                 echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
-                echo " " . __("km.", 'PLUGIN_NAME');
+                echo " " . __("km.", 'car-ads');
             } else {
-                _e('-', 'PLUGIN_NAME');
+                _e('-', 'car-ads');
             }
             ?>
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Farve', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Farve', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Color');
@@ -56,7 +56,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Drivmiddel', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Drivmiddel', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Propellant');
@@ -64,7 +64,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Polstring', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Polstring', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Upholstery');
@@ -72,7 +72,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Polstring farve', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Polstring farve', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'UpholsteryColor');
@@ -84,7 +84,7 @@
 <h4 class="ca-text-xl ca-font-medium">Teknik</h4>
 <div class="quick-specs ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4 ca-border-b ca-border-solid ca-border-lightgrey ca-pb-4">
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Acceleration 0 til 100', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Acceleration 0 til 100', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Acceleration0To100') . " sek.";
@@ -92,25 +92,25 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Gearkasse', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Gearkasse', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             switch ($connector->get_field($product->properties, 'GearType')) {
                 case 'A':
-                    _e('Automatisk', 'PLUGIN_NAME');
+                    _e('Automatisk', 'car-ads');
                     break;
                 case 'M':
-                    _e('Manuel', 'PLUGIN_NAME');
+                    _e('Manuel', 'car-ads');
                     break;
                 default:
-                    _e('-', 'PLUGIN_NAME');
+                    _e('-', 'car-ads');
                     break;
             }
             ?>
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Topfart', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Topfart', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'TopSpeed') . " km/t";
@@ -118,7 +118,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Virkning i nm', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Virkning i nm', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'EffectInNm');
@@ -127,16 +127,16 @@
     </dl>
 
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('HK', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('HK', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Effect') . " ";
-            echo __("hk", 'PLUGIN_NAME');
+            echo __("hk", 'car-ads');
             ?>
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Max. påhæng', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Max. påhæng', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'TrailerWeight') ? $connector->get_field($product->properties, 'TrailerWeight') : '-';
@@ -144,7 +144,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Cylindre', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Cylindre', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Cylinders');
@@ -162,11 +162,11 @@
         if ("El" === $connector->get_field($product->properties, 'Propellant')) {
             ?>
 
-            <dt class="ca-font-thin ca-leading-5"><?php _e('Rækkevidde', 'PLUGIN_NAME'); ?></dt>
+            <dt class="ca-font-thin ca-leading-5"><?php _e('Rækkevidde', 'car-ads'); ?></dt>
             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'Range') . " ";
-                echo __("km", 'PLUGIN_NAME');
+                echo __("km", 'car-ads');
                 ?>
             </dd>
 
@@ -174,11 +174,11 @@
         } else {
             ?>
 
-            <dt class="ca-font-thin ca-leading-5"><?php _e('Forbrug', 'PLUGIN_NAME'); ?></dt>
+            <dt class="ca-font-thin ca-leading-5"><?php _e('Forbrug', 'car-ads'); ?></dt>
             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
                 echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
-                echo __("km/l", 'PLUGIN_NAME');
+                echo __("km/l", 'car-ads');
                 ?>
             </dd>
 
@@ -188,7 +188,7 @@
     </dl>
 
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Vægtafgift', 'PLUGIN_NAME'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Vægtafgift', 'car-ads'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php echo $connector->get_field($product->properties, 'WeightTax'); ?>
             <?php
