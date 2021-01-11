@@ -119,44 +119,65 @@ class Connector
     }
 
     /**
-     * TODO: Cache resultat i mindst 1 døgn.
+     * Setting localized API based on
+     * WordPress' get_locale() function
      */
     public function setLocalizedApi()
     {
-        $locale = substr(get_locale(), 0, 2);
-        // loop for at finde website med sprog = get_locale()
-        $websites = $this->headless->get("/websites");
 
-        if (!empty($websites->items)) {
-            foreach ($websites->items as $key => $site) {
+        if ( false === ( $cached = get_transient( 'CarAds_setLocalizedApi' ) ) ) {
+            // It wasn't there, so regenerate the data and save the transient
+            $locale = substr(get_locale(), 0, 2);
+            // loop for at finde website med sprog = get_locale()
+            $websites = $this->headless->get("/websites");
 
-                if ($site->language === $locale) {
-                    // Set localized API object
-                    $this->localizedApi = new Connector($site->consumerKey, $site->consumerSecret, $site->publicToken);
-                    $this->language     = $site->language;
-                    $this->vat          = $site->vat;
-                    $this->currency     = $site->currency;
+            if (!empty($websites->items)) {
+                foreach ($websites->items as $key => $site) {
+
+                    if ($site->language === $locale) {
+                        set_transient('CarAds_setLocalizedApi', $site, 1 * DAY_IN_SECONDS);
+                        // Set localized API object
+                        $this->localizedApi = new Connector($site->consumerKey, $site->consumerSecret, $site->publicToken);
+                        $this->language     = $site->language;
+                        $this->vat          = $site->vat;
+                        $this->currency     = $site->currency;
+                    }
                 }
-
             }
+        } else {
+            $cache = get_transient('CarAds_setLocalizedApi');
+            $this->localizedApi = new Connector($cache->consumerKey, $cache->consumerSecret, $cache->publicToken);;
+            $this->language     = $cache->language;
+            $this->vat          = $cache->vat;
+            $this->currency     = $cache->currency;
         }
+
 
     }
 
     /**
-     * TODO Cache resultat i mindst 1 døgn.
      * @param $name
      * @return mixed
      */
     public function getCustomField($name)
     {
-        $settings     = $this->headless->get("/settings");
-        $customFields = $settings->customFields;
-        foreach ($customFields as $key => $customField) {
-            if ($customField->name === $name) {
-                return $customField->value;
+
+        if ( false === ( $cached = get_transient( 'CarAds_customfield_'.$name ) ) ) {
+            // It wasn't there, so regenerate the data and save the transient
+            $settings     = $this->headless->get("/settings");
+            $customFields = $settings->customFields;
+            foreach ($customFields as $key => $customField) {
+                if ($customField->name === $name) {
+                    set_transient( 'CarAds_customfield_'.$name, $customField->value, 1 * DAY_IN_SECONDS );
+                    return get_transient('CarAds_customfield_'.$name);
+                }
             }
+
+        } else {
+            return get_transient('CarAds_customfield_'.$name);
         }
+
+
     }
 
 
