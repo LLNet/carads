@@ -110,6 +110,11 @@ if (!class_exists('CarAdsApp')) {
                     'archive_slug' => 'biler'
                 ]);
             }
+            if(!get_option('car-ads-single-car')) {
+                update_option('car-ads-single-car', [
+                    'show_back_to_archive' => 'no',
+                ]);
+            }
 
         }
 
