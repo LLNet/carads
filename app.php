@@ -83,6 +83,9 @@ if (!class_exists('CarAdsApp')) {
                 require __DIR__ . '/elementor/custom_widgets.php';
             }
 
+            // Load optional translations
+            load_plugin_textdomain('car-ads');
+
         }
 
         public function cronstarter_deactivate()
