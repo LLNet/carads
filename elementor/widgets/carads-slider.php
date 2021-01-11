@@ -327,8 +327,6 @@ class CarAdsSlider extends Widget_Base
             wp_reset_query();
             wp_reset_postdata();
         } else {
-            // Importer
-//            require __DIR__ . '/../../src/classes/class.connector.php';
             $connector = new Connector();
 
             $params = [
