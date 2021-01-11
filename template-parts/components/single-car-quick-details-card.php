@@ -1,6 +1,6 @@
 <div class="ca-bg-white ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
 
-    <h1 class="ca-text-2xl ca-font-bold"><?php echo $product->name; ?></h1>
+    <h1 class="ca-text-2xl ca-font-medium"><?php echo $product->name; ?></h1>
     <hr class="ca-my-2 ca-bg-lightgrey">
 
     <div class="ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4">
@@ -93,8 +93,8 @@
     </div>
     <hr class="ca-my-2 ca-bg-lightgrey">
     <div class="price ca-flex ca-flex-col ca-items-center lg:ca-flex-row ca-mt-4 ca-mb-2">
-        <p class="price--label ca-font-bold lg:ca-flex-grow-1">Kontantpris</p>
-        <p class="price--value ca-font-bold ca-text-3xl lg:ca-ml-auto lg:ca-text-right">
+        <p class="price--label ca-font-medium lg:ca-flex-grow-1">Kontantpris</p>
+        <p class="price--value ca-font-medium ca-text-3xl lg:ca-ml-auto lg:ca-text-right">
             <?php
             echo number_format_i18n($product->pricing->{$currency}->price, 0);
             echo " " . $currency;
