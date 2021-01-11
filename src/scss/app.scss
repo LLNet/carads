@@ -134,8 +134,11 @@ select.multiselect {
 /* Free text search */
 label.free-search-label {
   &:after {
-    @apply ca-flex ca-h-10 ca-w-10 ca-items-center ca-justify-center ca-right-0 ca-top-0 ca-absolute text-primary;
+    @apply ca-flex ca-items-center ca-justify-center ca-right-0 ca-top-0 ca-absolute ca-text-primary;
+    height: 3.25rem;
+    width: 3.25rem;
     content: "\f002";
+    color: #444444;
     font-family: "FontAwesome";
   }
 }
