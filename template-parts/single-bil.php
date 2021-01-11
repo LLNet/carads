@@ -103,6 +103,15 @@ $currency  = $connector->getCurrency();
 
                 <div class="content--col-1 ca-col-span-4 ca-overflow-x-hidden">
                     <?php
+                    if (get_option('car-ads-single-car')['show_back_to_archive'] === "yes") {
+                        ?>
+                        <a href="/<?php echo get_option('car-ads')['archive_slug']; ?>" class="ca-mt-2 ca-mb-2 ca-rounded ca-inline-flex ca-items-center ca-text-secondary text-secondary">
+                            <i class="fa fa-fw fa-caret-left"></i>
+                            <?php echo __('Tilbage til oversigten', 'car-ads'); ?>
+                        </a>
+                        <?php
+                    }
+
                     if (function_exists('yoast_breadcrumb')) {
                         yoast_breadcrumb('<p id="breadcrumbs">', '</p>');
                     }
@@ -122,7 +131,7 @@ $currency  = $connector->getCurrency();
                     <div class="ca-h-14 ca-my-4 ca-text-primary ca-font-medium ca-text-center ca-flex ca-items-center ca-justify-between">
                         <button class="focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-prev slick-prev slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full
                         ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary"><i
-                                    class="fa fa-chevron-left"></i></button>
+                                    class="fa fa-fw fa-chevron-left"></i></button>
                         <div class="pagingInfo">
                             <?php
                             echo "1/" . (count($product->images) + 1);
@@ -130,7 +139,7 @@ $currency  = $connector->getCurrency();
                         </div>
                         <button class="focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-next slick-next slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full
                         ca-flex ca-items-center  ca-justify-center ca-text-primary  ca-transform focus:ca-bg-primary"><i
-                                    class="fa fa-chevron-right"></i></button>
+                                    class="fa fa-fw fa-chevron-right"></i></button>
                     </div>
                     <div class="thumb-slider ca-mb-4">
                         <img src="<?php echo $product->image->sizes->i1024x768 ?>">
