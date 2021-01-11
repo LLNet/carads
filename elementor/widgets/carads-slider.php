@@ -194,6 +194,21 @@ class CarAdsSlider extends Widget_Base
             ]
         );
 
+        $this->add_control(
+            'post_type',
+            [
+                'label'   => __('Sortering'),
+                'type'    => \Elementor\Controls_Manager::SELECT,
+                'condition' => [
+                    'post_type' => ['bil'],
+                ],
+                'options' => [
+                    ':asc'        => 'Nyeste først',
+                    ':desc'        => 'Ældste først',
+                ],
+                'default' => '',
+            ]
+        );
 
         $this->end_controls_section();
 
@@ -332,7 +347,8 @@ class CarAdsSlider extends Widget_Base
             $params = [
                 'size'       => $settings['size'] ?? 10,
                 'brands'     => $settings['brands'] ?? null,
-                'categories' => $settings['categories'] ?? null
+                'categories' => $settings['categories'] ?? null,
+                'sort_by'    => 'updated'.$settings['sort_by']
             ];
 
             $products = $connector->getCarsFromElementor($params);
