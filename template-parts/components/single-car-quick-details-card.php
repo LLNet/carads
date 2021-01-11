@@ -18,7 +18,7 @@
                 ?>
             </dd>
         </dl>
-         <dl class="ca-flex ca-flex-col">
+        <dl class="ca-flex ca-flex-col">
             <dt class="ca-font-thin ca-leading-5"><?php _e('Årgang', 'car-ads'); ?></dt>
             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
@@ -26,7 +26,7 @@
                 ?>
             </dd>
         </dl>
-         <dl class="ca-flex ca-flex-col">
+        <dl class="ca-flex ca-flex-col">
             <dt class="ca-font-thin ca-leading-5"><?php _e('Drivmiddel', 'car-ads'); ?></dt>
             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
@@ -34,7 +34,7 @@
                 ?>
             </dd>
         </dl>
-         <dl class="ca-flex ca-flex-col">
+        <dl class="ca-flex ca-flex-col">
             <?php
             if ("El" === $connector->get_field($product->properties, 'Propellant')) {
                 ?>
@@ -63,7 +63,7 @@
             }
             ?>
         </dl>
-         <dl class="ca-flex ca-flex-col">
+        <dl class="ca-flex ca-flex-col">
             <dt class="ca-font-thin ca-leading-5"><?php _e('Gearkasse', 'car-ads'); ?></dt>
             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
@@ -81,7 +81,7 @@
                 ?>
             </dd>
         </dl>
-         <dl class="ca-flex ca-flex-col">
+        <dl class="ca-flex ca-flex-col">
             <dt class="ca-font-thin ca-leading-5"><?php _e('HK', 'car-ads'); ?></dt>
             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
@@ -93,7 +93,7 @@
     </div>
     <hr class="ca-my-2 ca-bg-lightgrey">
     <div class="price ca-flex ca-flex-col ca-items-center lg:ca-flex-row ca-mt-4 ca-mb-2">
-        <p class="price--label ca-font-medium lg:ca-flex-grow-1">Kontantpris</p>
+        <p class="price--label ca-font-medium lg:ca-flex-grow-1"><?php echo __('Kontantpris', 'car-ads'); ?></p>
         <p class="price--value ca-font-medium ca-text-3xl lg:ca-ml-auto lg:ca-text-right">
             <?php
             echo number_format_i18n($product->pricing->{$currency}->price, 0);
@@ -105,31 +105,36 @@
     <div class="cta ca-hidden lg:ca-block">
         <?php
         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
-        ?>
-        <a href=""
-           class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
-           data-target="modalByttepris"><i
-                    class="fa fa-fw fa-calculator"></i> Beregn
-            byttepris</a>
-        <?php
+            ?>
+            <a href=""
+               class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+               data-target="modalByttepris">
+                <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-ads'); ?>
+            </a>
+            <?php
         }
         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
-        ?>
-        <a href=""
-           class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
-           data-target="modalBestil"><i
-                    class="fa fa-fw fa-car"></i> Bestil prøvetur</a>
-        <?php
+            ?>
+            <a href=""
+               class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+               data-target="modalBestil">
+                <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-ads'); ?>
+            </a>
+            <?php
         }
         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
             ?>
             <a href="#"
                class="ca-col-span-1 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
                data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
-                                <span class="text-cta ca-block" id="cta_before"><i
-                                            class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-ads'); ?></span>
-                <span class="text-value ca-hidden" id="cta_after"><i
-                            class="fa fa-fw fa-phone"></i> Tlf <?php echo get_option('car-ads-single-car')['phonenumber']; ?></span>
+                <div class="text-cta ca-block" id="cta_before">
+                    <i class="fa fa-fw fa-phone"></i>
+                    <?php echo __('Ring til os', 'car-ads'); ?>
+                </div>
+                <div class="text-value ca-hidden" id="cta_after">
+                    <i class="fa fa-fw fa-phone"></i>
+                    Tlf <?php echo get_option('car-ads-single-car')['phonenumber']; ?>
+                </div>
             </a>
             <?php
         }
