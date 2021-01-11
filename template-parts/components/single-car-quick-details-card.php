@@ -107,7 +107,7 @@
         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
         ?>
         <a href=""
-           class="ca-bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+           class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
            data-target="modalByttepris"><i
                     class="fa fa-fw fa-calculator"></i> Beregn
             byttepris</a>
@@ -116,7 +116,7 @@
         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
         ?>
         <a href=""
-           class="ca-bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+           class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
            data-target="modalBestil"><i
                     class="fa fa-fw fa-car"></i> Bestil prøvetur</a>
         <?php
@@ -124,7 +124,7 @@
         if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
             ?>
             <a href="#"
-               class="ca-col-span-1 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
+               class="ca-col-span-1 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
                data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
                                 <span class="text-cta ca-block" id="cta_before"><i
                                             class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-ads'); ?></span>
