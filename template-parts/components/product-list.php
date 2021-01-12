@@ -122,7 +122,6 @@
                 </div>
                 <div class="car--info--content__price ca-w-full lg:ca-w-1/4 ca-flex ca-justify-center ca-items-center lg:ca-items-end lg:ca-justify-center ca-flex-col">
                     <span class="ca-text-2xl md:ca-text-xl ca-mt-2 lg:ca-mt-0 ca-font-medium"><?php echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency(); ?></span>
-                    <p class="ca-text-sm ca-text-center ca-font-thin font-thin ca-mb-2"><?php _e('kontantpris inkl. moms', 'car-app'); ?></p>
                     <?php
                     $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
                     if (!empty($santanderPrice) && $santanderPrice != "-") {
