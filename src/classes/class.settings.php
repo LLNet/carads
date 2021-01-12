@@ -138,6 +138,17 @@ if (!class_exists('CarAdsSettings')):
                         'type' => 'textarea',
                         'default' => '',
                     ],
+                    [
+                        'name' => 'show_back_to_archive',
+                        'label' => __('Vis link tilbage til oversigten', 'car-ads'),
+                        'desc' => __('Skal der vises et link tilbage til oversigten?', 'car-ads'),
+                        'type'    => 'select',
+                        'default' => 'no',
+                        'options' => [
+                            'yes' => 'Ja',
+                            'no'  => 'Nej'
+                        ]
+                    ],
 
                 ],
                 'car-ads-theming' => [

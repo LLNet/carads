@@ -803,6 +803,23 @@ class Connector
         return $products;
     }
 
+    public function get_brands_categories($brand)
+    {
+        $products = $this->headless->get('/products?brand=' . $brand);
+        $all_categories = $products->aggregations->filtered->categories;
+
+
+        $categories = [];
+        foreach($all_categories as $key => $category) {
+            if($category->count > 0) {
+                $categories[] = $category->item;
+            }
+        }
+
+        return $categories;
+
+    }
+
 }
 
 new Connector();

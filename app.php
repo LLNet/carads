@@ -37,6 +37,7 @@ if (!class_exists('CarAdsApp')) {
 
             // Custom Post Type
             require __DIR__ . '/src/cpt.php';
+            require __DIR__ . '/src/shortcode/header-search.php';
 
             // Importer
             require __DIR__ . '/src/classes/class.connector.php';
