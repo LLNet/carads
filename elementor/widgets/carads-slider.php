@@ -39,7 +39,7 @@ class CarAdsSlider extends Widget_Base
 
     public function get_icon()
     {
-        return 'fa fa-th';
+        return 'eicon-slider-push';
     }
 
     public function get_categories()
@@ -51,9 +51,9 @@ class CarAdsSlider extends Widget_Base
     {
 
         $this->start_controls_section(
-            'section_icon',
+            'section_cpt',
             [
-                'label' => __('CPT Slider', 'elementor'),
+                'label' => __('Indstillinger for visning', 'elementor'),
             ]
         );
 
@@ -73,8 +73,8 @@ class CarAdsSlider extends Widget_Base
                 'label'   => __('Vælg Custom Post Type'),
                 'type'    => \Elementor\Controls_Manager::SELECT,
                 'options' => [
-                    'page'        => 'Sider',
-                    'post'        => 'Indlæg',
+//                    'page'        => 'Sider',
+//                    'post'        => 'Indlæg',
                     'bil'         => 'Biler',
                     'medarbejder' => 'Medarbejdere',
                     'tilbud'      => 'Tilbud',
@@ -103,53 +103,22 @@ class CarAdsSlider extends Widget_Base
                 'type'        => \Elementor\Controls_Manager::NUMBER,
                 'default'     => '10',
                 'min'         => -1,
-                'description' => 'Antal vist. Vælg -1 for alle!'
-            ]
-        );
-
-
-        $this->add_control(
-            'readmore_active',
-            [
-                'label'       => __('Læs mere knap aktiv?'),
-                'type'        => \Elementor\Controls_Manager::SELECT,
-                'default'     => 'no',
-                'options'     => [
-                    'yes' => 'Ja',
-                    'no'  => 'Nej',
+                'description' => 'Antal vist. Vælg -1 for alle!',
+                'condition'   => [
+                    'post_type' => ['medarbejder', 'tilbud'],
                 ],
-                'description' => 'Skal der vises en læs mere knap'
+
             ]
         );
 
-        $this->add_control(
-            'readmore_label',
-            [
-                'label'     => 'Læs mere knap tekst',
-                'type'      => Controls_Manager::TEXT,
-                'default'   => __('Se flere', 'elementor'),
-                'condition' => [
-                    'readmore_active' => ['yes'],
-                ],
-            ]
-        );
 
-        $this->add_control(
-            'readmore_url',
-            [
-                'label'     => 'Læs mere knap url',
-                'type'      => Controls_Manager::TEXT,
-                'default'   => __('https://', 'elementor'),
-                'condition' => [
-                    'readmore_active' => ['yes'],
-                ],
-            ]
-        );
+
 
         /** Car options */
         $connector        = new Connector();
         $products         = $connector->search(true);
         $availableFilters = $connector->getDropdownValuesForElementor($products);
+
 
         $this->add_control(
             'size',
@@ -193,9 +162,22 @@ class CarAdsSlider extends Widget_Base
                 'options'   => $availableFilters['categories']
             ]
         );
+        $this->add_control(
+            'properties',
+            [
+                'label'     => 'Vælg Properites',
+                'condition' => [
+                    'post_type' => ['bil'],
+                ],
+                'type'      => \Elementor\Controls_Manager::SELECT2,
+                'multiple'  => true,
+                'default'   => '',
+                'options'   => $availableFilters['properties']
+            ]
+        );
 
         $this->add_control(
-            'post_type',
+            'sort_by',
             [
                 'label'   => __('Sortering'),
                 'type'    => \Elementor\Controls_Manager::SELECT,
@@ -203,14 +185,71 @@ class CarAdsSlider extends Widget_Base
                     'post_type' => ['bil'],
                 ],
                 'options' => [
-                    ':asc'        => 'Nyeste først',
-                    ':desc'        => 'Ældste først',
+                    'price:asc'  => 'Pris (Billigste først)',
+                    'price:desc'  => 'Pris (Dyreste først)',
+                    'name:asc'  => 'Navn (A-Å)',
+                    'name:desc'  => 'Navn (Å-A)',
+                    'customFields.mileage:asc'  => 'Kilometer (lav til høj)',
+                    'customFields.mileage:desc'  => 'Kilometer (høj til lav)',
+                    'updated:asc'  => 'Opdateret (Nyeste først)',
+                    'updated:desc'  => 'Opdateret (Ældste først)',
+                    'created:asc'  => 'Oprettet (Nyeste først)',
+                    'created:desc'  => 'Oprettet (Ældste først)',
                 ],
-                'default' => '',
+                'default' => 'name:asc',
             ]
         );
 
         $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_readmore',
+            [
+                'label' => __('Læs mere?', 'elementor'),
+            ]
+        );
+        $this->add_control(
+            'readmore_active',
+            [
+                'label'       => __('Læs mere knap aktiv?'),
+                'type'        => \Elementor\Controls_Manager::SELECT,
+                'default'     => 'no',
+                'options'     => [
+                    'yes' => 'Ja',
+                    'no'  => 'Nej',
+                ],
+                'description' => 'Skal der vises en læs mere knap'
+            ]
+        );
+
+        $this->add_control(
+            'readmore_label',
+            [
+                'label'     => 'Læs mere knap tekst',
+                'type'      => Controls_Manager::TEXT,
+                'default'   => __('Se flere', 'elementor'),
+                'condition' => [
+                    'readmore_active' => ['yes'],
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'readmore_url',
+            [
+                'label'     => 'Læs mere knap url',
+                'type'      => Controls_Manager::TEXT,
+                'default'   => __('https://', 'elementor'),
+                'condition' => [
+                    'readmore_active' => ['yes'],
+                ],
+            ]
+        );
+
+
+        $this->end_controls_section();
+
+
 
 
     }
@@ -348,7 +387,8 @@ class CarAdsSlider extends Widget_Base
                 'size'       => $settings['size'] ?? 10,
                 'brands'     => $settings['brands'] ?? null,
                 'categories' => $settings['categories'] ?? null,
-                'sort_by'    => 'updated'.$settings['sort_by']
+                'properties' => $settings['properties'] ?? null,
+                'sort_by'    => $settings['sort_by']
             ];
 
             $products = $connector->getCarsFromElementor($params);

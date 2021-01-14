@@ -28,14 +28,16 @@ if (!class_exists('CarAdsAppQuickSearch')) {
 
             <div class="ca-flex ca-justify-center">
                 <div class="ca-w-auto">
-                    <div class="ca-text-2xl ca-font-medium ca-mb-4">
+                    <div class="car-ads-quick-search__header ca-text-white ca-text-3xl ca-font-medium ca-mb-4">
                         <?php echo __('Find din næste bil her - Søg blandt', 'car-ads'); ?>
-                        <?php echo count($products->items); ?>
+                        <?php echo $products->summary->totalItems; ?>
                         <?php echo __('biler', 'car-ads'); ?>
                     </div>
-                    <form class="ca-grid ca-grid-cols-1 md:ca-grid-cols-3 ca-gap-2" action="/<?php echo get_option('car-ads')['archive_slug'] ;?>" method="get">
+                    <form class="ca-grid ca-grid-cols-1 md:ca-grid-cols-3 ca-gap-2"
+                          action="/<?php echo get_option('car-ads')['archive_slug']; ?>" method="get">
 
-                        <select id="car-ads-quick-search__brands" name="brands[]" class="ca-rounded ca-w-full ca-h-10 ca-items-center">
+                        <select id="car-ads-quick-search__brands" name="brands[]"
+                                class="ca-rounded ca-w-full ca-h-10 ca-w-40 ca-bg-white ca-items-center ca-px-2">
                             <option selected disabled><?php echo __('Vælg bilmærke', 'car-ads'); ?></option>
                             <?php
                             foreach ($availableFilters['brands'] as $slug => $brand) {
@@ -47,7 +49,8 @@ if (!class_exists('CarAdsAppQuickSearch')) {
                         </select>
 
                         <select id="car-ads-quick-search__categories" name="categories[]"
-                                class="ca-rounded ca-w-full ca-h-10 ca-items-center">
+                                class="ca-rounded ca-w-full ca-h-10 ca-w-40 ca-bg-white ca-items-center ca-px-2">
+                            <option selected disabled><?php echo __('Vælg model', 'car-ads'); ?></option>
                             <?php
                             foreach ($availableFilters['categories'] as $slug => $categories) {
                                 ?>
@@ -59,7 +62,10 @@ if (!class_exists('CarAdsAppQuickSearch')) {
 
                         <button id="car-ads-quick-search__submit"
                                 type="submit"
-                                class="ca-rounded ca-h-10 ca-bg-primary ca-font-medium ca-uppercase ca-text-white"><?php echo __('Søg', 'car-ads'); ?></button>
+                                class="ca-rounded ca-h-10 ca-bg-secondary ca-px-2 bg-secondary font-medium ca-font-medium ca-uppercase ca-text-white">
+                            <?php echo __('Søg', 'car-ads'); ?>
+                        </button>
+
                     </form>
                 </div>
             </div>
@@ -67,10 +73,7 @@ if (!class_exists('CarAdsAppQuickSearch')) {
                 jQuery(function () {
                     jQuery('#car-ads-quick-search__brands').on('change', function (e) {
                         e.preventDefault();
-                        let optionSelected = jQuery("option:selected", this);
                         let valueSelected = this.value;
-
-                        console.log("<?php echo admin_url('admin-ajax.php'); ?>");
 
                         jQuery.ajax({
                             type: "post",
@@ -80,25 +83,29 @@ if (!class_exists('CarAdsAppQuickSearch')) {
                                 action: "carads_quicksearch_get_categories",
                                 brand: valueSelected,
                             },
-                            beforeSend: function() {
+                            beforeSend: function () {
 
                                 jQuery("#car-ads-quick-search__submit").html('<i class="fa fa-spinner fa-spin"></i>').prop('disabled', true);
                             },
                             success: function (response) {
+
                                 if (response.length) {
-                                    jQuery('#car-ads-quick-search__categories').children().remove();
-                                    jQuery.each(response, function (i, item) {
-                                        $('#car-ads-quick-search__categories').append(jQuery('<option>', {
+                                    jQuery('#car-ads-quick-search__categories').children().remove().end().append(jQuery('<option value="">Alle modeller</option>'));
+                                    jQuery.each(response, function (id, item) {
+                                        jQuery('#car-ads-quick-search__categories').append(jQuery('<option>', {
                                             value: item.slug,
                                             text: item.name
                                         }));
                                     });
                                     jQuery("#car-ads-quick-search__submit").text("Vis biler").prop('disabled', false);
                                 } else {
+                                    jQuery('#car-ads-quick-search__categories')
+                                        .children().remove().end()
+                                        .append(jQuery('<option>Ingen modeller fundet</option>'));
                                     jQuery("#car-ads-quick-search__submit").text("Ingen modeller fundet").prop('disabled', true);
                                     console.error("Ingen modeller fundet for: " + valueSelected)
                                 }
-                            }
+                            },
                         });
 
                     });
@@ -114,7 +121,7 @@ if (!class_exists('CarAdsAppQuickSearch')) {
         {
 
             $connector = new Connector();
-            $response  = $connector->get_brands_categories($_POST['brand']);
+            $response  = $connector->get_brands_categories((string) $_POST['brand']);
 
             print json_encode($response);
             wp_die();

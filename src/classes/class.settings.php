@@ -39,7 +39,11 @@ if (!class_exists('CarAdsSettings')):
                 ),
                 array(
                     'id' => 'car-ads-single-car',
-                    'title' => __('Single Car', 'car-ads')
+                    'title' => __('Bilkort (Single)', 'car-ads')
+                ),
+                array(
+                    'id' => 'car-ads-archive',
+                    'title' => __('Billiste (Archive)', 'car-ads')
                 ),
 //                array(
 //                    'id' => 'car-ads-theming',
@@ -150,6 +154,33 @@ if (!class_exists('CarAdsSettings')):
                         ]
                     ],
 
+                ],
+                'car-ads-archive' => [
+                    [
+                        'name' => 'includeDisabled',
+                        'label' => __('Inkluder solgte biler', 'car-ads'),
+                        'desc' => __('Skal der vises solgte biler i feedet?', 'car-ads'),
+                        'placeholder' => '',
+                        'type'    => 'select',
+                        'default' => 'yes',
+                        'options' => [
+                            'true' => 'Ja',
+                            'false'  => 'Nej'
+                        ]
+                    ],
+                    [
+                        'name' => 'includeDisabledSince',
+                        'label' => __('Hvor mange dage tilbage?', 'car-ads'),
+                        'desc' => __('Hvor mange dage tilbage skal de solgte biler vises i feedet?', 'car-ads'),
+                        'placeholder' => '',
+                        'type'    => 'select',
+                        'default' => '7',
+                        'options' => [
+                            '7' => '7 dage',
+                            '14'  => '14 dage',
+                            '30'  => '1 måned',
+                        ]
+                    ],
                 ],
                 'car-ads-theming' => [
                     [

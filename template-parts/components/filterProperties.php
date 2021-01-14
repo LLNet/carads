@@ -34,7 +34,7 @@ foreach ($properties as $key => $propGroup) {
                         <?php
                     }
                     ?>
-                    <button class="btn btn-block btn-primary"><?php _e('Apply', 'car-ads'); ?></button>
+                    <button class="btn btn-block btn-primary"><?php _e('Apply', 'car-app'); ?></button>
                 </div> <!-- card-body.// -->
             </div>
         </article>

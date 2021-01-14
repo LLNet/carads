@@ -2,7 +2,7 @@
     <header class="card-header">
         <a href="#" data-toggle="collapse" data-target="#collapse_aside2" class="ca-no-underline">
             <i class="icon-control fa fa-chevron-down"></i>
-            <h6 class="title"><?php echo __('Categories', 'car-ads'); ?></h6>
+            <h6 class="title"><?php echo __('Categories', 'car-app'); ?></h6>
         </a>
     </header>
     <div class="filter-content collapse" id="collapse_aside2">

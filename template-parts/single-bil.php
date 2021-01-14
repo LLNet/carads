@@ -18,8 +18,12 @@ $currency  = $connector->getCurrency();
                         <h3 class="name car_name ca-text-2xl ca-font-medium ca-overflow-ellipsis ca-overflow-hidden"><?php echo $product->name; ?></h3>
                         <p class="price ca-text-sm">
                             <?php
-                            echo __('Kontantpris', 'car-ads') . " " . number_format_i18n($product->pricing->{$currency}->price, 0);
-                            echo " " . $currency;
+                            if (!$product->disabled) {
+                                echo __('Kontantpris', 'car-app') . " " . number_format_i18n($product->pricing->{$currency}->price, 0);
+                                echo " " . $currency;
+                            } else {
+                                echo __('Solgt', 'car-app');
+                            }
                             ?>
                         </p>
                     </div>
@@ -27,31 +31,31 @@ $currency  = $connector->getCurrency();
                 <div class="header--right ca-p-2 lg:ca-w-1/2 ca-flex ca-items-center ca-justify-end">
                     <div class="ca-hidden md:ca-flex md:ca-justify-end">
                         <?php
-                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
+                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
                             ?>
                             <a href="#"
                                class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
                                data-target="modalByttepris">
-                                <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-ads'); ?>
+                                <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-app'); ?>
                             </a>
                             <?php
                         }
-                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
+                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
                             ?>
                             <a href="#"
                                class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  show-modal"
                                data-target="modalBestil">
-                                <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-ads'); ?>
+                                <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-app'); ?>
                             </a>
                             <?php
                         }
-                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
+                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
                             ?>
                             <a href="#"
                                class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white  js-phone-switch"
                                data-href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>">
                                 <span class="text-cta ca-block" id="cta_before"><i
-                                            class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-ads'); ?></span>
+                                            class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-app'); ?></span>
                                 <span class="text-value ca-hidden" id="cta_after"><i
                                             class="fa fa-fw fa-phone"></i> Tlf <?php echo get_option('car-ads-single-car')['phonenumber']; ?></span>
                             </a>
@@ -60,16 +64,20 @@ $currency  = $connector->getCurrency();
                         ?>
                     </div>
                     <div class="ca-flex ca-justify-between md:ca-hidden">
-                        <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
-                            <a href="#"
-                               class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
-                               data-target="modalByttepris">
-                                <i class="fa fa-fw fa-calculator"></i>
-                            </a>
-                            <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Beregn byttepris', 'car-ads'); ?></span>
-                        </div>
                         <?php
-                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
+                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
+                            ?>
+                            <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
+                                <a href="#"
+                                   class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white show-modal"
+                                   data-target="modalByttepris">
+                                    <i class="fa fa-fw fa-calculator"></i>
+                                </a>
+                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Beregn byttepris', 'car-app'); ?></span>
+                            </div>
+                            <?php
+                        }
+                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="#"
@@ -77,18 +85,18 @@ $currency  = $connector->getCurrency();
                                    data-target="modalBestil">
                                     <i class="fa fa-fw fa-car"></i>
                                 </a>
-                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Bestil prøvetur', 'car-ads'); ?></span>
+                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Bestil prøvetur', 'car-app'); ?></span>
                             </div>
                             <?php
                         }
-                        if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
+                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="tel:+45<?php echo get_option('car-ads-single-car')['phonenumber']; ?>"
                                    class="single-car--call-us ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white ">
                                     <i class="fa fa-fw fa-phone"></i>
                                 </a>
-                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Ring til os', 'car-ads'); ?></span>
+                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Ring til os', 'car-app'); ?></span>
                             </div>
                             <?php
                         }
@@ -105,9 +113,10 @@ $currency  = $connector->getCurrency();
                     <?php
                     if (get_option('car-ads-single-car')['show_back_to_archive'] === "yes") {
                         ?>
-                        <a href="/<?php echo get_option('car-ads')['archive_slug']; ?>" class="ca-mt-2 ca-mb-2 ca-rounded ca-inline-flex ca-items-center ca-text-secondary text-secondary">
+                        <a href="/<?php echo get_option('car-app')['archive_slug']; ?>"
+                           class="ca-mt-2 ca-mb-2 ca-rounded ca-inline-flex ca-items-center ca-text-secondary text-secondary">
                             <i class="fa fa-fw fa-caret-left"></i>
-                            <?php echo __('Tilbage til oversigten', 'car-ads'); ?>
+                            <?php echo __('Tilbage til oversigten', 'car-app'); ?>
                         </a>
                         <?php
                     }
@@ -172,32 +181,36 @@ $currency  = $connector->getCurrency();
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
                     <div class="ca-block lg:ca-hidden">
-                        <?php include("components/single-car-santander.php"); ?>
+                        <?php
+                        if (!$product->disabled) {
+                            include("components/single-car-santander.php");
+                        }
+                        ?>
                     </div>
 
                     <div class="accordion" x-data="{selected:1}">
                         <div class="ca-mb-4">
-                            <div class="ca-bg-gray-600 ca-rounded-t ca-py-2 ca-px-4 ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
+                            <div class="ca-bg-text ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
                                  id="Beskrivelse" @click="selected !== 1 ? selected = 1 : selected = null">
-                                <span><?php echo __('Beskrivelse', 'car-ads'); ?></span>
+                                <span><?php echo __('Beskrivelse', 'car-app'); ?></span>
                                 <i class="fa fa-chevron-down" x-show="selected != 1"></i>
                                 <i class="fa fa-chevron-up" x-show="selected == 1"></i>
                             </div>
-                            <div class="ca-bg-white ca-border-solid ca-border ca-border-l ca-border-r ca-border-b ca-border-lightgrey ca-p-4 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700"
-                                 x-show="selected == 1">
+                            <div class="ca-bg-lightgrey ca-p-4 md:ca-p-10 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700 ca-animate"
+                                 x-show.transition.inout.duration.300ms="selected == 1">
                                 <?php echo $product->description; ?>
                             </div>
                         </div>
 
                         <div class="ca-mb-4">
-                            <div class="ca-bg-gray-600 ca-rounded-t ca-py-2 ca-px-4 ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
+                            <div class="ca-bg-text ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
                                  id="specifications" @click="selected !== 2 ? selected = 2 : selected = null">
-                                <span><?php echo __('Specifikationer', 'car-ads'); ?></span>
+                                <span><?php echo __('Specifikationer', 'car-app'); ?></span>
                                 <i class="fa fa-chevron-down" x-show="selected != 2"></i>
                                 <i class="fa fa-chevron-up" x-show="selected == 2"></i>
                             </div>
-                            <div class="ca-bg-white ca-border-solid ca-border ca-border-l ca-border-r ca-border-b ca-border-lightgrey ca-p-4 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700"
-                                 x-show="selected == 2">
+                            <div class="ca-bg-lightgrey ca-p-4 md:ca-p-10 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700 ca-animate"
+                                 x-show.transition.inout.duration.300ms="selected == 2">
                                 <?php include("components/single-car-specifications.php"); ?>
                             </div>
                         </div>
@@ -209,12 +222,16 @@ $currency  = $connector->getCurrency();
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
                     <div class="ca-hidden lg:ca-flex car-order-1">
-                        <?php include("components/single-car-santander.php"); ?>
+                        <?php
+                        if (!$product->disabled) {
+                            include("components/single-car-santander.php");
+                        }
+                        ?>
                     </div>
                     <?php
-                    if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['contactform_shortcode'])) {
+                    if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['contactform_shortcode'])) {
                         ?>
-                        <div class="single-car--contact-us ca-bg-white ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
+                        <div class="single-car--contact-us ca-bg-white bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
                             <?php echo do_shortcode(get_option('car-ads-single-car')['contactform_shortcode']); ?>
                         </div>
                         <?php
@@ -241,7 +258,7 @@ $currency  = $connector->getCurrency();
         <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-auto">
             <!-- modal header -->
             <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
-                <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Byttepris', 'car-ads'); ?></h3>
+                <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Byttepris', 'car-app'); ?></h3>
                 <button class="ca-text-black close-modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <!-- modal body -->
@@ -259,7 +276,7 @@ $currency  = $connector->getCurrency();
 /**
  * Bestil prøvetur modal
  */
-if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
+if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
     ?>
     <div id="modalBestil"
          class="modal ca-h-screen ca-w-full ca-transition ca-duration-300 ca-ease-in-out ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
@@ -267,7 +284,7 @@ if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-sing
         <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-xl ca-w-auto ca-transition ca-duration-300 ca-ease-in-out">
             <!-- modal header -->
             <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
-                <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Bestil prøvetur', 'car-ads'); ?></h3>
+                <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Bestil prøvetur', 'car-app'); ?></h3>
                 <button class="ca-text-black close-modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <!-- modal body -->
@@ -283,7 +300,7 @@ if (!empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-sing
     <?php
 }
 // Only show santander is car has a santanderPaymentPerMonth value
-if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') != '-' && $connector->get_field($product->customFields, 'santanderPaymentPerMonth') >= 0) {
+if (!$product->disabled && $connector->get_field($product->customFields, 'santanderPaymentPerMonth') != '-' && $connector->get_field($product->customFields, 'santanderPaymentPerMonth') >= 0) {
     ?>
     <div id="modalSantander"
          class="modal ca-h-screen ca-w-full ca-fixed ca-left-0 ca-top-0 ca-flex ca-justify-center ca-items-center ca-bg-black ca-bg-opacity-50 ca-hidden ca-z-40">
@@ -291,7 +308,7 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
         <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-auto md:ca-w-96">
             <!-- modal header -->
             <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
-                <h3 class="ca-font-semibold ca-text-lg"><?php echo __(' Beregn finansiering', 'car-ads'); ?></h3>
+                <h3 class="ca-font-semibold ca-text-lg"><?php echo __(' Beregn finansiering', 'car-app'); ?></h3>
                 <button class="ca-text-black close-modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <!-- modal body -->
@@ -315,8 +332,9 @@ if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') !=
 }
 ?>
 <?php
-$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-?>
+if (!$product->disabled) {
+    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    ?>
     <script>
         jQuery(function ($) {
 
@@ -351,12 +369,12 @@ $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             jQuery('[name="ca-url"').val("<?php echo $actual_link; ?>");
             jQuery('[name="ca-url"').attr("value", "<?php echo $actual_link; ?>");
 
-            $(window).scroll(function () {
-                if ($(window).scrollTop() >= 250) {
-                    $('.single-bil--header').addClass('fixed-header');
+            jQuery(window).scroll(function () {
+                if (jQuery(window).scrollTop() >= 250) {
+                    jQuery('.single-bil--header').addClass('fixed-header');
                     jQuery('.single-bil--content').addClass('fixed');
                 } else {
-                    $('.single-bil--header').removeClass('fixed-header');
+                    jQuery('.single-bil--header').removeClass('fixed-header');
                     jQuery('.single-bil--content').removeClass('fixed');
                 }
             });
@@ -374,11 +392,8 @@ $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                 }
             });
 
-
         });
     </script>
-
-<?php
-
-
+    <?php
+}
 get_footer();

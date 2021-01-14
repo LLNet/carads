@@ -125,7 +125,7 @@ class Connector
     public function setLocalizedApi()
     {
 
-        if ( false === ( $cached = get_transient( 'CarAds_setLocalizedApi' ) ) ) {
+        if (false === ($cached = get_transient('CarAds_setLocalizedApi'))) {
             // It wasn't there, so regenerate the data and save the transient
             $locale = substr(get_locale(), 0, 2);
             // loop for at finde website med sprog = get_locale()
@@ -145,11 +145,11 @@ class Connector
                 }
             }
         } else {
-            $cache = get_transient('CarAds_setLocalizedApi');
+            $cache              = get_transient('CarAds_setLocalizedApi');
             $this->localizedApi = new Connector($cache->consumerKey, $cache->consumerSecret, $cache->publicToken);;
-            $this->language     = $cache->language;
-            $this->vat          = $cache->vat;
-            $this->currency     = $cache->currency;
+            $this->language = $cache->language;
+            $this->vat      = $cache->vat;
+            $this->currency = $cache->currency;
         }
 
 
@@ -162,19 +162,19 @@ class Connector
     public function getCustomField($name)
     {
 
-        if ( false === ( $cached = get_transient( 'CarAds_customfield_'.$name ) ) ) {
+        if (false === ($cached = get_transient('CarAds_customfield_' . $name))) {
             // It wasn't there, so regenerate the data and save the transient
             $settings     = $this->headless->get("/settings");
             $customFields = $settings->customFields;
             foreach ($customFields as $key => $customField) {
                 if ($customField->name === $name) {
-                    set_transient( 'CarAds_customfield_'.$name, $customField->value, 1 * DAY_IN_SECONDS );
-                    return get_transient('CarAds_customfield_'.$name);
+                    set_transient('CarAds_customfield_' . $name, $customField->value, 1 * DAY_IN_SECONDS);
+                    return get_transient('CarAds_customfield_' . $name);
                 }
             }
 
         } else {
-            return get_transient('CarAds_customfield_'.$name);
+            return get_transient('CarAds_customfield_' . $name);
         }
 
 
@@ -191,7 +191,7 @@ class Connector
         ini_set('max_execution_time', 900);
         set_time_limit(900);
 
-        $offset = "?size=50";
+        $offset = "?size=50". $this->includeDisabled();
 
         if (get_option('_carads_last_updated')) {
             $offset .= "&updated[gte]=" . urlencode(get_option('_carads_last_updated'));
@@ -463,7 +463,7 @@ class Connector
             }
         }
 
-        $products = $this->headless->get('/products' . $search);
+        $products = $this->headless->get('/products' . $search . $this->includeDisabled());
 
         if (isset($products->error)) {
             throw new \Exception($products->items);
@@ -539,7 +539,7 @@ class Connector
 
     public function getMinMaxPrice()
     {
-        $products = $this->headless->get("/products?size=1");
+        $products = $this->headless->get("/products?size=1" . $this->includeDisabled());
         if (isset($products->error)) {
             throw new \Exception($products->items);
         }
@@ -625,7 +625,7 @@ class Connector
 
         }
 
-        $products = $this->headless->get("/products?size=1" . $search);
+        $products = $this->headless->get("/products?size=1" . $search . $this->includeDisabled());
         if (property_exists($products, 'error')) {
             print $products->error;
         } else {
@@ -741,6 +741,20 @@ class Connector
             }
         }
 
+//        print "<pre>";
+//        print_r($products->aggregations->filtered->properties);
+//        print "</pre>";
+        foreach ($products->aggregations->global->properties as $key => $propGroup) {
+            foreach ($propGroup->groupItems as $k => $group) {
+                $groupName = $group->item->name;
+                foreach ($group->items as $data) {
+                    if (!empty($data->item->slug)) {
+                        $getDropdownValuesForElementor['properties'][$data->item->slug] = $groupName . " " . $data->item->value;
+                    }
+                }
+            }
+        }
+
 
 //
 //        foreach ($products->aggregations->filtered->properties as $key => $propGroup) {
@@ -762,6 +776,7 @@ class Connector
 //        }
         ksort($getDropdownValuesForElementor['brands']);
         ksort($getDropdownValuesForElementor['categories']);
+        ksort($getDropdownValuesForElementor['properties']);
         return $getDropdownValuesForElementor;
 
     }
@@ -772,28 +787,40 @@ class Connector
         $search = "?filter";
         if (!empty($params)) {
 
+            // Brands
             if (isset($params['brands']) && !empty($params['brands'])) {
-
                 foreach ($params['brands'] as $key => $slug) {
                     $search .= '&brands[]=' . $slug;
                 }
             }
 
             // Categories
+            if (isset($params['properties']) && !empty($params['properties'])) {
+                foreach ($params['properties'] as $key => $slug) {
+                    $search .= '&properties[]=' . $slug;
+                }
+            }
+
+            // Properties
             if (isset($params['categories']) && !empty($params['categories'])) {
                 foreach ($params['categories'] as $key => $slug) {
                     $search .= '&categories[]=' . $slug;
                 }
             }
+
+            // SortBy
+            if (isset($params['sort_by']) && !empty($params['sort_by'])) {
+                $search .= '&sort_by=' . $params['sort_by'];
+            }
+
+            // Number of cars
             if (isset($params['size']) && !empty($params['size'])) {
-
-                    $search .= '&size=' . $params['size'];
-
+                $search .= '&size=' . $params['size'];
             }
 
         }
 
-        $products = $this->headless->get('/products?' . $search);
+        $products = $this->headless->get('/products?' . $search . $this->includeDisabled());
 
 
         if (isset($products->error)) {
@@ -805,20 +832,36 @@ class Connector
 
     public function get_brands_categories($brand)
     {
-        $products = $this->headless->get('/products?brand=' . $brand);
+        $products       = $this->headless->get('/products?brand=' . $brand . $this->includeDisabled());
         $all_categories = $products->aggregations->filtered->categories;
 
 
         $categories = [];
-        foreach($all_categories as $key => $category) {
-            if($category->count > 0) {
+        foreach ($all_categories as $key => $category) {
+            if ($category->count > 0) {
                 $categories[] = $category->item;
             }
         }
-
+        usort($categories, function ($a, $b) {
+            return $a->slug <=> $b->slug;
+        });
         return $categories;
 
     }
+
+    public function includeDisabled()
+    {
+        $includeDisabled      = get_option('car-ads-archive')['includeDisabled'];
+        $includeDisabledSince = get_option('car-ads-archive')['includeDisabledSince'];
+
+        if (!empty($includeDisabled) && $includeDisabled == "true" && !empty($includeDisabledSince)) {
+
+            $since = date("Y-m-d H:i:s", strtotime("-" . $includeDisabledSince . " days"));
+            return "&includeDisabled=true&updated[gt]=" . urlencode($since);
+        }
+        return "";
+    }
+
 
 }
 

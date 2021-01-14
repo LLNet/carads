@@ -2,8 +2,8 @@
 get_header();
 $connector        = new CarAds\Connector();
 $products         = $connector->search();
-$archive_slug     = get_option('car-ads')['archive_slug'] ?? 'biler';
-$single_slug      = get_option('car-ads')['single_slug'] ?? 'bil';
+$archive_slug     = get_option('car-app')['archive_slug'] ?? 'biler';
+$single_slug      = get_option('car-app')['single_slug'] ?? 'bil';
 $filters          = $connector->filters();
 $availableFilters = $connector->availableFilters($products);
 ?>
@@ -48,8 +48,8 @@ $availableFilters = $connector->availableFilters($products);
                             if (property_exists($products, 'summary')) {
                                 ?>
                                 <div>
-                                <span class='number-of-cars-found ca-leading-6 lg:ca-leading-normal ca-text-primary ca-mr-2 ca-text-3xl lg:ca-text-3xl ca-font-medium'><?php echo  $products->summary->totalItems . " " . __('biler', 'car-ads'); ?></span>
-                                <span class='ca-leading-6 lg:ca-leading-normal ca-font-thin font-thin ca-text-white lg:ca-text-3xl'><?php echo __('matcher din søgning', 'car-ads'); ?></span>
+                                <span class='number-of-cars-found ca-leading-6 lg:ca-leading-normal ca-text-primary ca-mr-2 ca-text-3xl lg:ca-text-3xl ca-font-medium'><?php echo  $products->summary->totalItems . " " . __('biler', 'car-app'); ?></span>
+                                <span class='ca-leading-6 lg:ca-leading-normal ca-font-thin font-thin ca-text-white lg:ca-text-3xl'><?php echo __('matcher din søgning', 'car-app'); ?></span>
                                 </div>
                                 <?php
                             }
@@ -112,7 +112,7 @@ $availableFilters = $connector->availableFilters($products);
                                 if (property_exists($products, 'navigation')) {
                                     if (property_exists($products->navigation, 'previous')) {
                                         ?>
-                                        <a href="<?php echo $products->navigation->previous; ?>"><?php _e('Previous', 'car-ads'); ?></a>
+                                        <a href="<?php echo $products->navigation->previous; ?>"><?php _e('Previous', 'car-app'); ?></a>
                                         <?php
                                     }
                                     ?>
@@ -120,7 +120,7 @@ $availableFilters = $connector->availableFilters($products);
                                     <?php
                                     if (property_exists($products->navigation, 'next')) {
                                         ?>
-                                        <a href="<?php echo $products->navigation->next; ?>"><?php _e('Next', 'car-ads'); ?></a>
+                                        <a href="<?php echo $products->navigation->next; ?>"><?php _e('Next', 'car-app'); ?></a>
                                         <?php
                                     }
                                 }

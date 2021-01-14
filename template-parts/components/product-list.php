@@ -2,15 +2,16 @@
     <?php
     if ($product->image->sizes->i1024x768) {
         ?>
-        <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant') ); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
+        <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
            class="img-wrap ca-col-span-4 md:ca-col-span-2 lg:ca-col-span-1 ca-flex ca-w-full md:ca-w-auto ca-flex-shrink-0 ca-height-full ca-overflow-hidden md:ca-max-w-md">
             <img src="<?php echo str_replace("i1024x768", "500x250", $product->image->sizes->i1024x768); ?>"
-                 data-src="<?php echo $product->image->sizes->i1024x768; ?>" alt="product" class="ca-object-fit ca-w-full">
+                 data-src="<?php echo $product->image->sizes->i1024x768; ?>" alt="product"
+                 class="ca-object-fit ca-w-full">
         </a>
         <?php
     }
     ?>
-    <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant') ); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
+    <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
        class="car--info__title md:ca-col-span-2 lg:ca-col-span-3 ca-no-underline"
        style="color: unset; text-decoration: none !important;"
     >
@@ -20,7 +21,7 @@
             <div class="car--info--content ca-w-full md:ca-flex ca-flex-wrap">
                 <div class="car--info--content__specs ca-w-full lg:ca-w-3/4">
                     <div class="ca-grid ca-grid-cols-3 lg:ca-grid-cols-4 ca-gap-1">
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Kilometer', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
@@ -33,7 +34,7 @@
                                 ?>
                             </dd>
                         </dl>
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Årgang', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
@@ -41,7 +42,7 @@
                                 ?>
                             </dd>
                         </dl>
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Drivmiddel', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
@@ -49,7 +50,7 @@
                                 ?>
                             </dd>
                         </dl>
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Gearkasse', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
@@ -67,11 +68,11 @@
                                 ?>
                             </dd>
                         </dl>
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Energiklasse', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">-</dd>
                         </dl>
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <?php
                             if ("El" === $connector->get_field($product->properties, 'Propellant')) {
                                 ?>
@@ -101,7 +102,7 @@
                             ?>
                         </dl>
 
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('HK', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
@@ -110,7 +111,7 @@
                                 ?>
                             </dd>
                         </dl>
-                         <dl class="ca-flex ca-flex-col">
+                        <dl class="ca-flex ca-flex-col">
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Registreringsår', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
@@ -121,10 +122,18 @@
                     </div>
                 </div>
                 <div class="car--info--content__price ca-w-full lg:ca-w-1/4 ca-flex ca-justify-center ca-items-center lg:ca-items-end lg:ca-justify-center ca-flex-col">
-                    <span class="ca-text-2xl md:ca-text-xl ca-mt-2 lg:ca-mt-0 ca-font-medium"><?php echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency(); ?></span>
+                    <span class="ca-text-2xl md:ca-text-xl ca-mt-2 lg:ca-mt-0 ca-font-medium">
+                        <?php
+                        if (!$product->disabled) {
+                            echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                        } else {
+                            echo __('Solgt', 'car-app');
+                        }
+                        ?>
+                    </span>
                     <?php
                     $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
-                    if (!empty($santanderPrice) && $santanderPrice != "-") {
+                    if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                         ?>
                         <small class="leasing ca-opacity-50 ca-font-medium">
                             Fra. <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
@@ -138,4 +147,5 @@
 
         </figcaption>
     </a>
+
 </div>

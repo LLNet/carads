@@ -48,16 +48,25 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
             <h2 class="ca-text-center ca-font-medium ca-text-xl"><?php echo $product->brand->name . " " . $product->category->name; ?></h2>
             <h3 class="ca-text-center ca-mb-2 ca-text-lg"><?php echo $connector->get_field($product->properties, 'Variant'); ?></h3>
 
-            <div class="ca-text-center ca-font-medium ca-text-2xl ca-mb-0 mb-0"><?php echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency(); ?></div>
-            <div class="ca-hidden hidden ca-text-sm ca-text-center ca-font-thin font-thin ca-mb-2"><?php _e('kontantpris inkl. moms', 'car-app'); ?></div>
-
+            <div class="ca-text-center ca-font-medium ca-text-2xl ca-mb-0 mb-0">
+                <?php
+                if (!$product->disabled) {
+                    echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                } else {
+                    echo __('Solgt', 'car-app');
+                }
+                ?>
+            </div>
+            <div class="ca-hidden hidden ca-text-sm ca-text-center ca-font-thin font-thin ca-mb-2">
+                <?php _e('kontantpris inkl. moms', 'car-app'); ?>
+            </div>
             <?php
-            if (!empty($santanderPrice) && $santanderPrice != "-") {
+            if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                 ?>
                 <div class="ca-text-center ca-text-lg ca-font-medium ca-mb-0 mb-0">
                     Fra. <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
-                    DKK. /md.</div>
-
+                    DKK. /md.
+                </div>
                 <?php
             }
             ?>
