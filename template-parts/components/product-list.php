@@ -1,6 +1,7 @@
 <?php
-$santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
-$findleasingFinancial = $connector->get_field($product->customFields, 'findleasingFinancial');
+$santanderPrice          = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+$findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
+$findleasingPriceMonthly = $connector->get_field($product->customFields, 'findleasingPriceMonthly');
 ?>
 <div class="car md:ca-grid md:ca-grid-cols-4 ca-mb-8 ca-bg-white ca-w-full ca-border ca-border-solid ca-border-lightgrey">
     <?php
@@ -10,11 +11,17 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
            class="img-wrap ca-relative ca-col-span-4 md:ca-col-span-2 lg:ca-col-span-1 ca-flex ca-w-full md:ca-w-auto ca-flex-shrink-0 ca-height-full ca-overflow-hidden md:ca-max-w-md">
             <?php
             if (!empty($findleasingFinancial) && $findleasingFinancial != '-') {
-                ?>
-                <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
-                    <?php echo __('Se leasingberegner', 'car-app'); ?>
-                </div>
-                <?php
+                if (!empty($findleasingPriceMonthly) && $findleasingPriceMonthly != '-') {
+                    ?>
+                    <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+
+                        <?php
+                            echo __('Leasing fra', 'car-app'). ": ";
+                            echo number_format_i18n($findleasingPriceMonthly). " DKK";
+                        ?>
+                    </div>
+                    <?php
+                }
             }
             ?>
             <img src="<?php echo str_replace("i1024x768", "500x250", $product->image->sizes->i1024x768); ?>"
@@ -38,9 +45,8 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
        style="color: unset; text-decoration: none !important;"
     >
         <figcaption class="car--info ca-p-8 ca-w-full">
-
-            <span class="ca-text-2xl ca-font-medium"><?php echo $product->name; ?></span>
-            <div class="car--info--content ca-w-full md:ca-flex ca-flex-wrap">
+            <div class="ca-text-2xl ca-font-medium ca-mb-4"><?php echo $product->name; ?></div>
+            <div class="car--info--content md:ca-flex">
                 <div class="car--info--content__specs ca-w-full lg:ca-w-3/4">
                     <div class="ca-grid ca-grid-cols-3 lg:ca-grid-cols-4 ca-gap-1">
                         <dl class="ca-flex ca-flex-col">
@@ -57,7 +63,7 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
                             </dd>
                         </dl>
                         <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Årgang', 'car-app'); ?></dt>
+                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Modelår', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
                                 echo $connector->get_field($product->properties, 'Year');
@@ -90,10 +96,23 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
                                 ?>
                             </dd>
                         </dl>
-                        <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Energiklasse', 'car-app'); ?></dt>
-                            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">-</dd>
-                        </dl>
+                        <?php
+                        if (!empty($connector->get_field($product->properties, 'GreenTax')) && $connector->get_field($product->properties, 'GreenTax') != '-') {
+                            ?>
+                            <dl class="ca-flex ca-flex-col">
+                                <dt class="ca-font-thin ca-leading-5"><?php _e('Grøn ejerafgift', 'car-app'); ?></dt>
+                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                    <?php echo $connector->get_field($product->properties, 'GreenTax'); ?>
+                                    <?php
+                                    if ($connector->get_field($product->properties, 'GreenTaxPeriod')) {
+                                        echo "kr. / år";
+                                    }
+                                    ?>
+                                </dd>
+                            </dl>
+                            <?php
+                        }
+                        ?>
                         <dl class="ca-flex ca-flex-col">
                             <?php
                             if ("El" === $connector->get_field($product->properties, 'Propellant')) {
@@ -137,7 +156,8 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
                             <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Registreringsår', 'car-app'); ?></dt>
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
-                                echo $connector->get_field($product->properties, 'RegistrationDate');
+                                $date = $connector->get_field($product->properties, 'RegistrationDate');
+                                echo date("m/Y", strtotime($date));
                                 ?>
                             </dd>
                         </dl>
