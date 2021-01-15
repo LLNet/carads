@@ -415,7 +415,7 @@ class CarAdsSlider extends Widget_Base
             <div class="ca-flex ca-items-center ca-justify-center ca-h-24 flex items-center justify-center h-24">
                 <button id="prev-<?php echo $id_int; ?>"
                         class="slick-prev slick-arrow
-                        ca-z-20 ca-mr-6  ca-h-10 ca-w-10 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-flex ca-items-center ca-justify-center
+                        ca-z-20 ca-mr-6  ca-h-10 ca-w-10 ca-bg-white ca-border ca-border-primary ca-rounded-full hover:ca-rounded-full ca-flex ca-items-center ca-justify-center
                         ca-text-primary ca-translate ca-transform focus:ca-bg-primary focus:ca-text-white hover:ca-bg-primary hover:ca-text-white
                         z-20 mr-6 mr-6 h-10 w-10 bg-white border border-primary rounded-full flex items-center justify-center
                         text-primary translate transform focus:bg-primary focus:text-white hover:bg-primary hover:text-white">
@@ -435,7 +435,7 @@ class CarAdsSlider extends Widget_Base
                 ?>
                 <button id="next-<?php echo $id_int; ?>"
                         class="slick-next slick-arrow
-                        ca-z-20 ca-ml-6 ca-h-10 ca-w-10 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-flex ca-items-center ca-justify-center ca-text-primary
+                        ca-z-20 ca-ml-6 ca-h-10 ca-w-10 ca-bg-white ca-border ca-border-primary ca-rounded-full hover:ca-rounded-full ca-flex ca-items-center ca-justify-center ca-text-primary
                         ca-translate ca-transform focus:ca-bg-primary focus:ca-text-white hover:ca-bg-primary hover:ca-text-white
                         z-20 ml-6 h-10 w-10 bg-white border border-primary rounded-full flex items-center justify-center text-primary translate
                         transform focus:bg-primary focus:text-white hover:bg-primary hover:text-white">

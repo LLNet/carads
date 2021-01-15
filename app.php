@@ -87,8 +87,24 @@ if (!class_exists('CarAdsApp')) {
 
             // Load optional translations
             load_plugin_textdomain('car-ads');
+            add_action( 'widgets_init', [$this, 'carads_widgets_areas'] );
 
         }
+
+        public function carads_widgets_areas() {
+
+
+            register_sidebar( array(
+                'name'          => 'Under Billiste',
+                'id'            => 'carads_below_archive',
+                'before_widget' => '<div class="pr-0 md:pr-20 lg:pr-8 text-left mb-16 md:mb-0 text-base">',
+                'after_widget'  => '</div>',
+                'before_title'  => '<h1 class="title-font font-light text-text text-2xl mb-8 pr-4">',
+                'after_title'   => '</h1>',
+            ) );
+
+        }
+
 
         public function cronstarter_deactivate()
         {

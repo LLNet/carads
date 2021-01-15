@@ -133,5 +133,12 @@ $availableFilters = $connector->availableFilters($products);
             </div>
 
     </form>
+
+    <div class="ca-container ca-mx-auto">
+        <?php
+        dynamic_sidebar('carads_below_archive');
+        ?>
+    </div>
+
 <?php
 get_footer();
