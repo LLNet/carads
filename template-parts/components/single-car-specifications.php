@@ -18,7 +18,7 @@
         </dd>
     </dl>
      <dl class="ca-flex ca-flex-col">
-        <dt class="ca-font-thin ca-leading-5"><?php _e('Årgang', 'car-app'); ?></dt>
+        <dt class="ca-font-thin ca-leading-5"><?php _e('Modelår', 'car-app'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             echo $connector->get_field($product->properties, 'Year');
@@ -29,7 +29,8 @@
         <dt class="ca-font-thin ca-leading-5"><?php _e('Registreringsår', 'car-app'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
-            echo $connector->get_field($product->properties, 'RegistrationDate');
+            $date = $connector->get_field($product->properties, 'RegistrationDate');
+            echo date("m/Y", strtotime($date));
             ?>
         </dd>
     </dl>
@@ -186,16 +187,32 @@
         }
         ?>
     </dl>
-
      <dl class="ca-flex ca-flex-col">
         <dt class="ca-font-thin ca-leading-5"><?php _e('Vægtafgift', 'car-app'); ?></dt>
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php echo $connector->get_field($product->properties, 'WeightTax'); ?>
             <?php
             if ($connector->get_field($product->properties, 'WeightTaxPeriod')) {
-                echo "kr. / " . $connector->get_field($product->properties, 'WeightTaxPeriod') . ". måned";
+                echo "kr. hver " . $connector->get_field($product->properties, 'WeightTaxPeriod') . ". md";
             }
             ?>
         </dd>
     </dl>
+    <?php
+    if(!empty($connector->get_field($product->properties, 'GreenTax')) && $connector->get_field($product->properties, 'GreenTax') != '-') {
+        ?>
+        <dl class="ca-flex ca-flex-col">
+            <dt class="ca-font-thin ca-leading-5"><?php _e('Grøn ejerafgift', 'car-app'); ?></dt>
+            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                <?php echo $connector->get_field($product->properties, 'GreenTax'); ?>
+                <?php
+                if ($connector->get_field($product->properties, 'GreenTaxPeriod')) {
+                    echo "kr. / år";
+                }
+                ?>
+            </dd>
+        </dl>
+        <?php
+    }
+    ?>
 </div>
