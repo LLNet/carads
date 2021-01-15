@@ -98,13 +98,10 @@ jQuery(document).ready(function () {
                 arrows: true,
                 fade: true,
                 dots: false,
-                nextArrow: $('.main-slider-next'),
-                prevArrow: $('.main-slider-prev'),
+                nextArrow: jQuery('.main-slider-next'),
+                prevArrow: jQuery('.main-slider-prev'),
             });
-            $('.thumb-slider').hide();
-
-
-
+            jQuery('.thumb-slider').hide();
 
         } else {
             jQuery('.main-slider').slick({
@@ -114,8 +111,8 @@ jQuery(document).ready(function () {
                 fade: true,
                 dots: false,
                 asNavFor: '.thumb-slider',
-                nextArrow: $('.main-slider-next'),
-                prevArrow: $('.main-slider-prev'),
+                nextArrow: jQuery('.main-slider-next'),
+                prevArrow: jQuery('.main-slider-prev'),
             });
             jQuery('.thumb-slider').slick({
                 slidesToShow: 4,
@@ -125,8 +122,8 @@ jQuery(document).ready(function () {
                 focusOnSelect: true,
                 centerMode: true,
                 centerPadding: '40px',
-                nextArrow: $('#thumb-next'),
-                prevArrow: $('#thumb-prev'),
+                nextArrow: jQuery('#thumb-next'),
+                prevArrow: jQuery('#thumb-prev'),
             });
         }
     }
