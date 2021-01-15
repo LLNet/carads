@@ -10,9 +10,8 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
     if ($product->image->sizes->i1024x768) {
         ?>
         <div class="ca-w-full ca-h-80 ca-relative ca-flex-none">
-
             <?php
-            if (!empty($findleasingFinancial)) {
+            if (!empty($findleasingFinancial) && $findleasingFinancial != '-') {
                 ?>
                 <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
                     <?php echo __('Se leasingberegner', 'car-app'); ?>
@@ -20,8 +19,6 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
                 <?php
             }
             ?>
-
-
             <img src="<?php echo str_replace("i1024x768", "500x250", $product->image->sizes->i1024x768); ?>"
                  data-src="<?php echo $product->image->sizes->i1024x768; ?>" alt="product"
                  class="ca-w-full ca-object-cover ca-object-center"
@@ -31,9 +28,7 @@ $findleasingFinancial = $connector->get_field($product->customFields, 'findleasi
             if (property_exists($product->location->address, 'city')) {
                 ?>
                 <div class="ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
-
                     <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
-
                 </div>
                 <?php
             }

@@ -1,12 +1,34 @@
+<?php
+$santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+$findleasingFinancial = $connector->get_field($product->customFields, 'findleasingFinancial');
+?>
 <div class="car md:ca-grid md:ca-grid-cols-4 ca-mb-8 ca-bg-white ca-w-full ca-border ca-border-solid ca-border-lightgrey">
     <?php
     if ($product->image->sizes->i1024x768) {
         ?>
         <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
-           class="img-wrap ca-col-span-4 md:ca-col-span-2 lg:ca-col-span-1 ca-flex ca-w-full md:ca-w-auto ca-flex-shrink-0 ca-height-full ca-overflow-hidden md:ca-max-w-md">
+           class="img-wrap ca-relative ca-col-span-4 md:ca-col-span-2 lg:ca-col-span-1 ca-flex ca-w-full md:ca-w-auto ca-flex-shrink-0 ca-height-full ca-overflow-hidden md:ca-max-w-md">
+            <?php
+            if (!empty($findleasingFinancial) && $findleasingFinancial != '-') {
+                ?>
+                <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+                    <?php echo __('Se leasingberegner', 'car-app'); ?>
+                </div>
+                <?php
+            }
+            ?>
             <img src="<?php echo str_replace("i1024x768", "500x250", $product->image->sizes->i1024x768); ?>"
                  data-src="<?php echo $product->image->sizes->i1024x768; ?>" alt="product"
                  class="ca-object-fit ca-w-full">
+            <?php
+            if (property_exists($product->location->address, 'city')) {
+                ?>
+                <div class="ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
+                    <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
+                </div>
+                <?php
+            }
+            ?>
         </a>
         <?php
     }
@@ -136,7 +158,7 @@
                     if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                         ?>
                         <small class="leasing ca-opacity-50 ca-font-medium">
-                            <?php echo __('Fra', 'car-app'); ?> <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
+                            <?php echo __('Fra', 'car-app'); ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
                             <?php echo __('DKK. /md.', 'car-app'); ?>
                         </small>
                         <?php
