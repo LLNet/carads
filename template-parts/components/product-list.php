@@ -136,8 +136,8 @@
                     if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                         ?>
                         <small class="leasing ca-opacity-50 ca-font-medium">
-                            Fra. <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
-                            DKK. /md.
+                            <?php echo __('Fra', 'car-app'); ?> <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
+                            <?php echo __('DKK. /md.', 'car-app'); ?>
                         </small>
                         <?php
                     }

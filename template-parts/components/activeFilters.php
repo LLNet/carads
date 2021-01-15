@@ -37,7 +37,7 @@ if (!empty($filters)) {
             ?>
             <a href="#" class="ca-no-underline remove-filter ca-bg-white hover:ca-bg-lightgrey ca-rounded ca-px-2 ca-py-1 ca-mr-1 ca-text-xs md:ca-text-sm ca-mb-1"
                data-target="<?php echo $_GET['pricingMin']; ?>">
-                Minimumspris (<?php echo number_format_i18n($_GET['pricingMin']); ?>)
+                <?php echo __('Minimumspris', 'car-app'); ?>: (<?php echo number_format_i18n($_GET['pricingMin']); ?>)
                 <i class="fa fa-times"></i>
             </a>
             <?php
@@ -45,7 +45,7 @@ if (!empty($filters)) {
         if (isset($_GET['pricingMax']) && !empty($_GET['pricingMax']) && $_GET['pricingMax'] != '-1') {
             ?>
             <a href="#" class="ca-no-underline remove-filter ca-bg-white hover:ca-bg-lightgrey ca-rounded ca-px-2 ca-py-1 ca-mr-1 ca-text-xs md:ca-text-sm ca-mb-1"
-               data-target="<?php echo $_GET['pricingMax']; ?>">Maksimumspris
+               data-target="<?php echo $_GET['pricingMax']; ?>"><?php echo __('Maksimumspris', 'car-app'); ?>:
                 (<?php echo number_format_i18n($_GET['pricingMax']); ?>)
                 <i class="fa fa-times"></i></a>
             <?php
@@ -63,7 +63,7 @@ if (!empty($filters)) {
 
                 ?>
                 <a href="#" class="ca-no-underline remove-filter ca-bg-white hover:ca-bg-lightgrey ca-rounded ca-px-2 ca-py-1 ca-mr-1 ca-text-xs md:ca-text-sm ca-mb-1"
-                   data-target="<?php echo $_GET['pricingMinMax']; ?>">Pris mellem:
+                   data-target="<?php echo $_GET['pricingMinMax']; ?>"><?php echo __('Pris mellem', 'car-app'); ?>:
                     <?php echo number_format_i18n($prices[0]); ?> &mdash; <?php echo number_format_i18n($prices[1]); ?>
                     <i class="fa fa-times"></i></a>
                 <?php
@@ -81,7 +81,7 @@ if (!empty($filters)) {
 
                 ?>
                 <a href="#" class="ca-no-underline  remove-filter ca-bg-white hover:ca-bg-lightgrey ca-rounded ca-px-2 ca-py-1 ca-mr-1 ca-text-xs md:ca-text-sm ca-mb-1"
-                   data-target="<?php echo $mileageMinMaxValue; ?>">Kilometer mellem:
+                   data-target="<?php echo $mileageMinMaxValue; ?>"><?php echo __('Kilometer mellem', 'car-app'); ?>:
                     <?php echo number_format_i18n($sliderMileage[0]); ?>
                     &mdash; <?php echo number_format_i18n($sliderMileage[1]); ?>
                     <i class="fa fa-times"></i></a>
@@ -92,12 +92,12 @@ if (!empty($filters)) {
         if (isset($_GET['search']) && !empty($_GET['search'])) {
             ?>
             <a href="#" class="ca-no-underline remove-filter ca-bg-white hover:ca-bg-lightgrey ca-rounded ca-px-2 ca-py-1 ca-mr-1 ca-text-xs md:ca-text-sm ca-mb-1"
-               data-target="<?php echo $_GET['search']; ?>">Fri tekst: <?php echo $_GET['search']; ?>
+               data-target="<?php echo $_GET['search']; ?>"><?php echo __('Fri tekst', 'car-app'); ?>: <?php echo $_GET['search']; ?>
                 <i class="fa fa-times"></i></a>
             <?php
         }
         ?>
-        <a href="/<?php echo $archive_slug; ?>" class="carads-remove-all-filters ca-no-underline ca-bg-primary hover:ca-bg-primary-dark ca-text-white ca-rounded ca-px-2 ca-py-1 ca-text-xs md:ca-text-sm ca-mb-1">Fjern alle filtre</a>
+        <a href="/<?php echo $archive_slug; ?>" class="carads-remove-all-filters ca-no-underline ca-bg-primary hover:ca-bg-primary-dark ca-text-white ca-rounded ca-px-2 ca-py-1 ca-text-xs md:ca-text-sm ca-mb-1"><?php echo __('Fjern alle filtre', 'car-app'); ?></a>
     </div>
 
     <?php

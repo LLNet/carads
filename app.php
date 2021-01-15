@@ -54,7 +54,8 @@ if (!class_exists('CarAdsApp')) {
 
             // Register Activation / Deactivation
             register_deactivation_hook(__FILE__, [$this, 'cronstarter_deactivate']);
-            add_action('wp', [$this, 'cronstarter_activation']);
+            register_activation_hook(__FILE__, [$this, 'cronstarter_activation']);
+//            add_action('wp', [$this, 'cronstarter_activation']);
 
             // Rewrite rules
             add_action('init', [$this, 'carads_rewrite_rules']);

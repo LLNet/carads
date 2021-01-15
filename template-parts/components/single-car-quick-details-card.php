@@ -1,4 +1,4 @@
-<div class="ca-bg-white bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
+<div class="single-car--quick-details ca-bg-white bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4 ca-w-full">
 
     <h1 class="ca-text-2xl ca-font-medium"><?php echo $product->name; ?></h1>
     <hr class="ca-my-2 ca-bg-text bg-darkgrey">
@@ -147,7 +147,7 @@
                 </div>
                 <div class="text-value ca-hidden" id="cta_after">
                     <i class="fa fa-fw fa-phone"></i>
-                    Tlf <?php echo get_option('car-ads-single-car')['phonenumber']; ?>
+                    <?php echo __('Tlf', 'car-app'); ?> <?php echo get_option('car-ads-single-car')['phonenumber']; ?>
                 </div>
             </a>
             <?php

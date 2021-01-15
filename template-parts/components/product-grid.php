@@ -1,21 +1,21 @@
 <?php
 $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+$findleasingFinancial = $connector->get_field($product->customFields, 'findleasingFinancial');
 ?>
 <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
    class="ca-w-full ca-relative ca-bg-lightgrey ca-flex ca-flex-col ca-ca-no-underline"
    style="color: unset; text-decoration: none !important;"
-   title="Se flere detaljer om <?php echo $product->name; ?>">
+   title="<?php echo __('Se flere detaljer om', 'car-app'); ?> <?php echo $product->name; ?>">
     <?php
     if ($product->image->sizes->i1024x768) {
         ?>
         <div class="ca-w-full ca-h-80 ca-relative ca-flex-none">
 
             <?php
-            if (!empty($santanderPrice) && $santanderPrice != "-") {
+            if (!empty($findleasingFinancial)) {
                 ?>
                 <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
-                    Fra. <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
-                    DKK. /md.
+                    <?php echo __('Se leasingberegner', 'car-app'); ?>
                 </div>
                 <?php
             }
@@ -32,7 +32,7 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
                 ?>
                 <div class="ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
 
-                    Placering: <?php echo $product->location->address->city; ?>
+                    <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
 
                 </div>
                 <?php
@@ -64,8 +64,8 @@ $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymen
             if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                 ?>
                 <div class="ca-text-center ca-text-lg ca-font-medium ca-mb-0 mb-0">
-                    Fra. <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
-                    DKK. /md.
+                    <?php echo __('Fra', 'car-app'); ?> <?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
+                    <?php echo __('DKK. /md.', 'car-app'); ?>
                 </div>
                 <?php
             }

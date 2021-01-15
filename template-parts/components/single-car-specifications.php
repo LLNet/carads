@@ -1,4 +1,4 @@
-<h4 class="ca-text-xl ca-font-medium">Model</h4>
+<h4 class="ca-text-xl ca-font-medium"><?php echo __('Model', 'car-app'); ?></h4>
 <div class="quick-specs ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4 ca-border-b ca-border-solid ca-border-lightgrey ca-pb-4">
      <dl class="ca-flex ca-flex-col">
         <dt class="ca-font-thin ca-leading-5"><?php _e('HK', 'car-app'); ?></dt>
@@ -81,7 +81,7 @@
     </dl>
 
 </div>
-<h4 class="ca-text-xl ca-font-medium">Teknik</h4>
+<h4 class="ca-text-xl ca-font-medium"><?php echo __('Teknik', 'car-app'); ?></h4>
 <div class="quick-specs ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4 ca-border-b ca-border-solid ca-border-lightgrey ca-pb-4">
      <dl class="ca-flex ca-flex-col">
         <dt class="ca-font-thin ca-leading-5"><?php _e('Acceleration 0 til 100', 'car-app'); ?></dt>
@@ -154,7 +154,7 @@
 
 </div>
 
-<h4 class="ca-text-xl ca-font-medium">Miljø</h4>
+<h4 class="ca-text-xl ca-font-medium"><?php echo __('Miljø', 'car-app'); ?></h4>
 <div class="quick-specs ca-grid ca-grid-cols-3 ca-gap-3 ca-my-4 ca-pb-4">
 
      <dl class="ca-flex ca-flex-col">

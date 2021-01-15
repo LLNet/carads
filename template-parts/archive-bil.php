@@ -2,8 +2,8 @@
 get_header();
 $connector        = new CarAds\Connector();
 $products         = $connector->search();
-$archive_slug     = get_option('car-app')['archive_slug'] ?? 'biler';
-$single_slug      = get_option('car-app')['single_slug'] ?? 'bil';
+$archive_slug     = get_option('car-ads')['archive_slug'] ?? 'biler';
+$single_slug      = get_option('car-ads')['single_slug'] ?? 'bil';
 $filters          = $connector->filters();
 $availableFilters = $connector->availableFilters($products);
 ?>
@@ -21,24 +21,24 @@ $availableFilters = $connector->availableFilters($products);
                      ca-px-4 md:ca-px-8 ca-bg-primary-dark ca-text-white md:ca-mb-4">
                         <div class="car-sorting--sort_by ca-flex ca-order-2 lg:ca-order-1 ca-w-1/2 lg:ca-w-1/5 ca-items-center">
                             <select name="sort_by" id="sort_by" class="ca-h-10 ca-rounded-lg ca-text-text ca-rounded">
-                                <option disabled unselectable="">Sorter efter</option>
+                                <option disabled unselectable=""><?php echo __('Sorter efter', 'car-app'); ?></option>
                                 <option value="price:asc" <?php echo 'price:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
-                                    Billigste
+                                    <?php echo __('Billigste', 'car-app'); ?>
                                 </option>
                                 <option value="price:desc" <?php echo 'price:desc' == $filters['sort_by'] ? 'selected' : ''; ?>>
-                                    Dyreste
+                                    <?php echo __('Dyreste', 'car-app'); ?>
                                 </option>
                                 <option value="name:asc" <?php echo 'name:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
-                                    Navn A-Å
+                                    <?php echo __('Navn A-Å', 'car-app'); ?>
                                 </option>
                                 <option value="name:desc" <?php echo 'name:desc' == $filters['sort_by'] ? 'selected' : ''; ?>>
-                                    Navn Å-A
+                                    <?php echo __('Navn Å-A', 'car-app'); ?>
                                 </option>
                                 <option value="customFields.mileage:asc" <?php echo 'customFields.mileage:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
-                                    Kilometer (lav til høj)
+                                    <?php echo __('Kilometer (lav til høj)', 'car-app'); ?>
                                 </option>
                                 <option value="customFields.mileage:desc" <?php echo 'customFields.mileage:desc' == $filters['sort_by'] ? 'selected' : ''; ?>>
-                                    Kilometer (høj til lav)
+                                    <?php echo __('Kilometer (høj til lav)', 'car-app'); ?>
                                 </option>
                             </select>
                         </div>
