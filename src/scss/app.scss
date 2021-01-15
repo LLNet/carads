@@ -79,7 +79,7 @@ span.multiselect-native-select .btn-group {
 }
 
 button.multiselect.dropdown-toggle {
-  @apply ca-h-14 ca-py-0 ca-px-4 ca-bg-white ca-rounded ca-text-text ca-flex ca-items-center ca-transition ca-duration-300 ca-ease-in-out;
+  @apply ca-h-14 ca-p-0 ca-bg-white ca-rounded ca-text-text ca-flex ca-items-center ca-transition ca-duration-300 ca-ease-in-out;
 
   &:hover {
     @apply ca-bg-lightgrey;
