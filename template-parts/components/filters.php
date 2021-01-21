@@ -3,13 +3,13 @@ if (!is_post_type_archive('bil')) {
     return false;
 }
 ?>
-<div class="update-filters ca-hidden ca-bg-primary ca-z-20 ca-h-14 ca-py-0 ca-px-4 ca-flex ca-fixed ca-top-0 ca-left-0 ca-w-full ca-items-center ca-justify-center ca-text-white ca-font-medium"
+<div class="update-filters ca-hidden ca-bg-primary bg-primary ca-z-20 ca-h-14 ca-py-0 ca-px-4 ca-flex ca-fixed ca-top-0 ca-left-0 ca-w-full ca-items-center ca-justify-center ca-text-white ca-font-medium"
      id="update-filters">
     <div class="ca-container ca-mx-auto ca-flex ca-justify-center ca-items-center">
         <a href="#top" class="toggle-filters"><i class="fa fa-sliders"></i> Opdater søgning</a>
     </div>
 </div>
-<div class="car-filters ca-bg-secondary ca-p-4 md:ca-p-8" id="car-filters">
+<div class="car-filters ca-bg-secondary bg-secondary ca-p-4 md:ca-p-8" id="car-filters">
     <div class="ca-container ca-mx-auto">
 
         <label class="free-search-label ca-flex ca-mb-4 ca-w-full ca-h-14 ca-relative" for="search">
@@ -187,7 +187,7 @@ if (!is_post_type_archive('bil')) {
             </label>
             */
             ?>
-            <div class="ca-bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4">
+            <div class="ca-bg-white bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4">
                 <?php
                 $min = $products->aggregations->global->pricing->DKK->min;
                 $max = $products->aggregations->global->pricing->DKK->max;
@@ -229,7 +229,7 @@ if (!is_post_type_archive('bil')) {
             </div>
 
 
-            <div class="ca-bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4 mileage-container">
+            <div class="ca-bg-white bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4 mileage-container">
                 <?php
                 $mileageMinMaxValues = $connector->getCustomFieldAggregation('mileage');
 
@@ -280,7 +280,7 @@ if (!is_post_type_archive('bil')) {
             }
             ?>
             <button type="submit"
-                    class="filter ca-rounded ca-bg-primary ca-h-14 ca-text-white ca-font-medium ca-transition ca-duration-300 ca-ease-in-out hover:ca-bg-primary-dark"><?php echo $buttonText; ?></button>
+                    class="filter ca-rounded ca-bg-primary bg-primary ca-h-14 ca-text-white ca-font-medium ca-transition ca-duration-300 ca-ease-in-out hover:ca-bg-primary-dark"><?php echo $buttonText; ?></button>
 
         </div>
 
@@ -289,7 +289,7 @@ if (!is_post_type_archive('bil')) {
 
 </div>
 
-<div class="car-active-filters ca-bg-secondary  ca-p-4 md:ca-p-8">
+<div class="car-active-filters ca-bg-secondary bg-secondary ca-p-4 md:ca-p-8">
     <div class="ca-container ca-mx-auto">
         <?php include("activeFilters.php"); ?>
     </div>

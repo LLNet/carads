@@ -1,6 +1,5 @@
 jQuery(document).ready(function () {
 
-
     /**
      * Car filters
      */
@@ -30,6 +29,11 @@ jQuery(document).ready(function () {
         }
 
     });
+    jQuery('#scroll-to-top').on('click', function (e) {
+        e.preventDefault();
+        scrollToTop();
+
+    });
 
     jQuery('#sort_by').on('change', function (e) {
         e.preventDefault();
@@ -53,9 +57,13 @@ jQuery(document).ready(function () {
                 success: function (response) {
                     // console.log(formValues)
                     if (response > 0) {
-                        jQuery('button.filter').prop("disabled", false).text(" Vis " + response + " biler");
+                        jQuery('button.filter')
+                            .prop("disabled", false)
+                            .text(" Vis " + response + " biler");
                     } else {
-                        jQuery('button.filter').prop("disabled", true).text("Ingen biler i søgning");
+                        jQuery('button.filter')
+                            .prop("disabled", true)
+                            .text("Ingen biler i søgning");
                     }
                     return false;
                 }
@@ -64,11 +72,19 @@ jQuery(document).ready(function () {
     });
 
     if (jQuery('#update-filters').length > 0) {
+
+        let topofDiv = jQuery(".car-filters").offset().top;
+        let height = jQuery(".car-filters").outerHeight();
+
         jQuery(window).scroll(function () {
-            if (jQuery(window).scrollTop() >= 250) {
-                jQuery('#update-filters').addClass('ca-fixed').removeClass('ca-hidden');
+            if (jQuery(window).scrollTop() > (topofDiv + height)) {
+                jQuery('#update-filters')
+                    .addClass('ca-fixed')
+                    .removeClass('ca-hidden');
             } else {
-                jQuery('#update-filters').removeClass('ca-fixed').addClass('ca-hidden');
+                jQuery('#update-filters')
+                    .removeClass('ca-fixed')
+                    .addClass('ca-hidden');
             }
         });
     }
@@ -175,16 +191,16 @@ jQuery(document).ready(function () {
 
 
     jQuery(document).on("click", function () {
-       jQuery('.multiselect-container.dropdown-menu').removeClass('active')
+        jQuery('.multiselect-container.dropdown-menu').removeClass('active')
     });
-    jQuery('button.multiselect.dropdown-toggle').on('click', function(e) {
+    jQuery('button.multiselect.dropdown-toggle').on('click', function (e) {
         jQuery('.multiselect-container.dropdown-menu').removeClass('active')
         e.stopPropagation();
         e.preventDefault();
         jQuery(this).next('.multiselect-container.dropdown-menu').toggleClass('active')
     });
 
-    jQuery('.multiselect-container.dropdown-menu').on('click', function(e) {
+    jQuery('.multiselect-container.dropdown-menu').on('click', function (e) {
         e.stopPropagation();
     });
 
@@ -192,7 +208,7 @@ jQuery(document).ready(function () {
     /**
      * Car view mode
      */
-    jQuery('.car_view_change').on('click', function(e) {
+    jQuery('.car_view_change').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -247,7 +263,7 @@ jQuery(document).ready(function () {
             'max-age': 3600,
             ...options
         };
-        if(process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'production') {
             options.secure = true;
         }
 
@@ -265,10 +281,7 @@ jQuery(document).ready(function () {
     }
 
 
-
     checkCookie();
-
-
 
 
 });

@@ -68,40 +68,57 @@ if (!class_exists('CarAdsApp')) {
             add_filter('term_link', [$this, 'carads_term_link_filter'], 10, 3);
 
             // Set default slugs
-            if(!empty(get_option('car-ads')['archive_slug'])) {
+            if (!empty(get_option('car-ads')['archive_slug'])) {
                 $this->archive_slug = get_option('car-ads')['archive_slug'];
             } else {
                 $this->archive_slug = "biler";
             }
-            if(!empty(get_option('car-ads')['single_slug'])) {
+            if (!empty(get_option('car-ads')['single_slug'])) {
                 $this->single_slug = get_option('car-ads')['single_slug'];
             } else {
                 $this->single_slug = "bil";
             }
 
             // Include elementor modules if elementor is installed and active
-            if(in_array('elementor/elementor.php', apply_filters('active_plugins', get_option('active_plugins'))) || in_array('elementor-pro/elementor-pro.php', apply_filters('active_plugins', get_option('active_plugins'))) ){
+            if (in_array('elementor/elementor.php', apply_filters('active_plugins', get_option('active_plugins'))) || in_array('elementor-pro/elementor-pro.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 
                 require __DIR__ . '/elementor/custom_widgets.php';
             }
 
             // Load optional translations
             load_plugin_textdomain('car-ads');
-            add_action( 'widgets_init', [$this, 'carads_widgets_areas'] );
+//            add_action('widgets_init', [$this, 'carads_widgets_areas']);
+
+            // Add meta tags to head
+            add_action('wp_head', [$this, 'meta_tags']);
 
         }
 
-        public function carads_widgets_areas() {
 
+        public function meta_tags()
+        {
+            if (is_single(get_the_ID()) && get_post_type(get_the_ID()) == "bil") {
+                ?>
+                <meta name="robots" content="noindex"/>
+                <link rel="dns-prefetch" href="https://api.carads.io">
+                <link rel="preconnect" href="https://api.carads.io">
+                <?php
+            }
+        }
 
-            register_sidebar( array(
+        public function carads_widgets_areas()
+        {
+
+            /*
+            register_sidebar(array(
                 'name'          => 'Under Billiste',
                 'id'            => 'carads_below_archive',
                 'before_widget' => '<div class="pr-0 md:pr-20 lg:pr-8 text-left mb-16 md:mb-0 text-base">',
                 'after_widget'  => '</div>',
                 'before_title'  => '<h1 class="title-font font-light text-text text-2xl mb-8 pr-4">',
                 'after_title'   => '</h1>',
-            ) );
+            ));
+            */
 
         }
 
@@ -122,13 +139,13 @@ if (!class_exists('CarAdsApp')) {
         public function plugin_activate()
         {
             // Set default options for slugs if nothing has been set yet!
-            if(!get_option('car-ads')) {
+            if (!get_option('car-ads')) {
                 update_option('car-ads', [
-                    'single_slug' => 'bil',
+                    'single_slug'  => 'bil',
                     'archive_slug' => 'biler'
                 ]);
             }
-            if(!get_option('car-ads-single-car')) {
+            if (!get_option('car-ads-single-car')) {
                 update_option('car-ads-single-car', [
                     'show_back_to_archive' => 'no',
                 ]);
@@ -146,28 +163,27 @@ if (!class_exists('CarAdsApp')) {
             //wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
 
 
-            if(is_single(get_the_ID()) && get_post_type(get_the_ID()) == "bil") {
+            if (is_single(get_the_ID()) && get_post_type(get_the_ID()) == "bil") {
                 wp_enqueue_style('car-santander', "//api.scb.nu/SCBDK.Dealer.ExternalCalc/v2/Content/scbdk.dealer.externalcalc.css", '', '');
                 wp_enqueue_script('car-santander', "//api.scb.nu/SCBDK.Dealer.ExternalCalc/v2/Scripts/scbdk.dealer.externalcalc.js", array('jquery'), '', true);
                 wp_enqueue_script('car-popper', "//cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js", array('jquery'), '', true);
                 wp_enqueue_style('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", '', '');
                 wp_enqueue_script('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js", array('jquery'), '', true);
                 wp_enqueue_script('car-alpinejs', "//cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js", '', '', false);
+                wp_enqueue_style('car-lightbox2', plugin_dir_url(__FILE__) . "assets/css/vendor/lightbox.min.css", '', '');
+                wp_enqueue_script('car-lightbox2', plugin_dir_url(__FILE__) . "assets/js/vendor/lightbox.js", array('jquery'), '', true);
             }
 
-            if(is_post_type_archive('bil')) {
+            if (is_post_type_archive('bil')) {
                 wp_enqueue_style('car-slider', "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css", '', '');
                 wp_enqueue_script('car-slider', "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js", array('jquery'), '', false);
                 wp_enqueue_style('car-multiselect', "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css", '', '');
                 wp_enqueue_script('car-multiselect', "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js", array('jquery'), '', true);
             }
 
-            wp_enqueue_style('car', plugin_dir_url( __FILE__ ) . "assets/css/app.css", '', '', '');
-            wp_enqueue_script('car', plugin_dir_url( __FILE__ ) . "assets/js/app.js", array('jquery'), '', true);
+            wp_enqueue_style('car', plugin_dir_url(__FILE__) . "assets/css/app.css", '', time(), '');
+            wp_enqueue_script('car', plugin_dir_url(__FILE__) . "assets/js/app.js", array('jquery'), time(), true);
             wp_localize_script('car', 'indexed', array('ajaxurl' => admin_url('admin-ajax.php')));
-
-
-
 
 
         }
@@ -175,7 +191,7 @@ if (!class_exists('CarAdsApp')) {
         public function single_car_template($template)
         {
             global $post;
-            $theme_files     = array('single-' . $this->post_type . '.php', 'car-ads/single-' . $this->post_type . '.php');
+            $theme_files = array('single-' . $this->post_type . '.php', 'car-ads/single-' . $this->post_type . '.php');
 
             if ($this->post_type === $post->post_type) {
 
@@ -216,8 +232,8 @@ if (!class_exists('CarAdsApp')) {
         {
             add_rewrite_tag("%car_brand%", '(\d+)');
             add_rewrite_tag("%car_model%", '(\d+)');
-            add_rewrite_rule('^'. $this->archive_slug .'/([^/]*)/([^/]*)/?', 'index.php?car_brand=$matches[1]&car_model=$matches[2]', 'top');
-            add_rewrite_rule('^'. $this->archive_slug .'/([^/]*)/?', 'index.php?car_brand=$matches[1]', 'top');
+            add_rewrite_rule('^' . $this->archive_slug . '/([^/]*)/([^/]*)/?', 'index.php?car_brand=$matches[1]&car_model=$matches[2]', 'top');
+            add_rewrite_rule('^' . $this->archive_slug . '/([^/]*)/?', 'index.php?car_brand=$matches[1]', 'top');
         }
 
         public function resources_cpt_generating_rule($wp_rewrite)
@@ -237,7 +253,7 @@ if (!class_exists('CarAdsApp')) {
             foreach ($terms as $term) {
 
                 foreach ($terms_car_models as $terms_car_model) {
-                    $rules[$this->single_slug.'/' . $term->slug . '/' . $terms_car_model->slug . '/([^/]*)$'] = 'index.php?post_type=' . $post_type . '&car_brand=$matches[1]&name=$matches[1]';
+                    $rules[$this->single_slug . '/' . $term->slug . '/' . $terms_car_model->slug . '/([^/]*)$'] = 'index.php?post_type=' . $post_type . '&car_brand=$matches[1]&name=$matches[1]';
                 }
             }
 
@@ -251,10 +267,10 @@ if (!class_exists('CarAdsApp')) {
 
             // change the industry to the name of your taxonomy
             if ('car_brand' === $taxonomy) {
-                $url = home_url() . '/'. $this->archive_slug .'/' . $term->slug;
+                $url = home_url() . '/' . $this->archive_slug . '/' . $term->slug;
             }
             if ('car_model' === $taxonomy) {
-                $url = home_url() . '/'. $this->archive_slug .'/?car_model=' . $term->slug;
+                $url = home_url() . '/' . $this->archive_slug . '/?car_model=' . $term->slug;
             }
             return $url;
         }

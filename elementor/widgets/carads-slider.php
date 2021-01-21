@@ -112,8 +112,6 @@ class CarAdsSlider extends Widget_Base
         );
 
 
-
-
         /** Car options */
         $connector        = new Connector();
         $products         = $connector->search(true);
@@ -162,6 +160,28 @@ class CarAdsSlider extends Widget_Base
                 'options'   => $availableFilters['categories']
             ]
         );
+
+        if (!empty(get_option('car-ads-theming')['locations'])) {
+            $locations = explode(",", get_option('car-ads-theming')['locations']);
+
+            $locs       = [];
+            $locs[null] = "Alle";
+            foreach ($locations as $location) {
+                $locs[$location] = $location;
+            }
+
+
+            $this->add_control(
+                'location',
+                [
+                    'label'   => __('Placering'),
+                    'type'    => \Elementor\Controls_Manager::SELECT,
+                    'options' => $locs,
+                    'default' => null,
+                ]
+            );
+        }
+
         $this->add_control(
             'properties',
             [
@@ -179,24 +199,24 @@ class CarAdsSlider extends Widget_Base
         $this->add_control(
             'sort_by',
             [
-                'label'   => __('Sortering'),
-                'type'    => \Elementor\Controls_Manager::SELECT,
+                'label'     => __('Sortering'),
+                'type'      => \Elementor\Controls_Manager::SELECT,
                 'condition' => [
                     'post_type' => ['bil'],
                 ],
-                'options' => [
-                    'price:asc'  => 'Pris (Billigste først)',
-                    'price:desc'  => 'Pris (Dyreste først)',
-                    'name:asc'  => 'Navn (A-Å)',
-                    'name:desc'  => 'Navn (Å-A)',
+                'options'   => [
+                    'price:asc'                 => 'Pris (Billigste først)',
+                    'price:desc'                => 'Pris (Dyreste først)',
+                    'name:asc'                  => 'Navn (A-Å)',
+                    'name:desc'                 => 'Navn (Å-A)',
                     'customFields.mileage:asc'  => 'Kilometer (lav til høj)',
-                    'customFields.mileage:desc'  => 'Kilometer (høj til lav)',
-                    'updated:asc'  => 'Opdateret (Nyeste først)',
-                    'updated:desc'  => 'Opdateret (Ældste først)',
-                    'created:asc'  => 'Oprettet (Nyeste først)',
-                    'created:desc'  => 'Oprettet (Ældste først)',
+                    'customFields.mileage:desc' => 'Kilometer (høj til lav)',
+                    'updated:asc'               => 'Opdateret (Nyeste først)',
+                    'updated:desc'              => 'Opdateret (Ældste først)',
+                    'created:asc'               => 'Oprettet (Nyeste først)',
+                    'created:desc'              => 'Oprettet (Ældste først)',
                 ],
-                'default' => 'name:asc',
+                'default'   => 'name:asc',
             ]
         );
 
@@ -248,8 +268,6 @@ class CarAdsSlider extends Widget_Base
 
 
         $this->end_controls_section();
-
-
 
 
     }
@@ -388,7 +406,8 @@ class CarAdsSlider extends Widget_Base
                 'brands'     => $settings['brands'] ?? null,
                 'categories' => $settings['categories'] ?? null,
                 'properties' => $settings['properties'] ?? null,
-                'sort_by'    => $settings['sort_by']
+                'sort_by'    => $settings['sort_by'],
+                'location'   => $settings['location'] ?? null,
             ];
 
             $products = $connector->getCarsFromElementor($params);

@@ -10,12 +10,12 @@ $connector = new CarAds\Connector();
 $product   = $connector->get_single($car_ads_id);
 $currency  = $connector->getCurrency();
 ?>
-    <div class="outer-wrapper">
-        <div class="single-bil--header ca-bg-secondary ca-sticky ca-top-0 ca-z-30">
+    <div class="outer-wrapper" id="car-ads-top">
+        <div class="single-bil--header ca-bg-secondary bg-secondary ca-sticky ca-top-0 ca-z-30">
             <div class="ca-container ca-mx-auto lg:ca-flex">
-                <div class="single-car--header-left header--left ca-p-2 lg:ca-w-1/2 lg:ca-flex lg:ca-flex-col lg:ca-justify-center">
-                    <div>
-                        <h3 class="name car_name ca-text-2xl ca-font-medium ca-overflow-ellipsis ca-overflow-hidden"><?php echo $product->name; ?></h3>
+                <div class="single-car--header-left header--left ca-p-2 lg:ca-w-1/2 ca-flex lg:ca-flex lg:ca-flex-col lg:ca-justify-center">
+                    <div class="ca-flex-grow">
+                        <h3 class="name car_name ca-text-2xl ca-font-medium ca-overflow-ellipsis ca-overflow-hidden ca-transition-all ca-duration-300 ca-ease-in-out"><?php echo $product->name; ?></h3>
                         <p class="price ca-text-sm">
                             <?php
                             if (!$product->disabled) {
@@ -26,6 +26,11 @@ $currency  = $connector->getCurrency();
                             }
                             ?>
                         </p>
+                    </div>
+                    <div class="header--back-to-top ca-hidden ca-flex-grow-0 ca-w-10 ca-items-center ca-justify-center">
+                        <a href="#" id="scroll-to-top" class="ca-w-10 ca-h-10 ca-rounded-full ca-bg-primary bg-primary ca-flex ca-items-center ca-justify-center ca-text-white">
+                            <i class="fa fa-chevron-up ca-text-white"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="single-car--header-right header--right ca-p-2 lg:ca-w-1/2 ca-flex ca-items-center ca-justify-end">
@@ -57,13 +62,13 @@ $currency  = $connector->getCurrency();
                                 <span class="text-cta ca-block" id="cta_before"><i
                                             class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-app'); ?></span>
                                 <span class="text-value ca-hidden" id="cta_after"><i
-                                            class="fa fa-fw fa-phone"></i> Tlf <?php echo $product->location->telephone ??  get_option('car-ads-single-car')['phonenumber']; ?></span>
+                                            class="fa fa-fw fa-phone"></i> Tlf <?php echo $product->location->telephone ?? get_option('car-ads-single-car')['phonenumber']; ?></span>
                             </a>
                             <?php
                         }
                         ?>
                     </div>
-                    <div class="ca-flex ca-justify-between md:ca-hidden">
+                    <div class="ca-flex ca-justify-between ca-w-full md:ca-hidden">
                         <?php
                         if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
                             ?>
@@ -73,7 +78,7 @@ $currency  = $connector->getCurrency();
                                    data-target="modalByttepris">
                                     <i class="fa fa-fw fa-calculator"></i>
                                 </a>
-                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Beregn byttepris', 'car-app'); ?></span>
+                                <span class="car-button-label ca-text-primary ca-font-medium ca-text-xs md:ca-text-base"><?php echo __('Beregn byttepris', 'car-app'); ?></span>
                             </div>
                             <?php
                         }
@@ -85,7 +90,7 @@ $currency  = $connector->getCurrency();
                                    data-target="modalBestil">
                                     <i class="fa fa-fw fa-car"></i>
                                 </a>
-                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Bestil prøvetur', 'car-app'); ?></span>
+                                <span class="car-button-label ca-text-primary ca-font-medium ca-text-xs md:ca-text-base"><?php echo __('Bestil prøvetur', 'car-app'); ?></span>
                             </div>
                             <?php
                         }
@@ -96,7 +101,7 @@ $currency  = $connector->getCurrency();
                                    class="single-car--call-us ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center hover:ca-text-white hover:ca-no-underline ca-text-white ">
                                     <i class="fa fa-fw fa-phone"></i>
                                 </a>
-                                <span class="car-button-label ca-text-primary ca-font-medium"><?php echo __('Ring til os', 'car-app'); ?></span>
+                                <span class="car-button-label ca-text-primary ca-font-medium ca-text-xs md:ca-text-base"><?php echo __('Ring til os', 'car-app'); ?></span>
                             </div>
                             <?php
                         }
@@ -125,30 +130,33 @@ $currency  = $connector->getCurrency();
                         yoast_breadcrumb('<p id="breadcrumbs" class="single-car--breadcrumbs">', '</p>');
                     }
                     ?>
+
                     <div class="single-car--main-slider main-slider ca-relative ca-min-h-64 ca-mt-4">
-                        <img src="<?php echo $product->image->sizes->i1024x768 ?>">
+                        <a href="<?php echo $product->image->sizes->i1024x768 ?>" data-lightbox="gallery" data-title="<?php echo $product->name; ?>"><img src="<?php echo $product->image->sizes->i1024x768 ?>"></a>
                         <?php
                         if (property_exists($product, 'images')) {
                             foreach ($product->images as $key => $image) {
                                 ?>
-                                <img src="<?php echo $image->sizes->i1024x768 ?>">
+                                <a href="<?php echo $image->sizes->i1024x768 ?>" data-lightbox="gallery" data-title="<?php echo $product->name; ?>"><img src="<?php echo $image->sizes->i1024x768 ?>"></a>
                                 <?php
                             }
                         }
                         ?>
                     </div>
                     <div class="ca-h-14 ca-my-4 ca-text-primary ca-font-medium ca-text-center ca-flex ca-items-center ca-justify-between">
-                        <button class="single-car--slider-prev focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-prev slick-prev slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full
-                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary"><i
-                                    class="fa fa-fw fa-chevron-left"></i></button>
-                        <div class="single-car--slide-page-info pagingInfo">
+                        <button class="single-car--slider-prev focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-prev slick-prev slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-ml-1
+                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary border-primary text-primary focus:text-primary">
+                            <i class="fa fa-fw fa-chevron-left"></i>
+                        </button>
+                        <div class="single-car--slide-page-info pagingInfo ca-text-primary text-primary">
                             <?php
                             echo "1/" . (count($product->images) + 1);
                             ?>
                         </div>
-                        <button class="single-car--slider-next focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-next slick-next slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full
-                        ca-flex ca-items-center  ca-justify-center ca-text-primary  ca-transform focus:ca-bg-primary"><i
-                                    class="fa fa-fw fa-chevron-right"></i></button>
+                        <button class="single-car--slider-next focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-next slick-next slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-mr-1
+                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary border-primary text-primary focus:text-primary">
+                            <i class="fa fa-fw fa-chevron-right"></i>
+                        </button>
                     </div>
                     <div class="single-car--thumb-slider thumb-slider ca-mb-4">
                         <img src="<?php echo $product->image->sizes->i1024x768 ?>">
@@ -161,8 +169,8 @@ $currency  = $connector->getCurrency();
                             }
                         }
                         ?>
-
                     </div>
+
                     <div class="ca-block lg:ca-hidden">
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
@@ -176,7 +184,7 @@ $currency  = $connector->getCurrency();
 
                     <div class="car-ads--accordion" x-data="{selected:1}">
                         <div class="ca-mb-4">
-                            <div class="car-ads--accordion-title ca-bg-text ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
+                            <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
                                  id="Beskrivelse" @click="selected !== 1 ? selected = 1 : selected = null">
                                 <span><?php echo __('Beskrivelse', 'car-app'); ?></span>
                                 <i class="fa fa-chevron-down" x-show="selected != 1"></i>
@@ -189,7 +197,7 @@ $currency  = $connector->getCurrency();
                         </div>
 
                         <div class="ca-mb-4">
-                            <div class="car-ads--accordion-title ca-bg-text ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
+                            <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
                                  id="specifications" @click="selected !== 2 ? selected = 2 : selected = null">
                                 <span><?php echo __('Specifikationer', 'car-app'); ?></span>
                                 <i class="fa fa-chevron-down" x-show="selected != 2"></i>
@@ -248,10 +256,7 @@ $currency  = $connector->getCurrency();
             </div>
         </div>
 
-
     </div>
-
-
 <?php
 include("components/modalByttepris.php");
 include("components/modalBestil.php");
@@ -295,12 +300,12 @@ if (!$product->disabled) {
              * Fixed head on scroll
              */
             jQuery(window).scroll(function () {
-                if (jQuery(window).scrollTop() >= 250) {
+                if (jQuery(window).scrollTop() >= 300) {
                     jQuery('.single-bil--header').addClass('fixed-header');
-                    jQuery('.single-bil--content').addClass('fixed');
+                    jQuery('.single-car--header-right').fadeOut();
                 } else {
                     jQuery('.single-bil--header').removeClass('fixed-header');
-                    jQuery('.single-bil--content').removeClass('fixed');
+                    jQuery('.single-car--header-right').fadeIn();
                 }
             });
 

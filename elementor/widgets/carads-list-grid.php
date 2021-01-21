@@ -131,6 +131,28 @@ class CarAdsListGrid extends Widget_Base
                 ],
             ]
         );
+
+        if (!empty(get_option('car-ads-theming')['locations'])) {
+            $locations = explode(",", get_option('car-ads-theming')['locations']);
+
+            $locs       = [];
+            $locs[null] = "Alle";
+            foreach ($locations as $location) {
+                $locs[$location] = $location;
+            }
+
+
+            $this->add_control(
+                'location',
+                [
+                    'label'   => __('Placering'),
+                    'type'    => \Elementor\Controls_Manager::SELECT,
+                    'options' => $locs,
+                    'default' => null,
+                ]
+            );
+        }
+
         $this->add_control(
             'properties',
             [
@@ -172,20 +194,21 @@ class CarAdsListGrid extends Widget_Base
         $this->add_control(
             'display_type',
             [
-                'label'   => __('Vis som'),
-                'type'    => \Elementor\Controls_Manager::SELECT,
-                'options' => [
+                'label'     => __('Vis som'),
+                'type'      => \Elementor\Controls_Manager::SELECT,
+                'options'   => [
                     'grid' => 'Grid',
                     'list' => 'Liste',
                 ],
-                'default' => 'grid',
+                'default'   => 'grid',
                 'condition' => [
-                'post_type' => ['bil'],
-            ],
+                    'post_type' => ['bil'],
+                ],
             ]
         );
 
         $this->end_controls_section();
+
 
         $this->start_controls_section(
             'section_readmore',
@@ -270,7 +293,8 @@ class CarAdsListGrid extends Widget_Base
                 'brands'     => $settings['brands'] ?? null,
                 'categories' => $settings['categories'] ?? null,
                 'properties' => $settings['properties'] ?? null,
-                'sort_by'    => $settings['sort_by']
+                'sort_by'    => $settings['sort_by'],
+                'location'   => $settings['location'] ?? null,
             ];
             $products     = $connector->getCarsFromElementor($params);
             $archive_slug = get_option('car-ads')['archive_slug'] ?? 'biler';

@@ -360,7 +360,7 @@ class CarAdsSettings_API
         echo '<div style="max-width: ' . $size . ';">';
 
         $editor_settings = array(
-            'teeny' => true,
+            'teeny' => false,
             'textarea_name' => $args['section'] . '[' . $args['id'] . ']',
             'textarea_rows' => 10
         );

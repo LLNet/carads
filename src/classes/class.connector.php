@@ -316,6 +316,7 @@ class Connector
                 'meta_input'        => [
                     'carads_id' => $product->id,
                     'slug'      => $product->slug,
+                    '_yoast_wpseo_meta-robots-noindex' => 1
                 ]
             ]);
             // Add brand and model
@@ -347,6 +348,7 @@ class Connector
 
             update_post_meta($post_id, 'carads_id', $data->id);
             update_post_meta($post_id, 'slug', $data->slug);
+            update_post_meta($post_id, '_yoast_wpseo_meta-robots-noindex', 1);
 
             // Add brand and model
             wp_set_object_terms($post_id, $data->brand->name, 'car_brand');
@@ -366,7 +368,7 @@ class Connector
      */
     public function remove($post_id)
     {
-        wp_trash_post($post_id);
+        //wp_trash_post($post_id);
     }
 
     /**
@@ -816,6 +818,11 @@ class Connector
             // Number of cars
             if (isset($params['size']) && !empty($params['size'])) {
                 $search .= '&size=' . $params['size'];
+            }
+
+            // Location
+            if (isset($params['location']) && !is_null($params['location'])) {
+                $search .= '&location[address][city]=' . strtolower($params['location']);
             }
 
         }

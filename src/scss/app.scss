@@ -1,7 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+@import "elementor";
 @import "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 
 
@@ -148,6 +148,30 @@ label.free-search-label {
 Single car
  */
 
+.single-bil--header {
+
+  &.fixed-header {
+    .car_name {
+      @media all and (max-width: 768px) {
+        font-size: 1.25rem !important;
+        line-height: 1.75rem !important;
+      }
+    }
+
+    .single-car--header-right {
+      @media all and (max-width: 768px) {
+        display: none;
+      }
+    }
+
+    .header--back-to-top {
+      @media all and (max-width: 768px) {
+        display: flex;
+      }
+    }
+
+  }
+}
 
 // Santander
 ul.santander {
@@ -177,6 +201,7 @@ ul.santander {
   .slick-slide {
     margin: 0 8px;
   }
+
   /* the parent */
   .slick-list {
     margin: 0 -8px;
@@ -184,4 +209,18 @@ ul.santander {
 
 }
 
-@import "elementor";
+
+
+/** Diverse vedr WP Admin bar */
+@media (min-width: 600px) and (max-width: 768px) {
+  body.admin-bar .update-filters.ca-fixed,
+  body.admin-bar .single-bil--header.fixed-header {
+    top: 46px !important;
+  }
+}
+@media (min-width: 769px) {
+  body.admin-bar .update-filters.ca-fixed,
+  body.admin-bar .single-bil--header.fixed-header {
+    top: 32px !important;
+  }
+}

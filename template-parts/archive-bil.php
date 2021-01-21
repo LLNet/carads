@@ -18,9 +18,9 @@ $availableFilters = $connector->availableFilters($products);
                 if (is_post_type_archive('bil')) {
                     ?>
                     <div class="car-sorting ca-flex lg:ca-flex-row ca-py-2
-                     ca-px-4 md:ca-px-8 ca-bg-primary-dark ca-text-white md:ca-mb-4">
+                     ca-px-4 md:ca-px-8 ca-bg-primary-dark bg-secondary ca-text-white md:ca-mb-4">
                         <div class="car-sorting--sort_by ca-flex ca-order-2 lg:ca-order-1 ca-w-1/2 lg:ca-w-1/5 ca-items-center">
-                            <select name="sort_by" id="sort_by" class="ca-h-10 ca-rounded-lg ca-text-text ca-rounded">
+                            <select name="sort_by" id="sort_by" class="ca-h-10 ca-rounded-lg ca-text-text ca-rounded ca-bg-white">
                                 <option disabled unselectable=""><?php echo __('Sorter efter', 'car-app'); ?></option>
                                 <option value="price:asc" <?php echo 'price:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
                                     <?php echo __('Billigste', 'car-app'); ?>
@@ -48,7 +48,7 @@ $availableFilters = $connector->availableFilters($products);
                             if (property_exists($products, 'summary')) {
                                 ?>
                                 <div>
-                                <span class='number-of-cars-found ca-leading-6 lg:ca-leading-normal ca-text-primary ca-mr-2 ca-text-3xl lg:ca-text-3xl ca-font-medium'><?php echo  $products->summary->totalItems . " " . __('biler', 'car-app'); ?></span>
+                                <span class='number-of-cars-found ca-leading-6 lg:ca-leading-normal ca-text-primary text-primary ca-mr-2 ca-text-3xl lg:ca-text-3xl ca-font-medium'><?php echo  $products->summary->totalItems . " " . __('biler', 'car-app'); ?></span>
                                 <span class='ca-leading-6 lg:ca-leading-normal ca-font-thin font-thin ca-text-white lg:ca-text-3xl'><?php echo __('matcher din søgning', 'car-app'); ?></span>
                                 </div>
                                 <?php
@@ -62,11 +62,11 @@ $availableFilters = $connector->availableFilters($products);
                                 ?>
                                 <a href=""
                                    data-view="list"
-                                   class="ca-no-underline car_view_change <?php if ($car_view === "list") { ?>ca-bg-primary ca-text-white<?php } else { ?> ca-bg-white ca-text-text <?php } ?> ca-flex ca-items-center ca-justify-center ca-h-10 ca-w-10 ca-rounded-l-lg hover:ca-bg-primary-dark hover:ca-text-white ca-transition ca-duration-300 ca-ease-in-out"><i
+                                   class="ca-no-underline car_view_change <?php if ($car_view === "list") { ?>ca-bg-primary bg-primary ca-text-white<?php } else { ?> ca-bg-white ca-text-text <?php } ?> ca-flex ca-items-center ca-justify-center ca-h-10 ca-w-10 ca-rounded-l-lg hover:ca-bg-primary-dark hover:ca-text-white ca-transition ca-duration-300 ca-ease-in-out"><i
                                             class="fa fa-navicon"></i></a>
                                 <a href=""
                                    data-view="grid"
-                                   class="ca-no-underline car_view_change <?php if ($car_view === "grid") { ?>ca-bg-primary ca-text-white<?php } else { ?> ca-bg-white ca-text-text <?php } ?> ca-flex ca-items-center ca-justify-center ca-h-10 ca-w-10 ca-rounded-r-lg hover:ca-bg-primary-dark hover:ca-text-white ca-transition ca-duration-300 ca-ease-in-out"><i
+                                   class="ca-no-underline car_view_change <?php if ($car_view === "grid") { ?>ca-bg-primary bg-primary ca-text-white<?php } else { ?> ca-bg-white ca-text-text <?php } ?> ca-flex ca-items-center ca-justify-center ca-h-10 ca-w-10 ca-rounded-r-lg hover:ca-bg-primary-dark hover:ca-text-white ca-transition ca-duration-300 ca-ease-in-out"><i
                                             class="fa fa-th"></i></a>
                             </div>
                             <script>
@@ -134,9 +134,9 @@ $availableFilters = $connector->availableFilters($products);
 
     </form>
 
-    <div class="ca-container ca-mx-auto">
+    <div class="ca-container ca-mx-auto cars-description entry-content ca-py-10">
         <?php
-        dynamic_sidebar('carads_below_archive');
+        echo get_option('car-ads-archive')['archiveSeoText'] ?? null;
         ?>
     </div>
 

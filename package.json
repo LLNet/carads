@@ -1,6 +1,6 @@
 {
   "name": "car-app",
-  "version": "0.2.22",
+  "version": "0.2.39",
   "description": "Integration mellem WordPress og CarAds.io",
   "title": "Car Ads Integration",
   "main": "index.js",
@@ -38,7 +38,8 @@
     "@fortawesome/fontawesome-free": "^5.15.1",
     "bootstrap-slider": "^11.0.2",
     "laravel-mix": "^6.0.9",
-    "laravel-mix-tailwind": "^0.1.1"
+    "laravel-mix-tailwind": "^0.1.1",
+    "lightbox2": "^2.11.3"
   },
   "peerDependencies": {
     "postcss": "^8.1"

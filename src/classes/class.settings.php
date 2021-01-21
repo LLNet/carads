@@ -45,6 +45,10 @@ if (!class_exists('CarAdsSettings')):
                     'id' => 'car-ads-archive',
                     'title' => __('Billiste (Archive)', 'car-ads')
                 ),
+                array(
+                    'id' => 'car-ads-theming',
+                    'title' => __('Tema/Elementor', 'car-ads')
+                ),
 //                array(
 //                    'id' => 'car-ads-theming',
 //                    'title' => __('Theme Colors', 'car-ads')
@@ -181,14 +185,23 @@ if (!class_exists('CarAdsSettings')):
                             '30'  => '1 måned',
                         ]
                     ],
+                    [
+                        'name' => 'archiveSeoText',
+                        'label' => __('Arkiv SEO Tekst', 'car-ads'),
+                        'desc' => __('Skriv din SEO tekst til Billisten her. Denne fremkommer under alle biler på billisten.', 'car-ads'),
+                        'placeholder' => '',
+                        'type'    => 'wysiwyg',
+                        'default' => '',
+
+                    ],
                 ],
                 'car-ads-theming' => [
                     [
-                        'name' => 'byttepris_shortcode',
-                        'label' => __('Beregn byttepris shortcode', 'car-ads'),
-                        'desc' => __('Skriv din Beregn byttepris shortcode her', 'car-ads'),
+                        'name' => 'locations',
+                        'label' => __('Flere afdelinger?', 'car-ads'),
+                        'desc' => __('Har din forretning flere afdelinger (eks. flere CVR numre) hvor bilerne kan være placeret? Så kan du angive disse Bynavne adskilt af komma (,) her', 'car-ads'),
                         'placeholder' => '',
-                        'type' => 'color',
+                        'type' => 'text',
                         'default' => '',
                     ],
                 ]
