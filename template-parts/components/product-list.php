@@ -48,7 +48,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
     >
         <figcaption class="car--info ca-p-2 md:ca-p-8 ca-w-full">
             <div class="ca-text-2xl ca-font-medium ca-mb-4"><?php echo $product->name; ?></div>
-            <div class="car--info--content md:ca-flex">
+            <div class="car--info--content lg:ca-flex">
                 <div class="car--info--content__specs ca-w-full lg:ca-w-3/4">
                     <div class="ca-grid ca-grid-cols-3 lg:ca-grid-cols-4 ca-gap-1">
                         <dl class="ca-flex ca-flex-col">
