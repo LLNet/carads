@@ -8,16 +8,15 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
     if ($product->image->sizes->i1024x768) {
         ?>
         <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
-           class="img-wrap ca-relative ca-col-span-4 md:ca-col-span-2 lg:ca-col-span-1 ca-flex ca-w-full md:ca-w-auto ca-flex-shrink-0 ca-height-full ca-overflow-hidden md:ca-max-w-md">
+           class="ca-max-h-80 img-wrap ca-relative ca-col-span-4 md:ca-col-span-2 lg:ca-col-span-1 ca-flex ca-w-full md:ca-w-auto ca-flex-shrink-0 ca-height-full ca-overflow-hidden md:ca-max-w-md">
             <?php
             if (!$product->disabled && !empty($findleasingFinancial) && $findleasingFinancial != '-') {
                 if (!empty($findleasingPriceMonthly) && $findleasingPriceMonthly != '-') {
                     ?>
                     <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
-
                         <?php
-                            echo __('Leasing fra', 'car-app'). ": ";
-                            echo number_format_i18n($findleasingPriceMonthly). " DKK";
+                        echo __('Leasing fra', 'car-app') . ": ";
+                        echo number_format_i18n($findleasingPriceMonthly) . " DKK";
                         ?>
                     </div>
                     <?php
@@ -26,14 +25,17 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
             ?>
             <img src="<?php echo str_replace("i1024x768", "500x250", $product->image->sizes->i1024x768); ?>"
                  data-src="<?php echo $product->image->sizes->i1024x768; ?>" alt="product"
-                 class="ca-object-fit ca-w-full">
+                 class="ca-object-cover ca-object-center ca-w-full"
+                 loading="lazy">
             <?php
-            if (property_exists($product->location->address, 'city')) {
-                ?>
-                <div class="ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
-                    <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
-                </div>
-                <?php
+            if (get_option('car-ads-archive')['showLocation'] === "yes") {
+                if (property_exists($product->location->address, 'city')) {
+                    ?>
+                    <div class="car--placement ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
+                        <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
+                    </div>
+                    <?php
+                }
             }
             ?>
         </a>
@@ -44,7 +46,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
        class="car--info__title md:ca-col-span-2 lg:ca-col-span-3 ca-no-underline"
        style="color: unset; text-decoration: none !important;"
     >
-        <figcaption class="car--info ca-p-8 ca-w-full">
+        <figcaption class="car--info ca-p-2 md:ca-p-8 ca-w-full">
             <div class="ca-text-2xl ca-font-medium ca-mb-4"><?php echo $product->name; ?></div>
             <div class="car--info--content md:ca-flex">
                 <div class="car--info--content__specs ca-w-full lg:ca-w-3/4">
@@ -178,7 +180,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                     if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                         ?>
                         <small class="leasing ca-opacity-50 ca-font-medium">
-                            <?php echo __('Fra', 'car-app'). " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
+                            <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
                             <?php echo __('DKK. /md.', 'car-app'); ?>
                         </small>
                         <?php

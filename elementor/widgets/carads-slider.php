@@ -220,6 +220,23 @@ class CarAdsSlider extends Widget_Base
             ]
         );
 
+        $this->add_control(
+            'price_type',
+            [
+                'label'     => __('Pris Type'),
+                'type'      => \Elementor\Controls_Manager::SELECT,
+                'options'   => [
+                    'all'                   => 'Alle',
+                    'pricetype-retailprice' => 'Retail pris',
+                    'pricetype-leasing'     => 'Leasing pris',
+                ],
+                'default'   => 'pricetype-retailprice',
+                'condition' => [
+                    'post_type' => ['bil'],
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
         $this->start_controls_section(
@@ -265,6 +282,96 @@ class CarAdsSlider extends Widget_Base
                 ],
             ]
         );
+        $this->end_controls_section();
+
+
+        $this->start_controls_section(
+            'section_slider',
+            [
+                'label' => __('Slider', 'elementor'),
+                'condition' => [
+                    'post_type' => ['medarbejder', 'tilbud'],
+                ],
+            ]
+        );
+        $this->add_control(
+            'slidesToShow_1024',
+            [
+                'label'       => __('Slides To Show ved 1024px'),
+                'description' => '',
+                'type'        => \Elementor\Controls_Manager::NUMBER,
+                'default'     => 4,
+                'min'         => 1,
+                'condition' => [
+                    'post_type' => ['medarbejder', 'tilbud'],
+                ],
+            ]
+        );
+        $this->add_control(
+            'slidesToScroll_1024',
+            [
+                'label'       => __('Slides To Scroll ved 1024px'),
+                'description' => '',
+                'type'        => \Elementor\Controls_Manager::NUMBER,
+                'default'     => 1,
+                'min'         => 1,
+                'condition' => [
+                    'post_type' => ['medarbejder', 'tilbud'],
+                ],
+            ]
+        );
+        $this->add_control(
+            'slidesToShow_768',
+            [
+                'label'       => __('Slides To Show ved 1024px'),
+                'description' => '',
+                'type'        => \Elementor\Controls_Manager::NUMBER,
+                'default'     => 2,
+                'min'         => 1,
+                'condition' => [
+                    'post_type' => ['medarbejder', 'tilbud'],
+                ],
+            ]
+        );
+        $this->add_control(
+            'slidesToScroll_768',
+            [
+                'label'       => __('Slides To Scroll ved 1024px'),
+                'description' => '',
+                'type'        => \Elementor\Controls_Manager::NUMBER,
+                'default'     => 1,
+                'min'         => 1,
+                'condition' => [
+                    'post_type' => ['medarbejder', 'tilbud'],
+                ],
+            ]
+        );
+        $this->add_control(
+            'slidesToShow_576',
+            [
+                'label'       => __('Slides To Show ved 1024px'),
+                'description' => '',
+                'type'        => \Elementor\Controls_Manager::NUMBER,
+                'default'     => 1,
+                'min'         => 1,
+                'condition' => [
+                    'post_type' => ['medarbejder', 'tilbud'],
+                ],
+            ]
+        );
+        $this->add_control(
+            'slidesToScroll_576',
+            [
+                'label'       => __('Slides To Scroll ved 1024px'),
+                'description' => '',
+                'type'        => \Elementor\Controls_Manager::NUMBER,
+                'default'     => 1,
+                'min'         => 1,
+                'condition' => [
+                    'post_type' => ['medarbejder', 'tilbud'],
+                ],
+            ]
+        );
 
 
         $this->end_controls_section();
@@ -297,30 +404,30 @@ class CarAdsSlider extends Widget_Base
                 jQuery('.multiple-items-<?php echo $id_int; ?>').slick({
                     infinite: true,
                     autoplay: true,
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
+                    slidesToShow: <?php echo $settings['slidesToShow_1024'] ?? 4; ?>,
+                    slidesToScroll: <?php echo $settings['slidesToShow_1024'] ?? 1; ?>,
                     nextArrow: jQuery('#next-<?php echo $id_int; ?>'),
                     prevArrow: jQuery('#prev-<?php echo $id_int; ?>'),
                     responsive: [
                         {
                             breakpoint: 1024,
                             settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 1,
+                                slidesToShow: <?php echo $settings['slidesToShow_1024'] ?? 4; ?>,
+                                slidesToScroll: <?php echo $settings['slidesToShow_1024'] ?? 1; ?>,
                             }
                         },
                         {
                             breakpoint: 768,
                             settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 1
+                                slidesToShow: <?php echo $settings['slidesToShow_768'] ?? 2; ?>,
+                                slidesToScroll: <?php echo $settings['slidesToScroll_768'] ?? 1; ?>
                             }
                         },
                         {
                             breakpoint: 576,
                             settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1
+                                slidesToShow: <?php echo $settings['slidesToShow_576'] ?? 1; ?>,
+                                slidesToScroll: <?php echo $settings['slidesToScroll_576'] ?? 1; ?>
                             }
                         }
                     ]
@@ -352,7 +459,7 @@ class CarAdsSlider extends Widget_Base
                 // Kalender layout
 
                 ?>
-                <div class="car-ads-slider multiple-items-<?php echo $id_int; ?> relative">
+                <div class="car-ads-slider multiple-items-<?php echo $id_int; ?> relative slider-<?php echo $settings['post_type']; ?>">
                     <?php
                     while ($posts->have_posts()) {
                         $posts->the_post();
@@ -360,9 +467,11 @@ class CarAdsSlider extends Widget_Base
                         ?>
                         <div class="flex flex-col">
                             <div class="flex lg:h-72">
-                                <?php the_post_thumbnail('full', ['class' => 'object-cover w-full']); ?>
+                                <?php
+                                $classes = $settings['post_type'] === "medarbejder" ? 'ca-object-fit ca-object-center ca-mx-auto ': 'ca-object-cover ca-w-full object-cover w-full';
+                                the_post_thumbnail('full', ['class' => $classes, 'style' => 'max-height: 280px']); ?>
                             </div>
-                            <div class="bg-lightgrey text-center p-2 h-32 flex items-center justify-center">
+                            <div class="bg-lightgrey text-center p-2 h-32 flex items-center justify-center slider-content-bg">
                                 <div>
                                     <?php
                                     if ($settings['post_type'] === "medarbejder") {
@@ -408,6 +517,7 @@ class CarAdsSlider extends Widget_Base
                 'properties' => $settings['properties'] ?? null,
                 'sort_by'    => $settings['sort_by'],
                 'location'   => $settings['location'] ?? null,
+                'price_type' => $settings['price_type'] !== "all" ? $settings['price_type'] : null,
             ];
 
             $products = $connector->getCarsFromElementor($params);

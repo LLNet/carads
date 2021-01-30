@@ -90,6 +90,7 @@ class Connector
 
 
         if ($_REQUEST['syncmanual'] == "1") {
+            delete_option('_carads_last_updated');
             add_action('init', [$this, 'synchronize']);
             add_action('admin_notices', [$this, 'admin_notice']);
         }
@@ -191,7 +192,7 @@ class Connector
         ini_set('max_execution_time', 900);
         set_time_limit(900);
 
-        $offset = "?size=50". $this->includeDisabled();
+        $offset = "?size=50". $this->includeOptions();
 
         if (get_option('_carads_last_updated')) {
             $offset .= "&updated[gte]=" . urlencode(get_option('_carads_last_updated'));
@@ -425,10 +426,9 @@ class Connector
             //        if (!empty($_GET['size'])) {
             //            $search .= '&size=' . $_GET['size'];
             //        }
-            ////        $search .= '&sort_by='.$request->get('sort_by', 'name:asc');
-            //        if (!empty($_GET['offset'])) {
-            //            $search .= '&offset=' . $_GET['offset'];
-            //        }
+            if (!empty($_GET['offset'])) {
+                $search .= '&offset=' . (int)$_GET['offset'];
+            }
 
             // Min Max Pricing
             if (!empty($_GET['pricingMinMax'])) {
@@ -463,9 +463,10 @@ class Connector
             if (isset($_GET['sort_by']) && !empty($_GET['sort_by'])) {
                 $search .= '&sort_by=' . $_GET['sort_by'];
             }
+
         }
 
-        $products = $this->headless->get('/products' . $search . $this->includeDisabled());
+        $products = $this->headless->get('/products' . $search . $this->includeOptions() . $this->includePriceType());
 
         if (isset($products->error)) {
             throw new \Exception($products->items);
@@ -474,7 +475,20 @@ class Connector
         return $products;
     }
 
-    public function filters()
+    /**
+     * Add search property to filter cars based on priceType. Default is "all"
+     * @return string
+     */
+    public function includePriceType(): string
+    {
+        // PriceType
+        $price_type = get_option('car-ads-archive')['usePriceType'] ?? 'all';
+        if (!is_null($price_type) && $price_type !== "all") {
+            return '&properties[]=' . strtolower($price_type);
+        }
+    }
+    
+    public function filters(): array
     {
 
         $filters = [];
@@ -541,7 +555,7 @@ class Connector
 
     public function getMinMaxPrice()
     {
-        $products = $this->headless->get("/products?size=1" . $this->includeDisabled());
+        $products = $this->headless->get("/products?size=1" . $this->includeOptions());
         if (isset($products->error)) {
             throw new \Exception($products->items);
         }
@@ -627,7 +641,7 @@ class Connector
 
         }
 
-        $products = $this->headless->get("/products?size=1" . $search . $this->includeDisabled());
+        $products = $this->headless->get("/products?size=1" . $search . $this->includeOptions());
         if (property_exists($products, 'error')) {
             print $products->error;
         } else {
@@ -825,9 +839,14 @@ class Connector
                 $search .= '&location[address][city]=' . strtolower($params['location']);
             }
 
+            // PriceType
+            if (isset($params['price_type']) && !is_null($params['price_type'])) {
+                $search .= '&properties[]=' . strtolower($params['price_type']);
+            }
+
         }
 
-        $products = $this->headless->get('/products?' . $search . $this->includeDisabled());
+        $products = $this->headless->get('/products?' . $search . $this->includeOptions());
 
 
         if (isset($products->error)) {
@@ -839,7 +858,7 @@ class Connector
 
     public function get_brands_categories($brand)
     {
-        $products       = $this->headless->get('/products?brand=' . $brand . $this->includeDisabled());
+        $products       = $this->headless->get('/products?brand=' . $brand . $this->includeOptions());
         $all_categories = $products->aggregations->filtered->categories;
 
 
@@ -856,17 +875,24 @@ class Connector
 
     }
 
-    public function includeDisabled()
+    public function includeOptions()
     {
-        $includeDisabled      = get_option('car-ads-archive')['includeDisabled'];
+        $options = "";
+
+        /**
+         * Include disabled cars
+         * Global setting
+         */
+        $includeDisabled      = get_option('car-ads-archive')['includeDisabled'] ?? "false";
         $includeDisabledSince = get_option('car-ads-archive')['includeDisabledSince'];
 
-        if (!empty($includeDisabled) && $includeDisabled == "true" && !empty($includeDisabledSince)) {
+        if (!empty($includeDisabled) && $includeDisabled === "true" && !empty($includeDisabledSince)) {
 
             $since = date("Y-m-d H:i:s", strtotime("-" . $includeDisabledSince . " days"));
-            return "&includeDisabled=true&updated[gt]=" . urlencode($since);
+            $options .= "&includeDisabled=true&updated[gt]=" . urlencode($since);
         }
-        return "";
+
+        return $options;
     }
 
 

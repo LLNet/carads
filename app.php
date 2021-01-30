@@ -150,6 +150,13 @@ if (!class_exists('CarAdsApp')) {
                     'show_back_to_archive' => 'no',
                 ]);
             }
+            if (!get_option('car-ads-archive')) {
+                update_option('car-ads-archive', [
+                    'includeDisabled'      => 'yes',
+                    'includeDisabledSince' => '7',
+                    'showLocation'         => 'yes',
+                ]);
+            }
 
         }
 

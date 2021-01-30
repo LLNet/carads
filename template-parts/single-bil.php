@@ -28,7 +28,8 @@ $currency  = $connector->getCurrency();
                         </p>
                     </div>
                     <div class="header--back-to-top ca-hidden ca-flex-grow-0 ca-w-10 ca-items-center ca-justify-center">
-                        <a href="#" id="scroll-to-top" class="ca-w-10 ca-h-10 ca-rounded-full ca-bg-primary bg-primary ca-flex ca-items-center ca-justify-center ca-text-white">
+                        <a href="#" id="scroll-to-top"
+                           class="ca-w-10 ca-h-10 ca-rounded-full ca-bg-primary bg-primary ca-flex ca-items-center ca-justify-center ca-text-white">
                             <i class="fa fa-chevron-up ca-text-white"></i>
                         </a>
                     </div>
@@ -39,7 +40,7 @@ $currency  = $connector->getCurrency();
                         if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
                             ?>
                             <a href="#"
-                               class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline show-modal"
+                               class="show-modal ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
                                data-target="modalByttepris">
                                 <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-app'); ?>
                             </a>
@@ -48,7 +49,7 @@ $currency  = $connector->getCurrency();
                         if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
                             ?>
                             <a href="#"
-                               class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline show-modal"
+                               class="show-modal ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
                                data-target="modalBestil">
                                 <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-app'); ?>
                             </a>
@@ -74,7 +75,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="#"
-                                   class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline show-modal"
+                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
                                    data-target="modalByttepris">
                                     <i class="fa fa-fw fa-calculator"></i>
                                 </a>
@@ -86,7 +87,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="#"
-                                   class="ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline show-modal"
+                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
                                    data-target="modalBestil">
                                     <i class="fa fa-fw fa-car"></i>
                                 </a>
@@ -98,7 +99,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="tel:+45<?php echo $product->location->telephone ?? get_option('car-ads-single-car')['phonenumber']; ?>"
-                                   class="single-car--call-us ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center hover:ca-text-white hover:ca-no-underline ca-text-white ">
+                                   class="ca-mb-2 single-car--call-us ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center hover:ca-text-white hover:ca-no-underline ca-text-white ">
                                     <i class="fa fa-fw fa-phone"></i>
                                 </a>
                                 <span class="car-button-label ca-text-primary ca-font-medium ca-text-xs md:ca-text-base"><?php echo __('Ring til os', 'car-app'); ?></span>
@@ -131,13 +132,17 @@ $currency  = $connector->getCurrency();
                     }
                     ?>
 
-                    <div class="single-car--main-slider main-slider ca-relative ca-min-h-64 ca-mt-4">
-                        <a href="<?php echo $product->image->sizes->i1024x768 ?>" data-lightbox="gallery" data-title="<?php echo $product->name; ?>"><img src="<?php echo $product->image->sizes->i1024x768 ?>"></a>
+                    <div class="single-car--main-slider carads-main-slider ca-relative ca-min-h-64 ca-mt-4">
+                        <a href="<?php echo $product->image->sizes->i1024x768 ?>" data-lightbox="gallery"
+                           data-title="<?php echo $product->name; ?>"><img
+                                    src="<?php echo $product->image->sizes->i1024x768 ?>"></a>
                         <?php
                         if (property_exists($product, 'images')) {
                             foreach ($product->images as $key => $image) {
                                 ?>
-                                <a href="<?php echo $image->sizes->i1024x768 ?>" data-lightbox="gallery" data-title="<?php echo $product->name; ?>"><img src="<?php echo $image->sizes->i1024x768 ?>"></a>
+                                <a href="<?php echo $image->sizes->i1024x768 ?>" data-lightbox="gallery"
+                                   data-title="<?php echo $product->name; ?>"><img
+                                            src="<?php echo $image->sizes->i1024x768 ?>" loading="lazy"></a>
                                 <?php
                             }
                         }
@@ -158,13 +163,13 @@ $currency  = $connector->getCurrency();
                             <i class="fa fa-fw fa-chevron-right"></i>
                         </button>
                     </div>
-                    <div class="single-car--thumb-slider thumb-slider ca-mb-4">
+                    <div class="single-car--thumb-slider carads-thumb-slider ca-mb-4">
                         <img src="<?php echo $product->image->sizes->i1024x768 ?>">
                         <?php
                         if (property_exists($product, 'images')) {
                             foreach ($product->images as $key => $image) {
                                 ?>
-                                <img src="<?php echo str_replace('i1024x768', 'i768x400', $image->sizes->i1024x768) ?>">
+                                <img src="<?php echo str_replace('i1024x768', 'i768x400', $image->sizes->i1024x768) ?>" loading="lazy">
                                 <?php
                             }
                         }
@@ -299,13 +304,22 @@ if (!$product->disabled) {
             /**
              * Fixed head on scroll
              */
+            let single_car_quick_details = jQuery(".single-car--quick-details")
+            let single_car_header_right = jQuery(".single-car--header-right")
+            let single_car_quick_details_top = single_car_quick_details.offset().top;
+            let single_car_quick_details_height = single_car_quick_details.outerHeight();
+
             jQuery(window).scroll(function () {
-                if (jQuery(window).scrollTop() >= 300) {
-                    jQuery('.single-bil--header').addClass('fixed-header');
-                    jQuery('.single-car--header-right').fadeOut();
+                if (jQuery(window).scrollTop() > (single_car_quick_details_top + single_car_quick_details_height)) {
+                    single_car_quick_details.addClass('fixed-header');
+                    if (jQuery(window).width < 768) {
+                        single_car_header_right.fadeOut();
+                    }
                 } else {
-                    jQuery('.single-bil--header').removeClass('fixed-header');
-                    jQuery('.single-car--header-right').fadeIn();
+                    single_car_quick_details.removeClass('fixed-header');
+                    if (jQuery(window).width < 768) {
+                        single_car_header_right.fadeIn();
+                    }
                 }
             });
 

@@ -17,7 +17,7 @@ if (!is_post_type_archive('bil')) {
                    style="max-width: none !important; width: 100% !important;"
                    placeholder="<?php echo __("Fritekst søgning. Eks: 'Audi A3'", 'car-app'); ?>"
                    class="free-search ca-w-full ca-mb-4 ca-py-0 ca-px-4 ca-h-14 ca-border-0 ca-rounded "
-                   onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }"
+                   onkeydown="if (event.keyCode === 13) { this.form.submit(); return false; }"
             >
         </label>
 
@@ -30,7 +30,7 @@ if (!is_post_type_archive('bil')) {
                         if (isset($_GET['categories']) && !empty($_GET['categories'])) {
                             $brands = $products->aggregations->filtered->brands;
                         } else {
-                            $brands = $products->aggregations->global->brands;
+                            $brands = $products->aggregations->filtered->brands;
                         }
                         ksort($brands);
 
@@ -39,8 +39,10 @@ if (!is_post_type_archive('bil')) {
                                 ?>
                                 <option value="<?php echo $brand->item->slug; ?>"
                                     <?php
-                                    if (in_array($brand->item->slug, $filters['brands'])) {
-                                        echo 'selected';
+                                    if (!is_null($filters['brands'])) {
+                                        if (in_array($brand->item->slug, $filters['brands'])) {
+                                            echo 'selected';
+                                        }
                                     }
                                     ?>
                                 >
@@ -63,7 +65,7 @@ if (!is_post_type_archive('bil')) {
                         if (isset($_GET['brands']) && !empty($_GET['brands'])) {
                             $models = $products->aggregations->filtered->categories;
                         } else {
-                            $models = $products->aggregations->global->categories;
+                            $models = $products->aggregations->filtered->categories;
                         }
                         ksort($models);
 
@@ -72,8 +74,10 @@ if (!is_post_type_archive('bil')) {
                                 ?>
                                 <option value="<?php echo $category->item->slug; ?>"
                                     <?php
-                                    if (in_array($category->item->slug, $filters['categories'])) {
-                                        echo 'selected';
+                                    if (!is_null($filters['categories'])) {
+                                        if (in_array($category->item->slug, $filters['categories'])) {
+                                            echo 'selected';
+                                        }
                                     }
                                     ?>
                                 >
@@ -95,8 +99,10 @@ if (!is_post_type_archive('bil')) {
                             ?>
                             <option value="<?php echo $option['slug']; ?>"
                                 <?php
-                                if (in_array($option['slug'], $filters['properties'])) {
-                                    echo 'selected';
+                                if (!is_null($filters['properties'])) {
+                                    if (in_array($option['slug'], $filters['properties'])) {
+                                        echo 'selected';
+                                    }
                                 }
                                 ?>
                             >
@@ -118,8 +124,10 @@ if (!is_post_type_archive('bil')) {
                             ?>
                             <option value="<?php echo $option['slug']; ?>"
                                 <?php
-                                if (in_array($option['slug'], $filters['properties'])) {
-                                    echo 'selected';
+                                if (!is_null($filters['properties'])) {
+                                    if (in_array($option['slug'], $filters['properties'])) {
+                                        echo 'selected';
+                                    }
                                 }
                                 ?>
                             >
@@ -142,8 +150,10 @@ if (!is_post_type_archive('bil')) {
                             ?>
                             <option value="<?php echo $option['slug']; ?>"
                                 <?php
-                                if (in_array($option['slug'], $filters['properties'])) {
-                                    echo 'selected';
+                                if (!is_null($filters['properties'])) {
+                                    if (in_array($option['slug'], $filters['properties'])) {
+                                        echo 'selected';
+                                    }
                                 }
                                 ?>
                             >
@@ -205,7 +215,7 @@ if (!is_post_type_archive('bil')) {
                 <div class="slider-container">
                     <input id="pricingMinMax"
                            name="pricingMinMax"
-                           type="text"
+                           type="hidden"
                            class=""
                            value="<?php echo $pricingMinMaxValue; ?>"
                            data-slider-min="<?php echo $min; ?>"
@@ -246,7 +256,7 @@ if (!is_post_type_archive('bil')) {
                 <div class="slider-container">
                     <input id="mileageMinMax"
                            name="mileageMinMax"
-                           type="text"
+                           type="hidden"
                            class=""
                            value="<?php echo $mileageMinMaxValue; ?>"
                            data-slider-min="<?php echo $mileageMinMaxValues->min; ?>"

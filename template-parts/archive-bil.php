@@ -110,17 +110,17 @@ $availableFilters = $connector->availableFilters($products);
                             <div>
                                 <?php
                                 if (property_exists($products, 'navigation')) {
-                                    if (property_exists($products->navigation, 'previous')) {
+                                    if (!is_null($products->navigation->previous)) {
                                         ?>
-                                        <a href="<?php echo $products->navigation->previous; ?>"><?php _e('Previous', 'car-app'); ?></a>
+                                        <a href="<?php echo $products->navigation->previous; ?>"><?php _e('Forrige side', 'car-app'); ?></a>
                                         <?php
                                     }
                                     ?>
 
                                     <?php
-                                    if (property_exists($products->navigation, 'next')) {
+                                    if (!is_null($products->navigation->next)) {
                                         ?>
-                                        <a href="<?php echo $products->navigation->next; ?>"><?php _e('Next', 'car-app'); ?></a>
+                                        <a href="<?php echo $products->navigation->next; ?>"><?php _e('Næste side', 'car-app'); ?></a>
                                         <?php
                                     }
                                 }

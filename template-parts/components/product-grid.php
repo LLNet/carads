@@ -1,6 +1,6 @@
 <?php
-$santanderPrice       = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
-$findleasingFinancial = $connector->get_field($product->customFields, 'findleasingFinancial');
+$santanderPrice          = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+$findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
 $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findleasingPriceMonthly');
 ?>
 <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
@@ -17,8 +17,8 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                     ?>
                     <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
                         <?php
-                        echo __('Leasing fra', 'car-app'). ": ";
-                        echo number_format_i18n($findleasingPriceMonthly). " DKK";
+                        echo __('Leasing fra', 'car-app') . ": ";
+                        echo number_format_i18n($findleasingPriceMonthly) . " DKK";
                         ?>
                     </div>
                     <?php
@@ -29,14 +29,17 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                  data-src="<?php echo $product->image->sizes->i1024x768; ?>" alt="product"
                  class="ca-w-full ca-object-cover ca-object-center"
                  style="height: 100% !important;"
+                 loading="lazy"
             >
             <?php
-            if (property_exists($product->location->address, 'city')) {
-                ?>
-                <div class="ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
-                    <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
-                </div>
-                <?php
+            if (get_option('car-ads-archive')['showLocation'] === "yes") {
+                if (property_exists($product->location->address, 'city')) {
+                    ?>
+                    <div class="car--placement ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
+                        <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
+                    </div>
+                    <?php
+                }
             }
             ?>
         </div>
@@ -65,7 +68,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
             if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                 ?>
                 <div class="ca-text-center ca-text-lg ca-font-medium ca-mb-0 mb-0">
-                    <?php echo __('Fra', 'car-app')." "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
+                    <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
                     <?php echo __('DKK. /md.', 'car-app'); ?>
                 </div>
                 <?php

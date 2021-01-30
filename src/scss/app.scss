@@ -74,6 +74,19 @@ body.admin-bar {
 
 /* Filters */
 
+.attributes > * {
+  max-height: 52px;
+  height: 52px;
+}
+
+.car-filters .free-search {
+  height: 48px !important;
+  background: white !important;
+  border-radius: 2px !important;
+  border: 0 !important;
+}
+
+
 span.multiselect-native-select .btn-group {
   @apply ca-w-full ca-relative;
 }
@@ -174,15 +187,22 @@ Single car
 }
 
 // Santander
-ul.santander {
-  @apply ca-mb-4 ca-list-none;
+.single-car--santander {
+  ul.santander {
+    @apply ca-mb-4 ca-list-none;
 
-  li {
-    &:before {
-      content: '\f058';
-      font-family: "FontAwesome";
-      @apply ca-text-white ca-mr-2;
+    li {
+      &:before {
+        content: '\f058';
+        font-family: "FontAwesome";
+        @apply ca-text-white ca-mr-2;
+      }
     }
+  }
+
+  button {
+    background-color: white !important;
+    color: rgb(237, 23, 23) !important;
   }
 }
 
@@ -210,7 +230,6 @@ ul.santander {
 }
 
 
-
 /** Diverse vedr WP Admin bar */
 @media (min-width: 600px) and (max-width: 768px) {
   body.admin-bar .update-filters.ca-fixed,
@@ -218,9 +237,11 @@ ul.santander {
     top: 46px !important;
   }
 }
+
 @media (min-width: 769px) {
   body.admin-bar .update-filters.ca-fixed,
   body.admin-bar .single-bil--header.fixed-header {
     top: 32px !important;
   }
 }
+

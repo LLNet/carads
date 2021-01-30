@@ -98,7 +98,7 @@ jQuery(document).ready(function () {
 
     if (jQuery('.single-bil').length > 0) {
         let $status = jQuery('.pagingInfo');
-        let $slickElement = jQuery('.main-slider');
+        let $slickElement = jQuery('.carads-main-slider');
 
         $slickElement.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
             //currentSlide is undefined on init -- set it to 0 in this case (currentSlide is 0 based)
@@ -108,7 +108,7 @@ jQuery(document).ready(function () {
 
         if (viewportWidth < 576) {
 
-            jQuery('.main-slider').slick({
+            jQuery('.carads-main-slider').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 arrows: true,
@@ -117,23 +117,23 @@ jQuery(document).ready(function () {
                 nextArrow: jQuery('.main-slider-next'),
                 prevArrow: jQuery('.main-slider-prev'),
             });
-            jQuery('.thumb-slider').hide();
+            jQuery('.carads-thumb-slider').hide();
 
         } else {
-            jQuery('.main-slider').slick({
+            jQuery('.carads-main-slider').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 arrows: true,
                 fade: true,
                 dots: false,
-                asNavFor: '.thumb-slider',
+                asNavFor: '.carads-thumb-slider',
                 nextArrow: jQuery('.main-slider-next'),
                 prevArrow: jQuery('.main-slider-prev'),
             });
-            jQuery('.thumb-slider').slick({
+            jQuery('.carads-thumb-slider').slick({
                 slidesToShow: 4,
                 slidesToScroll: 1,
-                asNavFor: '.main-slider',
+                asNavFor: '.carads-main-slider',
                 dots: false,
                 focusOnSelect: true,
                 centerMode: true,

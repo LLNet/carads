@@ -192,6 +192,23 @@ class CarAdsListGrid extends Widget_Base
         );
 
         $this->add_control(
+            'price_type',
+            [
+                'label'     => __('Pris Type'),
+                'type'      => \Elementor\Controls_Manager::SELECT,
+                'options'   => [
+                    'all'                   => 'Alle',
+                    'pricetype-retailprice' => 'Retail pris',
+                    'pricetype-leasing'     => 'Leasing pris',
+                ],
+                'default'   => 'pricetype-retailprice',
+                'condition' => [
+                    'post_type' => ['bil'],
+                ],
+            ]
+        );
+
+        $this->add_control(
             'display_type',
             [
                 'label'     => __('Vis som'),
@@ -208,7 +225,6 @@ class CarAdsListGrid extends Widget_Base
         );
 
         $this->end_controls_section();
-
 
         $this->start_controls_section(
             'section_readmore',
@@ -295,6 +311,7 @@ class CarAdsListGrid extends Widget_Base
                 'properties' => $settings['properties'] ?? null,
                 'sort_by'    => $settings['sort_by'],
                 'location'   => $settings['location'] ?? null,
+                'price_type' => $settings['price_type'] !== "all" ? $settings['price_type'] : null,
             ];
             $products     = $connector->getCarsFromElementor($params);
             $archive_slug = get_option('car-ads')['archive_slug'] ?? 'biler';

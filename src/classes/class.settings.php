@@ -186,6 +186,31 @@ if (!class_exists('CarAdsSettings')):
                         ]
                     ],
                     [
+                        'name' => 'showLocation',
+                        'label' => __('Vis placering af bil?', 'car-ads'),
+                        'desc' => __('Vis placering af bil nederst på billedet?', 'car-ads'),
+                        'placeholder' => '',
+                        'type'    => 'select',
+                        'default' => 'yes',
+                        'options' => [
+                            'yes' => 'Ja',
+                            'no'  => 'Nej'
+                        ]
+                    ],
+                    [
+                        'name' => 'usePriceType',
+                        'label' => __('Pristype', 'car-ads'),
+                        'desc' => __('Vis kun biler med denne pristype på billisten', 'car-ads'),
+                        'placeholder' => '',
+                        'type'    => 'select',
+                        'default' => 'all',
+                        'options' => [
+                            'all'                   => 'Alle',
+                            'pricetype-retailprice' => 'Retail pris',
+                            'pricetype-leasing'     => 'Leasing pris',
+                        ]
+                    ],
+                    [
                         'name' => 'archiveSeoText',
                         'label' => __('Arkiv SEO Tekst', 'car-ads'),
                         'desc' => __('Skriv din SEO tekst til Billisten her. Denne fremkommer under alle biler på billisten.', 'car-ads'),
