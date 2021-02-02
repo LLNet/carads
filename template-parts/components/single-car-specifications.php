@@ -30,7 +30,11 @@
         <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
             <?php
             $date = $connector->get_field($product->properties, 'RegistrationDate');
-            echo date("m/Y", strtotime($date));
+            if(!empty($date) && $date !== '-') {
+                echo date("m/Y", strtotime($date));
+            } else {
+                echo $date;
+            }
             ?>
         </dd>
     </dl>

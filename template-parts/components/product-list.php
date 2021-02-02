@@ -40,6 +40,17 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
             ?>
         </a>
         <?php
+    } else {
+        ?>
+        <div class="ca-w-full ca-h-80 ca-relative ca-flex-none">
+            <img src="/wp-content/plugins/car-app/assets/noImageSmall.gif"
+                 data-src="/wp-content/plugins/car-app/assets/noImageSmall.gif" alt="product"
+                 class="ca-w-full ca-object-cover ca-object-center"
+                 style="height: 100% !important;"
+                 loading="lazy"
+            >
+        </div>
+        <?php
     }
     ?>
     <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
@@ -159,7 +170,11 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                                 <?php
                                 $date = $connector->get_field($product->properties, 'RegistrationDate');
-                                echo date("m/Y", strtotime($date));
+                                if(!empty($date) && $date !== '-') {
+                                    echo date("m/Y", strtotime($date));
+                                } else {
+                                    echo $date;
+                                }
                                 ?>
                             </dd>
                         </dl>
