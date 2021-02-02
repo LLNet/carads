@@ -40,7 +40,7 @@ $currency  = $connector->getCurrency();
                         if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
                             ?>
                             <a href="#"
-                               class="show-modal ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
+                               class="show-modal ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
                                data-target="modalByttepris">
                                 <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-app'); ?>
                             </a>
@@ -75,7 +75,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="#"
-                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
+                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
                                    data-target="modalByttepris">
                                     <i class="fa fa-fw fa-calculator"></i>
                                 </a>
@@ -87,7 +87,7 @@ $currency  = $connector->getCurrency();
                             ?>
                             <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
                                 <a href="#"
-                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
+                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-14 ca-w-14 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
                                    data-target="modalBestil">
                                     <i class="fa fa-fw fa-car"></i>
                                 </a>
@@ -130,52 +130,70 @@ $currency  = $connector->getCurrency();
                     if (function_exists('yoast_breadcrumb')) {
                         yoast_breadcrumb('<p id="breadcrumbs" class="single-car--breadcrumbs">', '</p>');
                     }
-                    ?>
 
-                    <div class="single-car--main-slider carads-main-slider ca-relative ca-min-h-64 ca-mt-4">
-                        <a href="<?php echo $product->image->sizes->i1024x768 ?>" data-lightbox="gallery"
-                           data-title="<?php echo $product->name; ?>"><img
-                                    src="<?php echo $product->image->sizes->i1024x768 ?>"></a>
-                        <?php
-                        if (property_exists($product, 'images')) {
-                            foreach ($product->images as $key => $image) {
-                                ?>
-                                <a href="<?php echo $image->sizes->i1024x768 ?>" data-lightbox="gallery"
-                                   data-title="<?php echo $product->name; ?>"><img
-                                            src="<?php echo $image->sizes->i1024x768 ?>" loading="lazy"></a>
-                                <?php
-                            }
-                        }
+                    if ($product->image->sizes->i1024x768 && $product->images) {
                         ?>
-                    </div>
-                    <div class="ca-h-14 ca-my-4 ca-text-primary ca-font-medium ca-text-center ca-flex ca-items-center ca-justify-between">
-                        <button class="single-car--slider-prev focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-prev slick-prev slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-ml-1
-                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary border-primary text-primary focus:text-primary">
-                            <i class="fa fa-fw fa-chevron-left"></i>
-                        </button>
-                        <div class="single-car--slide-page-info pagingInfo ca-text-primary text-primary">
+                        <div class="single-car--main-slider carads-main-slider ca-relative ca-min-h-64 ca-mt-4">
+                            <a href="<?php echo $product->image->sizes->i1024x768 ?>" data-lightbox="gallery"
+                               data-title="<?php echo $product->name; ?>">
+                                <img src="<?php echo $product->image->sizes->i1024x768 ?>">
+                            </a>
                             <?php
-                            echo "1/" . (count($product->images) + 1);
+                            if (property_exists($product, 'images')) {
+                                foreach ($product->images as $key => $image) {
+                                    ?>
+                                    <a href="<?php echo $image->sizes->i1024x768 ?>" data-lightbox="gallery"
+                                       data-title="<?php echo $product->name; ?>"><img
+                                                src="<?php echo $image->sizes->i1024x768 ?>" loading="lazy"></a>
+                                    <?php
+                                }
+                            }
                             ?>
                         </div>
-                        <button class="single-car--slider-next focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-next slick-next slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-mr-1
-                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary border-primary text-primary focus:text-primary">
-                            <i class="fa fa-fw fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="single-car--thumb-slider carads-thumb-slider ca-mb-4">
-                        <img src="<?php echo $product->image->sizes->i1024x768 ?>">
                         <?php
-                        if (property_exists($product, 'images')) {
+                    } else {
+                        ?>
+                        <div class="single-car--main-slider ca-relative ca-min-h-64 ca-mt-4">
+                            <a href="/wp-content/plugins/car-app/assets/noImageBig.jpg" data-lightbox="gallery"
+                               data-title="<?php echo __('Der er desværre ikke et billede af bilen endnu', 'car-app'); ?>">
+                                <img src="/wp-content/plugins/car-app/assets/noImageBig.jpg">
+                            </a>
+                        </div>
+                        <?php
+                    }
+
+                    if (property_exists($product, 'images')) {
+                        ?>
+                        <div class="ca-h-14 ca-my-4 ca-text-primary ca-font-medium ca-text-center ca-flex ca-items-center ca-justify-between">
+                            <button class="single-car--slider-prev focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-prev slick-prev slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-ml-1
+                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary border-primary text-primary focus:text-primary">
+                                <i class="fa fa-fw fa-chevron-left"></i>
+                            </button>
+                            <div class="single-car--slide-page-info pagingInfo ca-text-primary text-primary">
+                                <?php
+                                echo "1/" . (count($product->images) + 1);
+                                ?>
+                            </div>
+                            <button class="single-car--slider-next focus:ca-outline-none focus:ca-ring focus:ca-text-white main-slider-next slick-next slick-arrow ca-z-20 ca-h-14 ca-w-14 ca-bg-white ca-border ca-border-primary ca-rounded-full ca-mr-1
+                        ca-flex ca-items-center ca-justify-center ca-text-primary ca-transform focus:ca-bg-primary border-primary text-primary focus:text-primary">
+                                <i class="fa fa-fw fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="single-car--thumb-slider carads-thumb-slider ca-mb-4">
+                            <img src="<?php echo $product->image->sizes->i1024x768 ?>">
+                            <?php
                             foreach ($product->images as $key => $image) {
                                 ?>
-                                <img src="<?php echo str_replace('i1024x768', 'i768x400', $image->sizes->i1024x768) ?>" loading="lazy">
+                                <img src="<?php echo str_replace('i1024x768', 'i768x400', $image->sizes->i1024x768) ?>"
+                                     loading="lazy">
                                 <?php
                             }
-                        }
-                        ?>
-                    </div>
-
+                            ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <div class="ca-block lg:ca-hidden">
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
