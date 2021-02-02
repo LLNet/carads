@@ -28,6 +28,8 @@ if (!class_exists('CarAdsApp')) {
         public function __construct()
         {
 
+            define('__CAR_ADS_DIR__', WP_PLUGIN_DIR . "/car-app/");
+
             // Vendor autoload
             require __DIR__ . '/vendor/autoload.php';
 
@@ -230,6 +232,9 @@ if (!class_exists('CarAdsApp')) {
             }
             return $template;
         }
+
+
+
 
         /**
          * CarAds.io rewrite rules
