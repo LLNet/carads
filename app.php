@@ -3,8 +3,8 @@
  * Plugin Name: PLUGIN_TITLE
  * Description: PLUGIN_DESCRIPTION
  * Version: PLUGIN_VERSIONING
- * Author: Indexed.dk
- * Author URI: https://indexed.dk
+ * Author: CarAds.io
+ * Author URI: https://carads.io
  * Text Domain: PLUGIN_NAME
  *************************/
 
