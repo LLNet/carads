@@ -1,10 +1,12 @@
 <?php
+global $product;
 $santanderPrice          = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
 $findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
 $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findleasingPriceMonthly');
 ?>
 <div class="car md:ca-grid md:ca-grid-cols-4 ca-mb-8 ca-bg-white ca-w-full ca-border ca-border-solid ca-border-lightgrey">
     <?php
+
     if ($product->image->sizes->i1024x768) {
         ?>
         <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
@@ -181,23 +183,34 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                     </div>
                 </div>
                 <div class="car--info--content__price ca-w-full lg:ca-w-1/4 ca-flex ca-justify-center ca-items-center lg:ca-items-end lg:ca-justify-center ca-flex-col">
-                    <span class="ca-text-2xl md:ca-text-xl ca-mt-2 lg:ca-mt-0 ca-font-medium">
+
                         <?php
                         if (!$product->disabled) {
-                            echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                            $priceType = $connector->get_field($product->properties, 'PriceType');
+                            switch($priceType) {
+                                case 'RetailPrice':
+                                default:
+                                    $connector->getTemplatePart('components/price/retail', $product);
+                                    break;
+
+                                case null:
+                                case 'Leasing':
+                                    $connector->getTemplatePart('components/price/leasing', $product);
+                                    break;
+                            }
                         } else {
                             echo __('Solgt', 'car-app');
                         }
                         ?>
-                    </span>
+
                     <?php
                     $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
                     if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                         ?>
-                        <small class="leasing ca-opacity-50 ca-font-medium">
+                        <div class="leasing ca-opacity-50 ca-font-normal ca-text-base">
                             <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
                             <?php echo __('DKK. /md.', 'car-app'); ?>
-                        </small>
+                        </div>
                         <?php
                     }
                     ?>

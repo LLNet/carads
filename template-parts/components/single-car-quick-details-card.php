@@ -96,13 +96,22 @@
     if (!$product->disabled) {
         ?>
         <div class="price ca-flex ca-flex-col ca-items-center lg:ca-flex-row ca-mt-4 ca-mb-2">
-            <p class="price--label ca-font-medium lg:ca-flex-grow-1"><?php echo __('Kontantpris', 'car-app'); ?></p>
-            <p class="price--value ca-font-medium ca-text-3xl lg:ca-ml-auto lg:ca-text-right">
+            <div class="price--value ca-font-medium ca-text-3xl ca-mx-auto lg:ca-text-center ca-flex-col ca-flex">
                 <?php
-                echo number_format_i18n($product->pricing->{$currency}->price, 0);
-                echo " " . $currency;
+                $priceType = $connector->get_field($product->properties, 'PriceType');
+                switch ($priceType) {
+                    case 'RetailPrice':
+                    default:
+                        $connector->getTemplatePart('components/price/retail', $product);
+                        break;
+
+                    case null:
+                    case 'Leasing':
+                        $connector->getTemplatePart('components/price/leasing', $product);
+                        break;
+                }
                 ?>
-            </p>
+            </div>
         </div>
         <?php
     } else {

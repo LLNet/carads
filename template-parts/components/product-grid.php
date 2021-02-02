@@ -66,7 +66,18 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
             <div class="ca-text-center ca-font-medium ca-text-2xl ca-mb-0 mb-0">
                 <?php
                 if (!$product->disabled) {
-                    echo number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                    $priceType = $connector->get_field($product->properties, 'PriceType');
+                    switch($priceType) {
+                        case 'RetailPrice':
+                        default:
+                            $connector->getTemplatePart('components/price/retail', $product);
+                            break;
+
+                        case null:
+                        case 'Leasing':
+                            $connector->getTemplatePart('components/price/leasing', $product);
+                            break;
+                    }
                 } else {
                     echo __('Solgt', 'car-app');
                 }
@@ -78,7 +89,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
             <?php
             if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
                 ?>
-                <div class="ca-text-center ca-text-lg ca-font-medium ca-mb-0 mb-0">
+                <div class="ca-text-center ca-text-base ca-opacity-50 ca-font-medium ca-mb-0 mb-0">
                     <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
                     <?php echo __('DKK. /md.', 'car-app'); ?>
                 </div>
