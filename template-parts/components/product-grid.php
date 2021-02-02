@@ -44,6 +44,17 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
             ?>
         </div>
         <?php
+    } else {
+        ?>
+        <div class="ca-w-full ca-h-80 ca-relative ca-flex-none">
+            <img src="/wp-content/plugins/car-app/assets/noImageSmall.gif"
+                 data-src="/wp-content/plugins/car-app/assets/noImageSmall.gif" alt="product"
+                 class="ca-w-full ca-object-cover ca-object-center"
+                 style="height: 100% !important;"
+                 loading="lazy"
+            >
+        </div>
+        <?php
     }
     ?>
 
