@@ -477,9 +477,8 @@ class Connector
 
     /**
      * Add search property to filter cars based on priceType. Default is "all"
-     * @return string
      */
-    public function includePriceType(): string
+    public function includePriceType()
     {
         // PriceType
         $price_type = get_option('car-ads-archive')['usePriceType'] ?? 'all';
