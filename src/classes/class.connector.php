@@ -177,8 +177,18 @@ class Connector
         } else {
             return get_transient('CarAds_customfield_' . $name);
         }
+    }
 
+    public function getTemplatePart($filename, $product)
+    {
+        $currentTheme    = get_template_directory();
+        $plugin_dir_path = __CAR_ADS_DIR__ . "template-parts/";
 
+        if (file_exists($currentTheme . "/car-app/" . $filename . ".php")) {
+            include $currentTheme . "/car-app/" . $filename . ".php";
+        } else {
+            include $plugin_dir_path . $filename . ".php";
+        }
     }
 
 
@@ -192,7 +202,7 @@ class Connector
         ini_set('max_execution_time', 900);
         set_time_limit(900);
 
-        $offset = "?size=50". $this->includeOptions();
+        $offset = "?size=50" . $this->includeOptions();
 
         if (get_option('_carads_last_updated')) {
             $offset .= "&updated[gte]=" . urlencode(get_option('_carads_last_updated'));
@@ -315,8 +325,8 @@ class Connector
                 'post_modified_gmt' => $product->updated,
                 'post_status'       => 'publish',
                 'meta_input'        => [
-                    'carads_id' => $product->id,
-                    'slug'      => $product->slug,
+                    'carads_id'                        => $product->id,
+                    'slug'                             => $product->slug,
                     '_yoast_wpseo_meta-robots-noindex' => 1
                 ]
             ]);
@@ -486,7 +496,7 @@ class Connector
             return '&properties[]=' . strtolower($price_type);
         }
     }
-    
+
     public function filters(): array
     {
 
@@ -887,7 +897,7 @@ class Connector
 
         if (!empty($includeDisabled) && $includeDisabled === "true" && !empty($includeDisabledSince)) {
 
-            $since = date("Y-m-d H:i:s", strtotime("-" . $includeDisabledSince . " days"));
+            $since   = date("Y-m-d H:i:s", strtotime("-" . $includeDisabledSince . " days"));
             $options .= "&includeDisabled=true&updated[gt]=" . urlencode($since);
         }
 
