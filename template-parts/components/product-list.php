@@ -188,6 +188,9 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                         if (!$product->disabled) {
                             $priceType = $connector->get_field($product->properties, 'PriceType');
                             switch($priceType) {
+                                case 'CallForPrice':
+                                    $connector->getTemplatePart('components/price/callforprice', $product);
+                                    break;
                                 case 'RetailPrice':
                                 default:
                                     $connector->getTemplatePart('components/price/retail', $product);
