@@ -117,7 +117,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                             <dl class="ca-flex ca-flex-col">
                                 <dt class="ca-font-thin ca-leading-5"><?php _e('Grøn ejerafgift', 'car-app'); ?></dt>
                                 <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                    <?php echo $connector->get_field($product->properties, 'GreenTax'); ?>
+                                    <?php echo number_format_i18n($connector->get_field($product->properties, 'GreenTax')); ?>
                                     <?php
                                     if ($connector->get_field($product->properties, 'GreenTaxPeriod')) {
                                         echo "kr. / år";
@@ -208,7 +208,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
 
                     <?php
                     $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
-                    if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
+                    if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
                         ?>
                         <div class="leasing ca-opacity-50 ca-font-normal ca-text-base">
                             <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
