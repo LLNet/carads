@@ -90,7 +90,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                 <?php _e('kontantpris inkl. moms', 'car-app'); ?>
             </div>
             <?php
-            if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled) {
+            if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
                 ?>
                 <div class="ca-text-center ca-text-base ca-opacity-50 ca-font-medium ca-mb-0 mb-0">
                     <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
