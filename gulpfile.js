@@ -7,18 +7,23 @@ let beep = require('beepbeep');
 let rename = require("gulp-rename");
 const gutil = require('gutil');
 const ftp = require('vinyl-ftp');
+const sftp = require('gulp-sftp-up4');
 
-let user = "plugins";
-let password = "?Mm6uj58";
+let user = "indexedplugins";
+let password = "L06WOj0KlxXh39fx";
 
-function getFtpConnection() {
-    return ftp.create({
+
+function getFtpConnection(remoteLocation) {
+
+    conn = sftp({
         host: 'shared02.indexed.dk',
-        port: 21,
         user: user,
-        password: password,
-        log: gutil.log
+        pass: password,
+        port: '22',
+        remotePath: remoteLocation,
     });
+
+    return conn;
 }
 
 const pattern_options = {
@@ -82,32 +87,39 @@ gulp.task('zip', function () {
 /**
  * UPLOAD ZIP
  */
-let localFiles = ['./../' + pckg.name + '-' + pckg.version + '.zip'];
-const remoteLocation = '/files/'+ pckg.name + '-' + pckg.version + '.zip';
+let localFiles = './../' + pckg.name + '-' + pckg.version + '.zip';
+const remoteLocation = './httpdocs/files/'+ pckg.name + '-' + pckg.version + '.zip';
 gulp.task('upload', function () {
-    let connection = getFtpConnection();
-    return gulp.src(localFiles, {base: '.', buffer: false})
-        .pipe(connection.newer(remoteLocation))
-        .pipe(connection.dest(remoteLocation))
-        .on('end', function() {
-            gutil.log('Done !');
-            beep();
-        })})
+    let connection = getFtpConnection(remoteLocation);
+
+    return gulp.src(localFiles, { base: '.', buffer: false } )
+        .pipe(connection);
+
+    // return gulp.src(localFiles, {base: '.', buffer: false})
+    //     // .pipe(connection.newer(remoteLocation))
+    //     // .pipe(connection.dest(remoteLocation))
+    //     .pipe(connection)
+    //     .on('end', function() {
+    //         gutil.log('Done !');
+    //         beep();
+
+
+
+        });
 
 
 /**
  * UPLOAD JSON
  */
 let localReleaseFile = ['./release.json'];
-const remoteReleaseLocation = '/json/';
+const remoteReleaseLocation = './httpdocs/json/';
 gulp.task('upload-release-json', function () {
-    let connection = getFtpConnection();
+    let connection = getFtpConnection(remoteReleaseLocation);
+
     return gulp.src(localReleaseFile, {base: '.', buffer: false})
         // .pipe(replace(pattern_options))
         .pipe(rename(pckg.name + '.json'))
-
-        .pipe(connection.newer(remoteReleaseLocation))
-        .pipe(connection.dest(remoteReleaseLocation))
+        .pipe(connection)
         .on('end', function() {
             gutil.log('Done !');
             beep();
