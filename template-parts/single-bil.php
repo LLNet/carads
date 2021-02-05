@@ -18,11 +18,13 @@ $currency  = $connector->getCurrency();
                         <h3 class="name car_name ca-text-2xl ca-font-medium ca-overflow-ellipsis ca-overflow-hidden ca-transition-all ca-duration-300 ca-ease-in-out"><?php echo $product->name; ?></h3>
                         <p class="price ca-text-sm">
                             <?php
-                            if (!$product->disabled) {
+                            if (!$product->disabled && $connector->get_field($product->properties, 'PriceType') !== "CallForPrice") {
                                 echo __('Kontantpris', 'car-app') . " " . number_format_i18n($product->pricing->{$currency}->price, 0);
                                 echo " " . $currency;
-                            } else {
+                            } elseif ($product->disabled) {
                                 echo __('Solgt', 'car-app');
+                            } elseif($connector->get_field($product->properties, 'PriceType') === "CallForPrice") {
+                                echo __('Ring for pris', 'car-app');
                             }
                             ?>
                         </p>
