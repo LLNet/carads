@@ -26,12 +26,11 @@ if (!class_exists('CarAdsAppQuickSearch')) {
             $availableFilters = $connector->getDropdownValuesForElementor($products);
             ?>
 
-            <div class="ca-flex ca-justify-center">
-                <div class="ca-w-auto">
-                    <div class="car-ads-quick-search__header ca-text-white ca-text-3xl ca-font-medium ca-mb-4">
-                        <?php echo __('Find din næste bil her - Søg blandt', 'car-ads'); ?>
-                        <?php echo $products->summary->totalItems; ?>
-                        <?php echo __('biler', 'car-ads'); ?>
+            <div class="car-ads-quick-search__header ca-flex ca-justify-center">
+                <div class="ca-w-auto car-ads-quick-inner_container">
+                    <div class="ca-text-white ca-text-3xl ca-font-medium ca-mb-4 car-ads-quick-search_title">
+                        <span class="car-ads-quick-search_title--first">Vi har <?php echo $products->summary->totalItems; ?> <?php echo __('biler', 'car-ads'); ?> på lager</span>
+                        <span class="car-ads-quick-search_title--second">- Find din næste bil her</span>
                     </div>
                     <form class="ca-grid ca-grid-cols-1 md:ca-grid-cols-3 ca-gap-2"
                           action="/<?php echo get_option('car-ads')['archive_slug']; ?>" method="get">

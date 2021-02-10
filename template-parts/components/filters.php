@@ -6,7 +6,8 @@ if (!is_post_type_archive('bil')) {
 <div class="update-filters ca-hidden ca-bg-primary bg-primary ca-z-20 ca-h-14 ca-py-0 ca-px-4 ca-flex ca-fixed ca-top-0 ca-left-0 ca-w-full ca-items-center ca-justify-center ca-text-white ca-font-medium"
      id="update-filters">
     <div class="ca-container ca-mx-auto ca-flex ca-justify-center ca-items-center">
-        <a href="#top" class="toggle-filters"><i class="fa fa-sliders"></i> Opdater søgning</a>
+        <a href="#top" class="toggle-filters ca-mr-4"><i class="fa fa-sliders"></i> Opdater søgning</a>
+        <a href="#top" class="toggle-filters ca-ml-4"><i class="fa fa-arrow-up"></i> Gå til top</a>
     </div>
 </div>
 <div class="car-filters ca-bg-secondary bg-secondary ca-p-4 md:ca-p-8" id="car-filters">

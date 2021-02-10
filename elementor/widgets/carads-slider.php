@@ -288,9 +288,9 @@ class CarAdsSlider extends Widget_Base
         $this->start_controls_section(
             'section_slider',
             [
-                'label' => __('Slider', 'elementor'),
+                'label'     => __('Slider', 'elementor'),
                 'condition' => [
-                    'post_type' => ['medarbejder', 'tilbud'],
+                    'post_type' => ['bil', 'medarbejder', 'tilbud'],
                 ],
             ]
         );
@@ -302,8 +302,8 @@ class CarAdsSlider extends Widget_Base
                 'type'        => \Elementor\Controls_Manager::NUMBER,
                 'default'     => 4,
                 'min'         => 1,
-                'condition' => [
-                    'post_type' => ['medarbejder', 'tilbud'],
+                'condition'   => [
+                    'post_type' => ['bil', 'medarbejder', 'tilbud'],
                 ],
             ]
         );
@@ -315,8 +315,8 @@ class CarAdsSlider extends Widget_Base
                 'type'        => \Elementor\Controls_Manager::NUMBER,
                 'default'     => 1,
                 'min'         => 1,
-                'condition' => [
-                    'post_type' => ['medarbejder', 'tilbud'],
+                'condition'   => [
+                    'post_type' => ['bil', 'medarbejder', 'tilbud'],
                 ],
             ]
         );
@@ -328,8 +328,8 @@ class CarAdsSlider extends Widget_Base
                 'type'        => \Elementor\Controls_Manager::NUMBER,
                 'default'     => 2,
                 'min'         => 1,
-                'condition' => [
-                    'post_type' => ['medarbejder', 'tilbud'],
+                'condition'   => [
+                    'post_type' => ['bil', 'medarbejder', 'tilbud'],
                 ],
             ]
         );
@@ -341,8 +341,8 @@ class CarAdsSlider extends Widget_Base
                 'type'        => \Elementor\Controls_Manager::NUMBER,
                 'default'     => 1,
                 'min'         => 1,
-                'condition' => [
-                    'post_type' => ['medarbejder', 'tilbud'],
+                'condition'   => [
+                    'post_type' => ['bil', 'medarbejder', 'tilbud'],
                 ],
             ]
         );
@@ -354,7 +354,7 @@ class CarAdsSlider extends Widget_Base
                 'type'        => \Elementor\Controls_Manager::NUMBER,
                 'default'     => 1,
                 'min'         => 1,
-                'condition' => [
+                'condition'   => [
                     'post_type' => ['medarbejder', 'tilbud'],
                 ],
             ]
@@ -367,8 +367,8 @@ class CarAdsSlider extends Widget_Base
                 'type'        => \Elementor\Controls_Manager::NUMBER,
                 'default'     => 1,
                 'min'         => 1,
-                'condition' => [
-                    'post_type' => ['medarbejder', 'tilbud'],
+                'condition'   => [
+                    'post_type' => ['bil', 'medarbejder', 'tilbud'],
                 ],
             ]
         );
@@ -468,7 +468,7 @@ class CarAdsSlider extends Widget_Base
                         <div class="flex flex-col">
                             <div class="flex lg:h-72">
                                 <?php
-                                $classes = $settings['post_type'] === "medarbejder" ? 'ca-object-fit ca-object-center ca-mx-auto ': 'ca-object-cover ca-w-full object-cover w-full';
+                                $classes = $settings['post_type'] === "medarbejder" ? 'ca-object-fit ca-object-center ca-mx-auto ' : 'ca-object-cover ca-w-full object-cover w-full';
                                 the_post_thumbnail('full', ['class' => $classes, 'style' => 'max-height: 280px']); ?>
                             </div>
                             <div class="bg-lightgrey text-center p-2 h-32 flex items-center justify-center slider-content-bg">
@@ -556,7 +556,8 @@ class CarAdsSlider extends Widget_Base
                     <a href="<?php echo $settings['readmore_url']; ?>"
                        class="ca-h-10 ca-bg-primary hover:ca-bg-gray-900 ca-text-white ca-uppercase ca-text-sm ca-rounded ca-inline-flex ca-items-center ca-font-medium
                        ca-justify-center ca-px-6 ca-border ca-border-primary hover:ca-border-gray-900 ca-transition ca-duration-150 ca-ease-in-out
-                       h-10 bg-primary hover:bg-gray-900 text-white uppercase text-sm rounded inline-flex items-center  font-medium justify-center px-6 border border-primary hover:border-gray-900 transition duration-150 ease-in-out">
+                       h-10 bg-primary hover:bg-gray-900 text-white uppercase text-sm rounded inline-flex items-center  font-medium justify-center px-6 border border-primary hover:border-gray-900 transition duration-150 ease-in-out
+                       car-ads-slider-readmore">
                         <?php echo !empty($settings['readmore_label']) ? $settings['readmore_label'] : __('Læs mere', 'indexed'); ?>
                     </a>
                     <?php

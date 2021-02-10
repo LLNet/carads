@@ -10,7 +10,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
     <?php
     if ($product->image->sizes->i1024x768) {
         ?>
-        <div class="ca-w-full ca-h-80 ca-relative ca-flex-none">
+        <div class="ca-w-full ca-max-h-64 ca-h-64 ca-relative ca-flex-none">
             <?php
             if (!$product->disabled && !empty($findleasingFinancial) && $findleasingFinancial != '-') {
                 if (!empty($findleasingPriceMonthly) && $findleasingPriceMonthly != '-') {
