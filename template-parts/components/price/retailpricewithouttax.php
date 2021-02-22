@@ -1,4 +1,4 @@
-<div class="leasing ca-opacity-50 ca-font-normal ca-text-base"><?php echo __('Uden afgift:', 'car-app'); ?></div>
-<div class="ca-text-2xl md:ca-text-xl ca-mt-2 lg:ca-mt-0 ca-font-medium">
+<div class="leasing ca-opacity-50 ca-font-normal ca-text-base"><?php echo __('Uden afgift', 'car-app'); ?></div>
+<div class="ca-text-xl md:ca-text-2xl ca-mt-2 lg:ca-mt-0 ca-font-medium">
     <?php echo number_format_i18n($product->pricing->{$this->getCurrency()}->price) . " " . $this->getCurrency(); ?>
 </div>
