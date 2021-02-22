@@ -195,16 +195,20 @@ class CarAdsListGrid extends Widget_Base
             'price_type',
             [
                 'label'     => __('Pris Type'),
-                'type'      => \Elementor\Controls_Manager::SELECT,
+                'type'      => \Elementor\Controls_Manager::SELECT2,
+                'multiple'  => true,
                 'options'   => [
-                    'all'                   => 'Alle',
-                    'pricetype-retailprice' => 'Retail pris',
-                    'pricetype-leasing'     => 'Leasing pris',
+                    'pricetype-retailprice'           => 'Retail pris',
+                    'pricetype-leasing'               => 'Leasing pris',
+                    'pricetype-retailpricewithouttax' => 'Momsfri pris',
+                    'pricetype-callforprice'          => 'Ring for pris',
+                    'pricetype-wholesale'             => 'Engros',
                 ],
                 'default'   => 'pricetype-retailprice',
                 'condition' => [
                     'post_type' => ['bil'],
                 ],
+                'description' => 'Filtrer på pristype. Hvis ingen er valgt = vises alle typer.'
             ]
         );
 
@@ -311,7 +315,7 @@ class CarAdsListGrid extends Widget_Base
                 'properties' => $settings['properties'] ?? null,
                 'sort_by'    => $settings['sort_by'],
                 'location'   => $settings['location'] ?? null,
-                'price_type' => $settings['price_type'] !== "all" ? $settings['price_type'] : null,
+                'price_type' => $settings['price_type'] ?? null,
             ];
             $products     = $connector->getCarsFromElementor($params);
             $archive_slug = get_option('car-ads')['archive_slug'] ?? 'biler';
