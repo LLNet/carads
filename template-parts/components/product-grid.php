@@ -39,6 +39,16 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                 </div>
                 <?php
             }
+            /** Uden afgift label inside photo */
+            elseif ($connector->get_field($product->properties, 'PriceType') === "RetailPriceWithoutTax") {
+                ?>
+                <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+                    <?php
+                    echo __('Uden afgift', 'car-app');
+                    ?>
+                </div>
+                <?php
+            }
             ?>
             <img src="<?php echo str_replace("i1024x768", "500x250", $product->image->sizes->i1024x768); ?>"
                  data-src="<?php echo $product->image->sizes->i1024x768; ?>" alt="product"
@@ -95,7 +105,6 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                         case 'Leasing':
                             $connector->getTemplatePart('components/price/leasing', $product);
                             break;
-
                         case 'RetailPrice':
                         case null:
                         default:
@@ -139,7 +148,6 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                 <?php
                 if ($connector->get_field($product->properties, 'Mileage') != '-') {
                     echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
-                    echo " " . __("km.", 'car-app');
                 } else {
                     _e('-', 'car-app');
                 }
@@ -153,8 +161,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                 <div class="ca-font-thin font-thin ca-mb-0 mb-0"><?php _e('Rækkevidde', 'car-app'); ?></div>
                 <div class="ca-font-medium ca-mb-0 mb-0">
                     <?php
-                    echo $connector->get_field($product->properties, 'Range') . " ";
-                    echo __("km", 'car-app');
+                    echo $connector->get_field($product->properties, 'Range');
                     ?>
                 </div>
                 <?php
