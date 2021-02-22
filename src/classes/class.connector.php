@@ -490,11 +490,16 @@ class Connector
      */
     public function includePriceType()
     {
+
         // PriceType
-        $price_type = get_option('car-ads-archive')['usePriceType'] ?? 'all';
-        if (!is_null($price_type) && $price_type !== "all") {
-            return '&properties[]=' . strtolower($price_type);
+        $price_type = get_option('car-ads-archive')['usePriceType'];
+        $return = "";
+        if(is_array($price_type)) {
+            foreach($price_type as $type) {
+                $return .= "&properties[]=". strtolower($type);
+            }
         }
+        return $return;
     }
 
     public function filters(): array
@@ -756,19 +761,16 @@ class Connector
     public function getDropdownValuesForElementor($products)
     {
         $getDropdownValuesForElementor = [];
-        foreach ($products->aggregations->filtered->brands as $key => $data) {
+        foreach ($products->aggregations->global->brands as $key => $data) {
             $getDropdownValuesForElementor['brands'][$data->item->slug] = $data->item->name;
         }
 
-        foreach ($products->aggregations->filtered->categories as $key => $data) {
+        foreach ($products->aggregations->global->categories as $key => $data) {
             if (!empty($data->item->slug)) {
                 $getDropdownValuesForElementor['categories'][$data->item->slug] = $data->item->name;
             }
         }
 
-//        print "<pre>";
-//        print_r($products->aggregations->filtered->properties);
-//        print "</pre>";
         foreach ($products->aggregations->global->properties as $key => $propGroup) {
             foreach ($propGroup->groupItems as $k => $group) {
                 $groupName = $group->item->name;
@@ -850,7 +852,13 @@ class Connector
 
             // PriceType
             if (isset($params['price_type']) && !is_null($params['price_type'])) {
-                $search .= '&properties[]=' . strtolower($params['price_type']);
+                if(is_array($params['price_type'])) {
+                    foreach($params['price_type'] as $type) {
+                        $search .= '&properties[]=' . strtolower($type);
+                    }
+                } else {
+                    $search .= '&properties[]=' . strtolower($params['price_type']);
+                }
             }
 
         }
