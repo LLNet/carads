@@ -196,8 +196,12 @@ $currency  = $connector->getCurrency();
                         <?php
                     }
                     ?>
+
                     <div class="ca-block lg:ca-hidden">
                         <?php include("components/single-car-quick-details-card.php"); ?>
+                    </div>
+                    <div class="ca-block lg:ca-hidden ca-w-full">
+                        <?php dynamic_sidebar('carads-single-sidebar-1'); ?>
                     </div>
                     <div class="ca-block lg:ca-hidden">
                         <?php
@@ -206,7 +210,9 @@ $currency  = $connector->getCurrency();
                         }
                         ?>
                     </div>
-
+                    <div class="ca-block lg:ca-hidden ">
+                        <?php dynamic_sidebar('carads-single-sidebar-2'); ?>
+                    </div>
                     <div class="car-ads--accordion" x-data="{selected:1}">
                         <div class="ca-mb-4">
                             <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
@@ -234,11 +240,16 @@ $currency  = $connector->getCurrency();
                             </div>
                         </div>
                     </div>
-
+                    <div class="ca-block lg:ca-hidden">
+                        <?php dynamic_sidebar('carads-single-sidebar-3'); ?>
+                    </div>
                 </div>
                 <div class="single-car--col-2 content--col-2 ca-col-span-2">
                     <div class="ca-hidden lg:ca-flex lg:ca-mt-4">
                         <?php include("components/single-car-quick-details-card.php"); ?>
+                    </div>
+                    <div class="ca-hidden lg:ca-flex">
+                        <?php dynamic_sidebar('carads-single-sidebar-1'); ?>
                     </div>
                     <div class="ca-hidden lg:ca-flex car-order-1">
                         <?php
@@ -246,6 +257,9 @@ $currency  = $connector->getCurrency();
                             include("components/single-car-santander.php");
                         }
                         ?>
+                    </div>
+                    <div class="ca-hidden lg:ca-flex">
+                        <?php dynamic_sidebar('carads-single-sidebar-2'); ?>
                     </div>
                     <?php
                     /**
@@ -265,7 +279,9 @@ $currency  = $connector->getCurrency();
                         <?php
                     }
                     ?>
-
+                    <div class="ca-hidden lg:ca-flex">
+                        <?php dynamic_sidebar('carads-single-sidebar-3'); ?>
+                    </div>
                     <?php
                     if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['contactform_shortcode'])) {
                         ?>
@@ -275,6 +291,7 @@ $currency  = $connector->getCurrency();
                         <?php
                     }
                     ?>
+
                 </div>
 
 

@@ -481,7 +481,20 @@ class CarAdsSlider extends Widget_Base
                                         ?>
 
                                         <h3 class="font-medium text-text text-xl md:text-lg lg:text-2xl"><?php echo get_the_title(); ?></h3>
-                                        <div class="mb-4 px-4 text-base text-center font-thin"><?php echo get_field('stilling', get_the_ID()); ?></div>
+                                        <div class="mb-4 px-4 text-base text-center font-thin">
+                                            <?php echo get_field('stilling', get_the_ID()); ?>
+                                            <?php
+                                            if(get_field('underkategori_stilling', get_the_ID())) {
+                                                echo "<br>".get_field('underkategori_stilling', get_the_ID());
+                                            }
+                                            if(get_field('e-mail', get_the_ID())) {
+                                                echo "<br><a href='mailto:". get_field('e-mail', get_the_ID()) ."'>".get_field('e-mail', get_the_ID()). "</a>";
+                                            }
+                                            if(get_field('telefon', get_the_ID())) {
+                                                echo " - <a href='tel:". get_field('telefon', get_the_ID()) ."'>".get_field('telefon', get_the_ID()). "</a>";
+                                            }
+                                            ?>
+                                        </div>
 
                                         <?php
                                     }
@@ -542,7 +555,7 @@ class CarAdsSlider extends Widget_Base
 
         }
 
-        if ($posts->post_count > 3 || $settings['size'] > 3) {
+        if ($posts->post_count > $settings['slidesToShow_1024'] || $settings['size'] > $settings['slidesToShow_1024']) {
             ?>
             <div class="ca-flex ca-items-center ca-justify-center ca-h-24 flex items-center justify-center h-24">
                 <button id="prev-<?php echo $id_int; ?>"

@@ -69,8 +69,9 @@ class CarAdsListGrid extends Widget_Base
                 'label'   => __('Type'),
                 'type'    => \Elementor\Controls_Manager::SELECT,
                 'options' => [
-                    'bil'    => 'Biler',
-                    'tilbud' => 'Tilbud',
+                    'bil'         => 'Biler',
+                    'tilbud'      => 'Tilbud',
+                    'medarbejder' => 'Medarbejdere',
 
                 ],
                 'default' => 'bil',
@@ -99,7 +100,7 @@ class CarAdsListGrid extends Widget_Base
                 'default'     => 10,
                 'min'         => -1,
                 'condition'   => [
-                    'post_type' => ['tilbud'],
+                    'post_type' => ['tilbud', 'medarbejder'],
                 ],
             ]
         );
@@ -194,18 +195,18 @@ class CarAdsListGrid extends Widget_Base
         $this->add_control(
             'price_type',
             [
-                'label'     => __('Pris Type'),
-                'type'      => \Elementor\Controls_Manager::SELECT2,
-                'multiple'  => true,
-                'options'   => [
+                'label'       => __('Pris Type'),
+                'type'        => \Elementor\Controls_Manager::SELECT2,
+                'multiple'    => true,
+                'options'     => [
                     'pricetype-retailprice'           => 'Retail pris',
                     'pricetype-leasing'               => 'Leasing pris',
                     'pricetype-retailpricewithouttax' => 'Momsfri pris',
                     'pricetype-callforprice'          => 'Ring for pris',
                     'pricetype-wholesale'             => 'Engros',
                 ],
-                'default'   => 'pricetype-retailprice',
-                'condition' => [
+                'default'     => 'pricetype-retailprice',
+                'condition'   => [
                     'post_type' => ['bil'],
                 ],
                 'description' => 'Filtrer på pristype. Hvis ingen er valgt = vises alle typer.'
@@ -350,12 +351,14 @@ class CarAdsListGrid extends Widget_Base
             }
         }
 
-        if ($settings['post_type'] === "tilbud") {
+        if ($settings['post_type'] === "tilbud" || $settings['post_type'] === "medarbejder") {
             $language = substr(get_locale(), 0, 2);
             $args     = [
                 'post_type'      => $settings['post_type'],
                 'posts_per_page' => $settings['posts_per_page'],
                 'lang'           => $language,
+                'orderby'        => 'ID',
+                'order'          => 'ASC',
             ];
 
             $posts = new WP_Query($args);
@@ -367,24 +370,44 @@ class CarAdsListGrid extends Widget_Base
                     while ($posts->have_posts()) {
                         $posts->the_post();
                         ?>
-                        <div class="flex flex-col">
-                            <div class="flex lg:h-72">
-                                <?php the_post_thumbnail('full', ['class' => 'object-cover w-full']); ?>
+                        <div class="ca-flex ca-flex-col">
+                            <div class="ca-flex lg:ca-h-72 ca-m-h-72">
+                                <?php the_post_thumbnail('full', ['class' => 'ca-object-cover ca-w-full']); ?>
                             </div>
-                            <div class="bg-lightgrey text-center p-2 h-32 flex items-center justify-center">
+                            <div class="ca-bg-lightgrey ca-text-center ca-p-2 ca-min-h-32 ca-flex ca-items-center ca-justify-center">
                                 <div>
                                     <?php
+                                    if ($settings['post_type'] === "medarbejder") {
+                                        ?>
+
+                                        <h3 class="ca-font-medium ca-text-text ca-text-xl md:ca-text-lg lg:ca-text-2xl"><?php echo get_the_title(); ?></h3>
+                                        <div class="ca-mb-4 ca-px-4 ca-text-base ca-text-center ca-font-thin">
+                                            <?php echo get_field('stilling', get_the_ID()); ?>
+                                            <?php
+                                            if(get_field('underkategori_stilling', get_the_ID())) {
+                                                echo "<br>".get_field('underkategori_stilling', get_the_ID());
+                                            }
+                                            if(get_field('e-mail', get_the_ID())) {
+                                                echo "<br><a href='mailto:". get_field('e-mail', get_the_ID()) ."'>".get_field('e-mail', get_the_ID()). "</a>";
+                                            }
+                                            if(get_field('telefon', get_the_ID())) {
+                                                echo " - <a href='tel:". get_field('telefon', get_the_ID()) ."'>".get_field('telefon', get_the_ID()). "</a>";
+                                            }
+                                            ?>
+                                        </div>
+
+                                        <?php
+                                    }
                                     if ($settings['post_type'] === "tilbud") {
                                         ?>
-                                        <h3 class="font-medium text-text text-md md:text-lg lg:text-xl opacity-75 leading-5"><?php echo get_the_title(); ?></h3>
-                                        <div class="px-4 text-text text-center text-xl md:text-lg lg:text-2xl font-bold"><?php echo get_field('pris', get_the_ID()); ?></div>
+                                        <h3 class="ca-font-medium ca-text-text ca-text-md md:ca-text-lg lg:ca-text-xl ca-opacity-75 lca-eading-5"><?php echo get_the_title(); ?></h3>
+                                        <div class="ca-px-4 ca-text-text ca-text-center ca-text-xl md:ca-text-lg lg:ca-text-2xl ca-font-bold"><?php echo get_field('pris', get_the_ID()); ?></div>
                                         <a href="<?php echo get_the_permalink(); ?>"
-                                           class="text-center text-primary text-sm my-2">
+                                           class="ca-text-center ca-text-primary ca-text-sm ca-my-2">
                                             <i class="fa fa-chevron-right"></i> <?php echo __('Læs mere', 'indexed'); ?>
                                         </a>
                                         <?php
                                     }
-
                                     ?>
                                 </div>
                             </div>

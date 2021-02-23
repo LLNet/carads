@@ -94,8 +94,41 @@ if (!class_exists('CarAdsApp')) {
             // Add meta tags to head
             add_action('wp_head', [$this, 'meta_tags']);
 
+            // Registrer sidebar widget areas
+            add_action('widgets_init', [$this, 'register_sidebar_widget_areas']);
+
         }
 
+        public function register_sidebar_widget_areas()
+        {
+            register_sidebar(array(
+                'name'          => 'Bilkort Sidebar #1',
+                'description'   => 'Området lige efter Quick Details',
+                'id'            => 'carads-single-sidebar-1',
+                'before_widget' => '<div class="ca-w-full ca-bg-white bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4">',
+                'after_widget'  => '</div>',
+                'before_title'  => '<p class="ca-title-font ca-font-medium ca-text-2xl ca-mb-3">',
+                'after_title'   => '</p>',
+            ));
+            register_sidebar(array(
+                'name'          => 'Bilkort Sidebar #2',
+                'description'   => 'Området lige efter Santander',
+                'id'            => 'carads-single-sidebar-2',
+                'before_widget' => '<div class="ca-w-full ca-bg-white bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4">',
+                'after_widget'  => '</div>',
+                'before_title'  => '<p class="ca-title-font ca-font-medium ca-text-2xl ca-mb-3">',
+                'after_title'   => '</p>',
+            ));
+            register_sidebar(array(
+                'name'          => 'Bilkort Sidebar #3',
+                'id'            => 'carads-single-sidebar-3',
+                'description'   => 'Området lige efter Find leasing beregner og før kontaktformular',
+                'before_widget' => '<div class="ca-w-full ca-bg-white bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4">',
+                'after_widget'  => '</div>',
+                'before_title'  => '<p class="ca-title-font ca-font-medium ca-text-2xl ca-mb-3">',
+                'after_title'   => '</p>',
+            ));
+        }
 
         public function meta_tags()
         {
@@ -232,8 +265,6 @@ if (!class_exists('CarAdsApp')) {
             }
             return $template;
         }
-
-
 
 
         /**
