@@ -187,14 +187,15 @@ if (!class_exists('CarAdsSettings')):
                     ],
                     [
                         'name'        => 'showLocation',
-                        'label'       => __('Vis placering af bil?', 'car-ads'),
-                        'desc'        => __('Vis placering af bil nederst på billedet?', 'car-ads'),
+                        'label'       => __('Image Label?', 'car-ads'),
+                        'desc'        => __('Visning af label nederst på en bils billede.', 'car-ads'),
                         'placeholder' => '',
                         'type'        => 'select',
-                        'default'     => 'yes',
+                        'default'     => 'location',
                         'options'     => [
-                            'yes' => 'Ja',
-                            'no'  => 'Nej'
+                            'no'  => 'Ingen',
+                            'location' => 'Placering',
+                            'type' => 'Bilens type',
                         ]
                     ],
 
@@ -203,9 +204,8 @@ if (!class_exists('CarAdsSettings')):
                         'label'       => __('Pristype', 'car-ads'),
                         'desc'        => __('Vis kun biler med denne pristype på billisten', 'car-ads'),
                         'type'    => 'multicheck',
-                        'default' => 'all',
+                        'default' => 'pricetype-retailprice',
                         'options' => array(
-                            'all'                             => 'Alle',
                             'pricetype-retailprice'           => 'Retail pris',
                             'pricetype-leasing'               => 'Leasing pris',
                             'pricetype-retailpricewithouttax' => 'Momsfri pris',

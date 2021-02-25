@@ -522,8 +522,8 @@ class Connector
         if (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax']) && $_GET['pricingMinMax'] != '-1') {
 
             // Make sure mileage has indeed been set, before sending to api.
-            $min = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->min;
-            $max = $this->getMinMaxPrice()->aggregations->global->pricing->{$this->getCurrency()}->max;
+            $min = $this->getMinMaxPrice()->aggregations->filtered->pricing->{$this->getCurrency()}->min;
+            $max = $this->getMinMaxPrice()->aggregations->filtered->pricing->{$this->getCurrency()}->max;
 
             $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
 
@@ -569,7 +569,7 @@ class Connector
 
     public function getMinMaxPrice()
     {
-        $products = $this->headless->get("/products?size=1" . $this->includeOptions());
+        $products = $this->headless->get("/products?size=1" . $this->includeOptions() . $this->includePriceType());
         if (isset($products->error)) {
             throw new \Exception($products->items);
         }
@@ -584,9 +584,9 @@ class Connector
      */
     public function getCustomFieldAggregation($fieldName, $includeCount = false)
     {
-        $data = $this->headless->get("/products?aggregationMinMaxAvg=customFields." . $fieldName . ($includeCount == true ? 'aggregationCount=customFields.' . $fieldName : ''));
+        $data = $this->headless->get("/products?aggregationMinMaxAvg=customFields." . $fieldName . ($includeCount == true ? 'aggregationCount=customFields.' . $fieldName : '') . $this->includePriceType());
 
-        return $data->aggregations->global->customFields->{$fieldName};
+        return $data->aggregations->filtered->customFields->{$fieldName};
 
     }
 
@@ -655,7 +655,7 @@ class Connector
 
         }
 
-        $products = $this->headless->get("/products?size=1" . $search . $this->includeOptions());
+        $products = $this->headless->get("/products?size=1" . $search . $this->includeOptions() . $this->includePriceType());
         if (property_exists($products, 'error')) {
             print $products->error;
         } else {
@@ -863,7 +863,7 @@ class Connector
 
         }
 
-        $products = $this->headless->get('/products?' . $search . $this->includeOptions());
+        $products = $this->headless->get('/products?' . $search . $this->includeOptions() . $this->includePriceType());
 
 
         if (isset($products->error)) {
@@ -875,7 +875,7 @@ class Connector
 
     public function get_brands_categories($brand)
     {
-        $products       = $this->headless->get('/products?brand=' . $brand . $this->includeOptions());
+        $products       = $this->headless->get('/products?brand=' . $brand . $this->includeOptions()  . $this->includePriceType());
         $all_categories = $products->aggregations->filtered->categories;
 
 

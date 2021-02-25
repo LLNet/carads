@@ -57,11 +57,40 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                  loading="lazy"
             >
             <?php
-            if (get_option('car-ads-archive')['showLocation'] === "yes") {
+            if (get_option('car-ads-archive')['showLocation'] === "yes" || get_option('car-ads-archive')['showLocation'] == "location") {
                 if (property_exists($product->location->address, 'city')) {
                     ?>
                     <div class="car--placement ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
                         <?php echo __('Placering', 'car-app'); ?>: <?php echo $product->location->address->city; ?>
+                    </div>
+                    <?php
+                }
+            }
+            if (get_option('car-ads-archive')['showLocation'] === "type") {
+                if (property_exists($product->location->address, 'city')) {
+                    ?>
+                    <div class="car--type ca-absolute ca-bottom-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-text-white ca-text-sm">
+                        <?php
+                        $carType = $connector->get_field($product->properties, 'Type');
+                        if ($carType) {
+                            switch ($carType) {
+                                case 'Varevogn +Moms':
+                                    $typeText = __("Varevogn +Moms", "car-app");
+                                    break;
+                                case 'Varevogn -Moms':
+                                    $typeText = __("Varevogn", "car-app");
+                                    break;
+                                default:
+                                case 'Personvogn':
+                                    $typeText = __("Personvogn", "car-app");
+                                    break;
+                                case 'Campingbus':
+                                    $typeText = __("Campingbus", "car-app");
+                                    break;
+                            }
+                            echo $typeText;
+                        }
+                        ?>
                     </div>
                     <?php
                 }

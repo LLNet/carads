@@ -142,7 +142,6 @@ class CarAdsSettings_API
                     'name' => $label,
                     'section' => $section,
                     'size' => isset($option['size']) ? $option['size'] : null,
-                    'multiple' => isset($option['multiple']) ? $option['multiple'] : null,
                     'options' => isset($option['options']) ? $option['options'] : '',
                     'std' => isset($option['default']) ? $option['default'] : '',
                     'sanitize_callback' => isset($option['sanitize_callback']) ? $option['sanitize_callback'] : '',
@@ -303,10 +302,10 @@ class CarAdsSettings_API
      */
     function callback_select($args)
     {
+
         $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
         $size = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
-        $multiple = isset($args['multiple']) && $args['multiple'] === "true" ? 'multiple' : ' ';
-        $html = sprintf('<select class="%1$s" name="%2$s[%3$s][]" id="%2$s[%3$s]" %4$s>', $size, $args['section'], $args['id'], $multiple);
+        $html = sprintf('<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['id']);
 
         foreach ($args['options'] as $key => $label) {
             $html .= sprintf('<option value="%s"%s>%s</option>', $key, selected($value, $key, false), $label);
@@ -361,7 +360,7 @@ class CarAdsSettings_API
         echo '<div style="max-width: ' . $size . ';">';
 
         $editor_settings = array(
-            'teeny' => false,
+            'teeny' => true,
             'textarea_name' => $args['section'] . '[' . $args['id'] . ']',
             'textarea_rows' => 10
         );

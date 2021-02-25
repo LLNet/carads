@@ -95,22 +95,54 @@
     <?php
     if (!$product->disabled) {
         ?>
+        <div>
+            <?php
+            $carType = $connector->get_field($product->properties, 'Type');
+            if ($carType) {
+                switch ($carType) {
+                    case 'Varevogn +Moms':
+                        $typeText = __("Varevogn +Moms", "car-app");
+                        break;
+                    case 'Varevogn -Moms':
+                        $typeText = __("Varevogn", "car-app");
+                        break;
+                    default:
+                    case 'Personvogn':
+                        $typeText = __("Personvogn", "car-app");
+                        break;
+                    case 'Campingbus':
+                        $typeText = __("Campingbus", "car-app");
+                        break;
+                }
+                ?>
+            <div class="leasing ca-opacity-50 ca-font-normal ca-text-base ca-text-center"><?php echo $typeText; ?></div>
+            <?php
+
+            }
+            ?>
+        </div>
         <div class="price ca-flex ca-flex-col ca-items-center lg:ca-flex-row ca-mt-4 ca-mb-2">
             <div class="price--value ca-font-medium ca-text-3xl ca-mx-auto lg:ca-text-center ca-flex-col ca-flex">
                 <?php
                 $priceType = $connector->get_field($product->properties, 'PriceType');
                 switch ($priceType) {
+                    case 'RetailPriceWithoutTax':
+                        $connector->getTemplatePart('components/price/retailpricewithouttax', $product);
+                        break;
+                    case 'Wholesale':
+                        $connector->getTemplatePart('components/price/wholesale', $product);
+                        break;
                     case 'CallForPrice':
                         $connector->getTemplatePart('components/price/callforprice', $product);
                         break;
-                    case 'RetailPrice':
-                    default:
-                        $connector->getTemplatePart('components/price/retail', $product);
-                        break;
-
-                    case null:
                     case 'Leasing':
                         $connector->getTemplatePart('components/price/leasing', $product);
+                        break;
+
+                    case 'RetailPrice':
+                    case null:
+                    default:
+                        $connector->getTemplatePart('components/price/retail', $product);
                         break;
                 }
                 ?>
