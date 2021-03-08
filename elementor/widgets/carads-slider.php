@@ -491,7 +491,8 @@ class CarAdsSlider extends Widget_Base
                                                 echo "<br><a href='mailto:". get_field('e-mail', get_the_ID()) ."'>".get_field('e-mail', get_the_ID()). "</a>";
                                             }
                                             if(get_field('telefon', get_the_ID())) {
-                                                echo " - <a href='tel:". get_field('telefon', get_the_ID()) ."'>".get_field('telefon', get_the_ID()). "</a>";
+                                                echo get_field('e-mail', get_the_ID()) ? " - " : "";
+                                                echo "<a href='tel:". get_field('telefon', get_the_ID()) ."'>".get_field('telefon', get_the_ID()). "</a>";
                                             }
                                             ?>
                                         </div>

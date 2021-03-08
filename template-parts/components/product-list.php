@@ -70,10 +70,10 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                         $carType = $connector->get_field($product->properties, 'Type');
                         if ($carType) {
                             switch ($carType) {
-                                case 'Varevogn +Moms':
+                                case 'Varevogn plus moms':
                                     $typeText = __("Varevogn +Moms", "car-app");
                                     break;
-                                case 'Varevogn -Moms':
+                                case 'Varevogn minus moms':
                                     $typeText = __("Varevogn", "car-app");
                                     break;
                                 default:

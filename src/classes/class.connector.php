@@ -398,14 +398,13 @@ class Connector
      */
     public function search($all = false)
     {
-
         $search = '?filter';
         if ($all === false) {
 
             // Brands
             if (isset($_GET['brands']) && !empty($_GET['brands'])) {
                 foreach ($_GET['brands'] as $slug) {
-                    $search .= '&brands[]=' . $slug;
+                    $search .= '&brands[]=' . filter_var($slug, FILTER_SANITIZE_STRING);
                 }
             }
             if (!empty(get_query_var('car_brand'))) {
@@ -415,7 +414,7 @@ class Connector
             // Categories
             if (isset($_GET['categories']) && !empty($_GET['categories'])) {
                 foreach ($_GET['categories'] as $slug) {
-                    $search .= '&categories[]=' . $slug;
+                    $search .= '&categories[]=' . filter_var($slug, FILTER_SANITIZE_STRING);
                 }
             }
             if (!empty(get_query_var('car_model'))) {
@@ -425,19 +424,16 @@ class Connector
             // Properties
             if (isset($_GET['properties']) && !empty($_GET['properties'])) {
                 foreach ($_GET['properties'] as $slug) {
-                    $search .= '&properties[]=' . $slug;
+                    $search .= '&properties[]=' . filter_var($slug, FILTER_SANITIZE_STRING);
                 }
             }
             // Free search
             if (isset($_GET['search']) && !empty($_GET['search'])) {
-                $search .= '&q=' . urlencode($_GET['search']);
+                $search .= '&q=' . filter_var(urlencode($_GET['search']), FILTER_SANITIZE_ENCODED);
             }
 
-            //        if (!empty($_GET['size'])) {
-            //            $search .= '&size=' . $_GET['size'];
-            //        }
             if (!empty($_GET['offset'])) {
-                $search .= '&offset=' . (int)$_GET['offset'];
+                $search .= '&offset=' . filter_var($_GET['offset'], FILTER_SANITIZE_NUMBER_INT);
             }
 
             // Min Max Pricing
@@ -448,7 +444,7 @@ class Connector
 
                 $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
 
-                $values = explode(",", $pricingMinMaxValue);
+                $values = explode(",", filter_var($pricingMinMaxValue, FILTER_SANITIZE_STRING));
                 if ($min != $values[0] || $max != $values[1]) {
                     $search .= '&pricingMin=' . $values[0];
                     $search .= '&pricingMax=' . $values[1];
@@ -459,7 +455,7 @@ class Connector
                 // Make sure mileage has indeed been set, before sending to api.
                 $mileageMinMaxValues = $this->getCustomFieldAggregation('mileage');
                 $mileageMinMaxValue  = (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) ? $_GET['mileageMinMax'] : '';
-                $sliderMileage       = explode(",", $mileageMinMaxValue);
+                $sliderMileage       = explode(",", filter_var($mileageMinMaxValue, FILTER_SANITIZE_STRING));
 
                 if ($mileageMinMaxValues->min != $sliderMileage[0] || $mileageMinMaxValues->max != $sliderMileage[1]) {
 
@@ -471,7 +467,7 @@ class Connector
 
             // Sorting
             if (isset($_GET['sort_by']) && !empty($_GET['sort_by'])) {
-                $search .= '&sort_by=' . $_GET['sort_by'];
+                $search .= '&sort_by=' . filter_var($_GET['sort_by'], FILTER_SANITIZE_STRING);
             }
 
         }
@@ -514,10 +510,10 @@ class Connector
             $filters['categories'][] = get_query_var('car_model');
         }
         if (isset($_GET['pricingMin']) && !empty($_GET['pricingMin']) && $_GET['pricingMin'] != '-1') {
-            $filters['pricingMin'] = $_GET['pricingMin'];
+            $filters['pricingMin'] = filter_var($_GET['pricingMin'], FILTER_SANITIZE_NUMBER_INT);
         }
         if (isset($_GET['pricingMax']) && !empty($_GET['pricingMax']) && $_GET['pricingMax'] != '-1') {
-            $filters['pricingMax'] = $_GET['pricingMax'];
+            $filters['pricingMax'] = filter_var($_GET['pricingMax'], FILTER_SANITIZE_NUMBER_INT);
         }
         if (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax']) && $_GET['pricingMinMax'] != '-1') {
 
@@ -527,7 +523,7 @@ class Connector
 
             $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
 
-            $values = explode(",", $pricingMinMaxValue);
+            $values = explode(",", filter_var($pricingMinMaxValue, FILTER_SANITIZE_STRING));
             if ($min != $values[0] || $max != $values[1]) {
                 $filters['pricingMinMax'] = $_GET['pricingMinMax'];
             }
@@ -537,30 +533,28 @@ class Connector
             // Make sure mileage has indeed been set, before sending to api.
             $mileageMinMaxValues = $this->getCustomFieldAggregation('mileage');
             $mileageMinMaxValue  = (isset($_GET['mileageMinMax']) && !empty($_GET['mileageMinMax'])) ? $_GET['mileageMinMax'] : '';
-            $sliderMileage       = explode(",", $mileageMinMaxValue);
+            $sliderMileage       = explode(",", filter_var($mileageMinMaxValue, FILTER_SANITIZE_STRING));
 
             if ($mileageMinMaxValues->min != $sliderMileage[0] || $mileageMinMaxValues->max != $sliderMileage[1]) {
-
                 $filters['mileageMinMax'] = $_GET['mileageMinMax'];
             }
 
-
         }
         if (isset($_GET['brands']) && !empty($_GET['brands']) && $_GET['brands'][0] != '-1') {
-            $filters['brands'] = $_GET['brands'];
+            $filters['brands'] = filter_var($_GET['brands'], FILTER_SANITIZE_STRING);
         }
         if (isset($_GET['properties']) && !empty($_GET['properties'])) {
-            foreach ($_GET['properties'] as $property) {
+            foreach (filter_var($_GET['properties'], FILTER_SANITIZE_STRING) as $property) {
                 if ($property != '-1') {
                     $filters['properties'][] = $property;
                 }
             }
         }
         if (isset($_GET['categories']) && !empty($_GET['categories']) && $_GET['categories'][0] != '-1') {
-            $filters['categories'] = $_GET['categories'];
+            $filters['categories'] = filter_var($_GET['categories'], FILTER_SANITIZE_STRING);
         }
         if (isset($_GET['search']) && !empty($_GET['search'])) {
-            $filters['search'] = $_GET['search'];
+            $filters['search'] = filter_var($_GET['search'], FILTER_SANITIZE_STRING);
         }
 
         return $filters;
@@ -771,7 +765,7 @@ class Connector
             }
         }
 
-        foreach ($products->aggregations->global->properties as $key => $propGroup) {
+        foreach ($products->aggregations->filtered->properties as $key => $propGroup) {
             foreach ($propGroup->groupItems as $k => $group) {
                 $groupName = $group->item->name;
                 foreach ($group->items as $data) {
@@ -781,7 +775,6 @@ class Connector
                 }
             }
         }
-
 
 //
 //        foreach ($products->aggregations->filtered->properties as $key => $propGroup) {
@@ -863,8 +856,7 @@ class Connector
 
         }
 
-        $products = $this->headless->get('/products?' . $search . $this->includeOptions() . $this->includePriceType());
-
+        $products = $this->headless->get('/products?' . $search . $this->includeOptions());
 
         if (isset($products->error)) {
             throw new \Exception($products->items);

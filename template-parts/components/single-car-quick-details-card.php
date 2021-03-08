@@ -100,13 +100,17 @@
             $carType = $connector->get_field($product->properties, 'Type');
             if ($carType) {
                 switch ($carType) {
+                    case 'Varevogn plus moms':
                     case 'Varevogn +Moms':
                         $typeText = __("Varevogn +Moms", "car-app");
                         break;
+                    case 'Varevogn minus moms':
                     case 'Varevogn -Moms':
                         $typeText = __("Varevogn", "car-app");
                         break;
                     default:
+                        $typeText = $carType;
+                        break;
                     case 'Personvogn':
                         $typeText = __("Personvogn", "car-app");
                         break;

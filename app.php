@@ -40,6 +40,7 @@ if (!class_exists('CarAdsApp')) {
             // Custom Post Type
             require __DIR__ . '/src/cpt.php';
             require __DIR__ . '/src/shortcode/header-search.php';
+            require __DIR__ . '/src/extra_custom_post_types.php';
 
             // Importer
             require __DIR__ . '/src/classes/class.connector.php';
@@ -173,25 +174,35 @@ if (!class_exists('CarAdsApp')) {
 
         public function plugin_activate()
         {
-            // Set default options for slugs if nothing has been set yet!
-            if (!get_option('car-ads')) {
-                update_option('car-ads', [
-                    'single_slug'  => 'bil',
-                    'archive_slug' => 'biler'
-                ]);
-            }
-            if (!get_option('car-ads-single-car')) {
-                update_option('car-ads-single-car', [
-                    'show_back_to_archive' => 'no',
-                ]);
-            }
-            if (!get_option('car-ads-archive')) {
-                update_option('car-ads-archive', [
-                    'includeDisabled'      => 'yes',
-                    'includeDisabledSince' => '7',
-                    'showLocation'         => 'yes',
-                ]);
-            }
+
+            /**
+             * Set default options for slugs if nothing has been set yet!
+             * @FIX Find en anden metode til at tjekke om disse er gemt.
+             */
+//            if (!get_option('car-ads')) {
+//                update_option('car-ads', [
+//                    'single_slug'  => 'bil',
+//                    'archive_slug' => 'brugte-biler'
+//                ]);
+//            }
+//            if (!get_option('car-ads-single-car')) {
+//                update_option('car-ads-single-car', [
+//                    'show_back_to_archive' => 'no',
+//                ]);
+//            }
+//            if (!get_option('car-ads-archive')) {
+//                update_option('car-ads-archive', [
+//                    'includeDisabled'      => 'yes',
+//                    'includeDisabledSince' => '7',
+//                    'showLocation'         => 'yes',
+//                ]);
+//            }
+//            if (!get_option('car-ads-cpt')) {
+//                update_option('car-ads-cpt', [
+//                    'cpt_medarbejdere' => 'inactive',
+//                    'cpt_tilbud'       => 'inactive',
+//                ]);
+//            }
 
         }
 
@@ -202,7 +213,6 @@ if (!class_exists('CarAdsApp')) {
         {
             wp_enqueue_style('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", '', '');
             wp_enqueue_script('car-slick', "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js", array('jquery'), '', true);
-            //wp_enqueue_script('car-jquery', "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", '', '', false);
 
 
             if (is_single(get_the_ID()) && get_post_type(get_the_ID()) == "bil") {

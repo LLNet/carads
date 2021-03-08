@@ -10,7 +10,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
     <?php
     if ($product->image->sizes->i1024x768) {
         ?>
-        <div class="ca-w-full ca-max-h-64 ca-h-64 ca-relative ca-flex-none">
+        <div class="ca-car-image-container ca-w-full ca-max-h-56 ca-h-56 ca-relative ca-flex-none">
             <?php
             /**
              * Leasing label inside photo
@@ -74,10 +74,10 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                         $carType = $connector->get_field($product->properties, 'Type');
                         if ($carType) {
                             switch ($carType) {
-                                case 'Varevogn +Moms':
+                                case 'Varevogn plus moms':
                                     $typeText = __("Varevogn +Moms", "car-app");
                                     break;
-                                case 'Varevogn -Moms':
+                                case 'Varevogn minus moms':
                                     $typeText = __("Varevogn", "car-app");
                                     break;
                                 default:

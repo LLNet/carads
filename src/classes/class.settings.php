@@ -49,10 +49,10 @@ if (!class_exists('CarAdsSettings')):
                     'id'    => 'car-ads-theming',
                     'title' => __('Tema/Elementor', 'car-ads')
                 ),
-//                array(
-//                    'id' => 'car-ads-theming',
-//                    'title' => __('Theme Colors', 'car-ads')
-//                ),
+                array(
+                    'id'    => 'car-ads-cpt',
+                    'title' => __('Custom Post Types', 'car-ads')
+                ),
             );
             return $sections;
         }
@@ -232,7 +232,33 @@ if (!class_exists('CarAdsSettings')):
                         'type'        => 'text',
                         'default'     => '',
                     ],
-                ]
+                ],
+                'car-ads-cpt' => [
+                    [
+                        'name'        => 'cpt_medarbejdere',
+                        'label'       => __('Medarbejdere', 'car-ads'),
+                        'desc'        => __('Skal denne custom post type være aktiv?', 'car-ads'),
+                        'placeholder' => '',
+                        'type'        => 'select',
+                        'default'     => 'inactive',
+                        'options'     => [
+                            'inactive'  => 'Ikke aktiv',
+                            'active' => 'Aktiv'
+                        ]
+                    ],
+                    [
+                        'name'        => 'cpt_tilbud',
+                        'label'       => __('Aktuelle tilbud', 'car-ads'),
+                        'desc'        => __('Skal denne custom post type være aktiv?', 'car-ads'),
+                        'placeholder' => '',
+                        'type'        => 'select',
+                        'default'     => 'inactive',
+                        'options'     => [
+                            'inactive'  => 'Ikke aktiv',
+                            'active' => 'Aktiv'
+                        ]
+                    ],
+                ],
             ];
         }
 
