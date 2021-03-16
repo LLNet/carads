@@ -2,8 +2,21 @@
 $santanderPrice          = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
 $findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
 $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findleasingPriceMonthly');
+/** Creating slug */
+$car_slug_id = "";
+if ($connector->get_field($product->properties, '__Id') != "-") {
+    $car_slug_id = "-" . $connector->get_field($product->properties, '__Id');
+}
+if ($connector->get_field($product->properties, 'Id') != "-") {
+    $car_slug_id = "-" . $connector->get_field($product->properties, 'Id');
+}
+
+$variant = str_replace('variant-', '', $connector->get_field($product->properties, 'Variant'));
+
+$slug = ($variant != "-" ? sanitize_title($variant) : sanitize_title($product->name));
+$slug .= $car_slug_id;
 ?>
-<a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
+<a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo $slug; ?>"
    class="ca-w-full ca-relative ca-bg-lightgrey ca-flex ca-flex-col ca-ca-no-underline"
    style="color: unset; text-decoration: none !important;"
    title="<?php echo __('Se flere detaljer om', 'car-app'); ?> <?php echo $product->name; ?>">

@@ -6,7 +6,6 @@ if (!empty($filters)) {
         <?php
         foreach ($filters as $filter) {
             if (!empty($filter)) {
-
                 foreach ($filter as $key => $item) {
                     if (array_key_exists($item, $availableFilters)) {
                         ?>

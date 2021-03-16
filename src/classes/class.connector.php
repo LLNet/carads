@@ -316,11 +316,19 @@ class Connector
     {
         try {
 
+            $car_slug_id = "";
+            if ($this->get_field($product->properties, '__Id') != "-") {
+                $car_slug_id = "-" . $this->get_field($product->properties, '__Id');
+            }
+            if ($this->get_field($product->properties, 'Id') != "-") {
+                $car_slug_id = "-" . $this->get_field($product->properties, 'Id');
+            }
+
             $variant = str_replace('variant-', '', $this->get_field($product->properties, 'Variant'));
             $page    = wp_insert_post([
                 'post_type'         => $this->post_type,
                 'post_title'        => $product->name,
-                'post_name'         => $variant . "-" . $this->get_field($product->properties, 'Id'),
+                'post_name'         => ($variant != "-" ? $variant : sanitize_title($product->name)) . $car_slug_id,
                 'post_modified'     => $product->updated,
                 'post_modified_gmt' => $product->updated,
                 'post_status'       => 'publish',
@@ -350,10 +358,19 @@ class Connector
     public function update($post_id, $data)
     {
         try {
+
+            $car_slug_id = "";
+            if ($this->get_field($data->properties, '__Id') != "-") {
+                $car_slug_id = "-" . $this->get_field($data->properties, '__Id');
+            }
+            if ($this->get_field($data->properties, 'Id') != "-") {
+                $car_slug_id = "-" . $this->get_field($data->properties, 'Id');
+            }
+
             $variant = str_replace('variant-', '', $this->get_field($data->properties, 'Variant'));
             $updated = wp_update_post([
                 'ID'         => $post_id,
-                'post_name'  => $variant . "-" . $this->get_field($data->properties, 'Id'),
+                'post_name'  => ($variant != "-" ? $variant : sanitize_title($data->name)) . $car_slug_id,
                 'post_title' => $data->name,
             ]);
 
@@ -467,7 +484,7 @@ class Connector
 
             // Sorting
             if (isset($_GET['sort_by']) && !empty($_GET['sort_by'])) {
-                $search .= '&sort_by=' . filter_var($_GET['sort_by'], FILTER_SANITIZE_STRING);
+                $search .= '&sort_by=' . $_GET['sort_by'];
             }
 
         }
@@ -489,10 +506,10 @@ class Connector
 
         // PriceType
         $price_type = get_option('car-ads-archive')['usePriceType'];
-        $return = "";
-        if(is_array($price_type)) {
-            foreach($price_type as $type) {
-                $return .= "&properties[]=". strtolower($type);
+        $return     = "";
+        if (is_array($price_type)) {
+            foreach ($price_type as $type) {
+                $return .= "&properties[]=" . strtolower($type);
             }
         }
         return $return;
@@ -541,20 +558,23 @@ class Connector
 
         }
         if (isset($_GET['brands']) && !empty($_GET['brands']) && $_GET['brands'][0] != '-1') {
-            $filters['brands'] = filter_var($_GET['brands'], FILTER_SANITIZE_STRING);
+            $filters['brands'] = $_GET['brands'];
         }
         if (isset($_GET['properties']) && !empty($_GET['properties'])) {
-            foreach (filter_var($_GET['properties'], FILTER_SANITIZE_STRING) as $property) {
+            foreach ($_GET['properties'] as $property) {
                 if ($property != '-1') {
-                    $filters['properties'][] = $property;
+                    $filters['properties'][] = filter_var($property, FILTER_SANITIZE_STRING);
                 }
             }
         }
         if (isset($_GET['categories']) && !empty($_GET['categories']) && $_GET['categories'][0] != '-1') {
-            $filters['categories'] = filter_var($_GET['categories'], FILTER_SANITIZE_STRING);
+            $filters['categories'] = $_GET['categories'];
         }
         if (isset($_GET['search']) && !empty($_GET['search'])) {
             $filters['search'] = filter_var($_GET['search'], FILTER_SANITIZE_STRING);
+        }
+        if (isset($_GET['sort_by']) && !empty($_GET['sort_by'])) {
+            $filters['sort_by'] = filter_var($_GET['sort_by'], FILTER_SANITIZE_STRING);
         }
 
         return $filters;
@@ -845,8 +865,8 @@ class Connector
 
             // PriceType
             if (isset($params['price_type']) && !is_null($params['price_type'])) {
-                if(is_array($params['price_type'])) {
-                    foreach($params['price_type'] as $type) {
+                if (is_array($params['price_type'])) {
+                    foreach ($params['price_type'] as $type) {
                         $search .= '&properties[]=' . strtolower($type);
                     }
                 } else {
@@ -867,7 +887,7 @@ class Connector
 
     public function get_brands_categories($brand)
     {
-        $products       = $this->headless->get('/products?brand=' . $brand . $this->includeOptions()  . $this->includePriceType());
+        $products       = $this->headless->get('/products?brand=' . $brand . $this->includeOptions() . $this->includePriceType());
         $all_categories = $products->aggregations->filtered->categories;
 
 

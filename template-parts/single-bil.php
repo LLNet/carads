@@ -18,13 +18,29 @@ $currency  = $connector->getCurrency();
                         <h3 class="name car_name ca-text-2xl ca-font-medium ca-overflow-ellipsis ca-overflow-hidden ca-transition-all ca-duration-300 ca-ease-in-out"><?php echo $product->name; ?></h3>
                         <p class="price ca-text-sm">
                             <?php
-                            if (!$product->disabled && $connector->get_field($product->properties, 'PriceType') !== "CallForPrice") {
-                                echo __('Kontantpris', 'car-app') . " " . number_format_i18n($product->pricing->{$currency}->price, 0);
-                                echo " " . $currency;
-                            } elseif ($product->disabled) {
+                            if (!$product->disabled) {
+                                $priceType = $connector->get_field($product->properties, 'PriceType');
+                                switch($priceType) {
+                                    case 'RetailPriceWithoutTax':
+                                        echo __('Uden afgift', 'car-app') . " ". number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                                        break;
+                                    case 'Wholesale':
+                                        echo __('Engros', 'car-app') . " " . number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                                        break;
+                                    case 'CallForPrice':
+                                        echo __('Ring for pris', 'car-app');
+                                        break;
+                                    case 'Leasing':
+                                        $connector->getTemplatePart('components/price/single-header--leasing', $product);
+                                        break;
+                                    case 'RetailPrice':
+                                    case null:
+                                    default:
+                                        echo __('Kontant pris', 'car-app') . " ". number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                                        break;
+                                }
+                            } else {
                                 echo __('Solgt', 'car-app');
-                            } elseif($connector->get_field($product->properties, 'PriceType') === "CallForPrice") {
-                                echo __('Ring for pris', 'car-app');
                             }
                             ?>
                         </p>

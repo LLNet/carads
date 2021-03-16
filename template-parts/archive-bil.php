@@ -28,6 +28,12 @@ $availableFilters = $connector->availableFilters($products);
                                 <option value="price:desc" <?php echo 'price:desc' == $filters['sort_by'] ? 'selected' : ''; ?>>
                                     <?php echo __('Dyreste', 'car-app'); ?>
                                 </option>
+                                <option value="created:asc" <?php echo 'created:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
+                                    <?php echo __('Nyeste først', 'car-app'); ?>
+                                </option>
+                                <option value="created:desc" <?php echo 'created:desc' == $filters['sort_by'] ? 'selected' : ''; ?>>
+                                    <?php echo __('Ældste først', 'car-app'); ?>
+                                </option>
                                 <option value="name:asc" <?php echo 'name:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
                                     <?php echo __('Navn A-Å', 'car-app'); ?>
                                 </option>

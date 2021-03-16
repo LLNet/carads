@@ -3,13 +3,28 @@ global $product;
 $santanderPrice          = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
 $findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
 $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findleasingPriceMonthly');
+/** Creating slug */
+$car_slug_id = "";
+if ($connector->get_field($product->properties, '__Id') != "-") {
+    $car_slug_id = "-" . $connector->get_field($product->properties, '__Id');
+}
+if ($connector->get_field($product->properties, 'Id') != "-") {
+    $car_slug_id = "-" . $connector->get_field($product->properties, 'Id');
+}
+
+$variant = str_replace('variant-', '', $connector->get_field($product->properties, 'Variant'));
+
+$slug = ($variant != "-" ? sanitize_title($variant) : sanitize_title($product->name));
+$slug .= $car_slug_id;
 ?>
 <div class="car md:ca-grid md:ca-grid-cols-4 ca-mb-8 ca-bg-white ca-w-full ca-border ca-border-solid ca-border-lightgrey">
     <?php
 
     if ($product->image->sizes->i1024x768) {
+
+
         ?>
-        <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
+        <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo $slug ?>"
            class="ca-max-h-80 img-wrap ca-relative ca-col-span-4 md:ca-col-span-2 lg:ca-col-span-1 ca-flex ca-w-full md:ca-w-auto ca-flex-shrink-0 ca-height-full ca-overflow-hidden md:ca-max-w-md">
             <?php
             /**
@@ -107,7 +122,7 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
         <?php
     }
     ?>
-    <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo sanitize_title($connector->get_field($product->properties, 'Variant')); ?>-<?php echo $connector->get_field($product->properties, 'Id'); ?>"
+    <a href="/<?php echo $single_slug; ?>/<?php echo $product->brand->slug; ?>/<?php echo $product->category->slug; ?>/<?php echo $slug ?>"
        class="car--info__title md:ca-col-span-2 lg:ca-col-span-3 ca-no-underline"
        style="color: unset; text-decoration: none !important;"
     >
@@ -234,7 +249,6 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                     </div>
                 </div>
                 <div class="car--info--content__price ca-w-full lg:ca-w-1/4 ca-flex ca-justify-center ca-items-center lg:ca-items-end lg:ca-justify-center ca-flex-col">
-
                     <?php
                     if (!$product->disabled) {
                         $priceType = $connector->get_field($product->properties, 'PriceType');
@@ -252,7 +266,6 @@ $findleasingPriceMonthly = $connector->get_field($product->customFields, 'findle
                             case 'Leasing':
                                 $connector->getTemplatePart('components/price/leasing', $product);
                                 break;
-
                             case 'RetailPrice':
                             case null:
                             default:

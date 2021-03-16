@@ -1,4 +1,3 @@
-
 let gulp = require('gulp');
 let zip = require('gulp-zip');
 let pckg = require('./package.json');
@@ -74,12 +73,12 @@ gulp.task('zip', function () {
             '!./.git/**/*',
             '!./logs/**/*',
         ], {base: '.'})
-        .pipe(rename(function(file) {
+        .pipe(rename(function (file) {
             file.dirname = pckg.name + '/' + file.dirname;
         }))
         .pipe(replace(pattern_options))
 
-        .pipe(zip(pckg.name + '-' + pckg.version +  '.zip'))
+        .pipe(zip(pckg.name + '-' + pckg.version + '.zip'))
         .pipe(gulp.dest('./../'));
 
 });
@@ -88,24 +87,13 @@ gulp.task('zip', function () {
  * UPLOAD ZIP
  */
 let localFiles = './../' + pckg.name + '-' + pckg.version + '.zip';
-const remoteLocation = './httpdocs/files/'+ pckg.name + '-' + pckg.version + '.zip';
+const remoteLocation = './httpdocs/files/' + pckg.name + '-' + pckg.version + '.zip';
 gulp.task('upload', function () {
     let connection = getFtpConnection(remoteLocation);
 
-    return gulp.src(localFiles, { base: '.', buffer: false } )
+    return gulp.src(localFiles, {base: '.', buffer: false})
         .pipe(connection);
-
-    // return gulp.src(localFiles, {base: '.', buffer: false})
-    //     // .pipe(connection.newer(remoteLocation))
-    //     // .pipe(connection.dest(remoteLocation))
-    //     .pipe(connection)
-    //     .on('end', function() {
-    //         gutil.log('Done !');
-    //         beep();
-
-
-
-        });
+});
 
 
 /**
@@ -120,10 +108,11 @@ gulp.task('upload-release-json', function () {
         // .pipe(replace(pattern_options))
         .pipe(rename(pckg.name + '.json'))
         .pipe(connection)
-        .on('end', function() {
+        .on('end', function () {
             gutil.log('Done !');
             beep();
-        })})
+        })
+})
 
 
 /**
