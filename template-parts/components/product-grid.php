@@ -1,7 +1,13 @@
 <?php
 $santanderPrice          = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+
+/** Findleasing priser */
 $findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
-$findleasingPriceMonthly = $connector->get_field($product->customFields, 'findleasingPriceMonthly');
+$findleasingFinansielPriceMonthly = $connector->get_field($product->customFields, 'findleasingFinansielPriceMonthly');
+
+$findleasingOperationel    = $connector->get_field($product->customFields, 'findleasingOperationel');
+$findleasingOperationelPriceMonthly = $connector->get_field($product->customFields, 'findleasingOperationelPriceMonthly');
+
 /** Creating slug */
 $car_slug_id = "";
 if ($connector->get_field($product->properties, '__Id') != "-") {
@@ -28,21 +34,31 @@ $slug .= $car_slug_id;
             /**
              * Leasing label inside photo
              */
-            if (!$product->disabled && !empty($findleasingFinancial) && $findleasingFinancial != '-') {
-                if (!empty($findleasingPriceMonthly) && $findleasingPriceMonthly != '-') {
+            if (!$product->disabled) {
+                /** Vis først Finansiel hvis den findes */
+                if (!empty($findleasingFinansielPriceMonthly) && $findleasingFinansielPriceMonthly != '-') {
                     ?>
                     <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
                         <?php
                         echo __('Leasing fra', 'car-app') . ": ";
-                        echo number_format_i18n($findleasingPriceMonthly) . " DKK";
+                        echo number_format_i18n($findleasingFinansielPriceMonthly) . " DKK";
+                        ?>
+                    </div>
+                    <?php
+                }
+                /** Ellers vis operationel hvis den findes */
+                elseif(!empty($findleasingOperationelPriceMonthly) && $findleasingOperationelPriceMonthly != '-') {
+                    ?>
+                    <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+                        <?php
+                        echo __('Leasing fra', 'car-app') . ": ";
+                        echo number_format_i18n($findleasingOperationelPriceMonthly) . " DKK";
                         ?>
                     </div>
                     <?php
                 }
             }
-            /**
-             * Engros label inside photo
-             */
+            /** Engros label inside photo  */
             elseif ($connector->get_field($product->properties, 'PriceType') === "Wholesale") {
                 ?>
                 <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">

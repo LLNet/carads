@@ -229,29 +229,29 @@ $currency  = $connector->getCurrency();
                     <div class="ca-block lg:ca-hidden ">
                         <?php dynamic_sidebar('carads-single-sidebar-2'); ?>
                     </div>
-                    <div class="car-ads--accordion" x-data="{selected:1}">
+                    <div class="car-ads--accordion" x-data="{description:1, specifications: 1}">
                         <div class="ca-mb-4">
                             <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
-                                 id="Beskrivelse" @click="selected !== 1 ? selected = 1 : selected = null">
+                                 id="Beskrivelse" @click="description !== 1 ? description = 1 : description = 0">
                                 <span><?php echo __('Beskrivelse', 'car-app'); ?></span>
-                                <i class="fa fa-chevron-down" x-show="selected != 1"></i>
-                                <i class="fa fa-chevron-up" x-show="selected == 1"></i>
+                                <i class="fa fa-chevron-down" x-show="description != 1"></i>
+                                <i class="fa fa-chevron-up" x-show="description == 1"></i>
                             </div>
                             <div class="car-ads--accordion-content ca-bg-lightgrey ca-p-4 md:ca-p-10 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700 ca-animate"
-                                 x-show.transition.inout.duration.300ms="selected == 1">
+                                 x-show.transition.inout.duration.300ms="description == 1">
                                 <?php echo $product->description; ?>
                             </div>
                         </div>
 
                         <div class="ca-mb-4">
                             <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
-                                 id="specifications" @click="selected !== 2 ? selected = 2 : selected = null">
+                                 id="specifications" @click="specifications !== 1 ? specifications = 1 : specifications = 0">
                                 <span><?php echo __('Specifikationer', 'car-app'); ?></span>
-                                <i class="fa fa-chevron-down" x-show="selected != 2"></i>
-                                <i class="fa fa-chevron-up" x-show="selected == 2"></i>
+                                <i class="fa fa-chevron-down" x-show="specifications != 1"></i>
+                                <i class="fa fa-chevron-up" x-show="specifications == 1"></i>
                             </div>
                             <div class="car-ads--accordion-content ca-bg-lightgrey ca-p-4 md:ca-p-10 ca-relative ca-overflow-hidden ca-transition-all ca-duration-700 ca-animate"
-                                 x-show.transition.inout.duration.300ms="selected == 2">
+                                 x-show.transition.inout.duration.300ms="specifications == 1">
                                 <?php include("components/single-car-specifications.php"); ?>
                             </div>
                         </div>
