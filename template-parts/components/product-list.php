@@ -4,10 +4,10 @@ $santanderPrice          = $connector->get_field($product->customFields, 'santan
 
 /** Findleasing priser */
 $findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
-$findleasingFinansielPriceMonthly = $connector->get_field($product->customFields, 'findleasingFinansielPriceMonthly');
+$findleasingFinansielPriceMonthly = (int) $connector->get_field($product->customFields, 'findleasingFinansielPriceMonthly');
 
 $findleasingOperationel    = $connector->get_field($product->customFields, 'findleasingOperationel');
-$findleasingOperationelPriceMonthly = $connector->get_field($product->customFields, 'findleasingOperationelPriceMonthly');
+$findleasingOperationelPriceMonthly = (int) $connector->get_field($product->customFields, 'findleasingOperationelPriceMonthly');
 
 /** Creating slug */
 $car_slug_id = "";
@@ -38,7 +38,7 @@ $slug .= $car_slug_id;
              */
             if (!$product->disabled) {
                 /** Vis først Finansiel hvis den findes */
-                if (!empty($findleasingFinansielPriceMonthly) && $findleasingFinansielPriceMonthly != '-') {
+                if ($findleasingFinansielPriceMonthly) {
                     ?>
                     <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
                         <?php
@@ -49,7 +49,7 @@ $slug .= $car_slug_id;
                     <?php
                 }
                 /** Ellers vis operationel hvis den findes */
-                elseif(!empty($findleasingOperationelPriceMonthly) && $findleasingOperationelPriceMonthly != '-') {
+                elseif($findleasingOperationelPriceMonthly) {
                     ?>
                     <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
                         <?php
