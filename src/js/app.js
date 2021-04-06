@@ -190,19 +190,22 @@ jQuery(document).ready(function () {
     }
 
 
-    jQuery(document).on("click", function () {
-        jQuery('.multiselect-container.dropdown-menu').removeClass('active')
-    });
-    jQuery('button.multiselect.dropdown-toggle').on('click', function (e) {
-        jQuery('.multiselect-container.dropdown-menu').removeClass('active')
-        e.stopPropagation();
-        e.preventDefault();
-        jQuery(this).next('.multiselect-container.dropdown-menu').toggleClass('active')
+    // jQuery(document).on("click", function () {
+    //     jQuery('.multiselect-container.dropdown-menu').removeClass('active')
+    // });
+    jQuery('.multiselect.dropdown-toggle').on('click', function (e) {
+        if(jQuery(this).next('.multiselect-container.dropdown-menu').hasClass('active') === true) {
+            jQuery(this).next('.multiselect-container.dropdown-menu').removeClass('active');
+        } else {
+            jQuery(this).next('.multiselect-container.dropdown-menu').addClass('active');
+        }
     });
 
     jQuery('.multiselect-container.dropdown-menu').on('click', function (e) {
         e.stopPropagation();
     });
+
+
 
 
     /**

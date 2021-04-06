@@ -294,6 +294,7 @@ $currency  = $connector->getCurrency();
                             <script src="https://www.findleasing.nu/static/javascript/embed-sliders.js"></script>
                         </div>
                         <?php
+
                     } elseif($connector->get_field($product->customFields, 'findleasingOperational') != "" && $connector->get_field($product->customFields, 'findleasingOperational') != "-") {
                         ?>
                         <div class="single-car--findleasing ca-bg-lightgrey bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4">

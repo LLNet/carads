@@ -114,6 +114,8 @@ button.multiselect.dropdown-toggle {
 
   &.active {
     @apply ca-grid;
+    max-height: 250px;
+    overflow-y: auto;
   }
 
   /** Buttons within dropdown */
@@ -123,6 +125,15 @@ button.multiselect.dropdown-toggle {
     &:hover {
       @apply ca-bg-primary ca-text-white
     }
+  }
+}
+
+.multiselect-container>.multiselect-option>span {
+  padding: 0 !important;
+}
+.dropdown-item.multiselect-all {
+  .form-check-input {
+    margin-right: 3px;
   }
 }
 
