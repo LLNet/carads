@@ -308,7 +308,9 @@ $slug .= $car_slug_id;
                     ?>
                 </div>
             </div>
-
+            <?php
+            do_action('car_ads_archive_list_below_content');
+            ?>
         </figcaption>
     </a>
 

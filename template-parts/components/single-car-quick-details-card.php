@@ -153,6 +153,7 @@
             </div>
         </div>
         <?php
+        do_action('car_ads_single_car_below_price');
     } else {
         ?>
         <div class="price ca-flex ca-flex-col ca-items-center lg:ca-flex ca-justify-center ca-mt-4 ca-mb-2">

@@ -230,7 +230,7 @@ $currency  = $connector->getCurrency();
                     <div class="ca-block lg:ca-hidden ">
                         <?php dynamic_sidebar('carads-single-sidebar-2'); ?>
                     </div>
-                    <div class="car-ads--accordion" x-data="{description:1, specifications:1}">
+                    <div class="car-ads--accordion" x-data="{<?php echo apply_filters('car_ads_accordion_tabs', 'description:1, specifications:1'); ?>}">
                         <div class="ca-mb-4">
                             <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
                                  id="Beskrivelse" @click="description !== 1 ? description = 1 : description = 0">
@@ -256,6 +256,11 @@ $currency  = $connector->getCurrency();
                                 <?php include("components/single-car-specifications.php"); ?>
                             </div>
                         </div>
+
+                        <?php
+                        do_action('car_ads_accordion_content');
+                        ?>
+
                     </div>
                     <div class="ca-block lg:ca-hidden">
                         <?php dynamic_sidebar('carads-single-sidebar-3'); ?>

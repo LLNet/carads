@@ -54,7 +54,7 @@ if (!class_exists('CarAdsSettings')):
                     'title' => __('Custom Post Types', 'car-ads')
                 ),
             );
-            return $sections;
+            return apply_filters('car_ads_settings_sections', $sections);
         }
 
         /**
@@ -64,7 +64,7 @@ if (!class_exists('CarAdsSettings')):
          */
         function get_settings_fields()
         {
-            return [
+            $fields = [
                 'car-ads'            => [
                     [
                         'name'              => 'consumer_key',
@@ -260,6 +260,8 @@ if (!class_exists('CarAdsSettings')):
                     ],
                 ],
             ];
+
+            return apply_filters('car_ads_settings_fields', $fields);
         }
 
         function plugin_page()
