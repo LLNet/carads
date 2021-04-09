@@ -1,13 +1,13 @@
 <?php
 global $product;
-$santanderPrice          = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+$santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
 
 /** Findleasing priser */
-$findleasingFinancial    = $connector->get_field($product->customFields, 'findleasingFinancial');
-$findleasingFinansielPriceMonthly = (int) $connector->get_field($product->customFields, 'findleasingFinansielPriceMonthly');
+$findleasingFinancial             = $connector->get_field($product->customFields, 'findleasingFinancial');
+$findleasingFinansielPriceMonthly = (int)$connector->get_field($product->customFields, 'findleasingFinansielPriceMonthly');
 
-$findleasingOperationel    = $connector->get_field($product->customFields, 'findleasingOperationel');
-$findleasingOperationelPriceMonthly = (int) $connector->get_field($product->customFields, 'findleasingOperationelPriceMonthly');
+$findleasingOperationel             = $connector->get_field($product->customFields, 'findleasingOperationel');
+$findleasingOperationelPriceMonthly = (int)$connector->get_field($product->customFields, 'findleasingOperationelPriceMonthly');
 
 /** Creating slug */
 $car_slug_id = "";
@@ -47,9 +47,8 @@ $slug .= $car_slug_id;
                         ?>
                     </div>
                     <?php
-                }
-                /** Ellers vis operationel hvis den findes */
-                elseif($findleasingOperationelPriceMonthly) {
+                } /** Ellers vis operationel hvis den findes */
+                elseif ($findleasingOperationelPriceMonthly) {
                     ?>
                     <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
                         <?php
@@ -59,8 +58,7 @@ $slug .= $car_slug_id;
                     </div>
                     <?php
                 }
-            }
-            /** Engros label inside photo */
+            } /** Engros label inside photo */
             elseif ($connector->get_field($product->properties, 'PriceType') === "Wholesale") {
                 ?>
                 <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
@@ -69,8 +67,7 @@ $slug .= $car_slug_id;
                     ?>
                 </div>
                 <?php
-            }
-            /** Uden afgift label inside photo */
+            } /** Uden afgift label inside photo */
             elseif ($connector->get_field($product->properties, 'PriceType') === "RetailPriceWithoutTax") {
                 ?>
                 <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
@@ -144,168 +141,170 @@ $slug .= $car_slug_id;
        class="car--info__title md:ca-col-span-2 lg:ca-col-span-3 ca-no-underline"
        style="color: unset; text-decoration: none !important;"
     >
-        <figcaption class="car--info ca-p-2 md:ca-p-8 ca-w-full">
-            <div class="ca-text-2xl ca-font-medium ca-mb-4"><?php echo $product->name; ?></div>
-            <div class="car--info--content lg:ca-flex">
-                <div class="car--info--content__specs ca-w-full lg:ca-w-3/4">
-                    <div class="ca-grid ca-grid-cols-3 lg:ca-grid-cols-4 ca-gap-1">
-                        <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Kilometer', 'car-app'); ?></dt>
-                            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                <?php
-                                if ($connector->get_field($product->properties, 'Mileage') != '-') {
-                                    echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
-                                } else {
-                                    _e('-', 'car-app');
-                                }
-                                ?>
-                            </dd>
-                        </dl>
-                        <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Modelår', 'car-app'); ?></dt>
-                            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                <?php
-                                echo $connector->get_field($product->properties, 'Year');
-                                ?>
-                            </dd>
-                        </dl>
-                        <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Drivmiddel', 'car-app'); ?></dt>
-                            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                <?php
-                                echo $connector->get_field($product->properties, 'Propellant');
-                                ?>
-                            </dd>
-                        </dl>
-                        <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Gearkasse', 'car-app'); ?></dt>
-                            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                <?php
-                                switch ($connector->get_field($product->properties, 'GearType')) {
-                                    case 'A':
-                                        _e('Automatisk', 'car-app');
-                                        break;
-                                    case 'M':
-                                        _e('Manuel', 'car-app');
-                                        break;
-                                    default:
-                                        _e('-', 'car-app');
-                                        break;
-                                }
-                                ?>
-                            </dd>
-                        </dl>
-                        <?php
-                        if (!empty($connector->get_field($product->properties, 'GreenTax')) && $connector->get_field($product->properties, 'GreenTax') != '-') {
-                            ?>
+        <figcaption class="car--info <?php echo apply_filters('car_ads_archive_list_classes', 'ca-w-full ca-relative ca-flex ca-h-full '); ?>">
+            <div class="car--info-right ca-w-full ca-p-2 md:ca-p-8">
+                <div class="ca-text-2xl ca-font-medium ca-mb-4"><?php echo $product->name; ?></div>
+                <div class="car--info--content lg:ca-flex">
+                    <div class="car--info--content__specs ca-w-full lg:ca-w-3/4">
+                        <div class="ca-grid ca-grid-cols-3 lg:ca-grid-cols-4 ca-gap-1">
                             <dl class="ca-flex ca-flex-col">
-                                <dt class="ca-font-thin ca-leading-5"><?php _e('Grøn ejerafgift', 'car-app'); ?></dt>
+                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Kilometer', 'car-app'); ?></dt>
                                 <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                    <?php echo number_format_i18n($connector->get_field($product->properties, 'GreenTax')); ?>
                                     <?php
-                                    if ($connector->get_field($product->properties, 'GreenTaxPeriod')) {
-                                        echo "kr. / år";
+                                    if ($connector->get_field($product->properties, 'Mileage') != '-') {
+                                        echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
+                                    } else {
+                                        _e('-', 'car-app');
+                                    }
+                                    ?>
+                                </dd>
+                            </dl>
+                            <dl class="ca-flex ca-flex-col">
+                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Modelår', 'car-app'); ?></dt>
+                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                    <?php
+                                    echo $connector->get_field($product->properties, 'Year');
+                                    ?>
+                                </dd>
+                            </dl>
+                            <dl class="ca-flex ca-flex-col">
+                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Drivmiddel', 'car-app'); ?></dt>
+                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                    <?php
+                                    echo $connector->get_field($product->properties, 'Propellant');
+                                    ?>
+                                </dd>
+                            </dl>
+                            <dl class="ca-flex ca-flex-col">
+                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Gearkasse', 'car-app'); ?></dt>
+                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                    <?php
+                                    switch ($connector->get_field($product->properties, 'GearType')) {
+                                        case 'A':
+                                            _e('Automatisk', 'car-app');
+                                            break;
+                                        case 'M':
+                                            _e('Manuel', 'car-app');
+                                            break;
+                                        default:
+                                            _e('-', 'car-app');
+                                            break;
                                     }
                                     ?>
                                 </dd>
                             </dl>
                             <?php
-                        }
-                        ?>
-                        <dl class="ca-flex ca-flex-col">
-                            <?php
-                            if ("El" === $connector->get_field($product->properties, 'Propellant')) {
+                            if (!empty($connector->get_field($product->properties, 'GreenTax')) && $connector->get_field($product->properties, 'GreenTax') != '-') {
                                 ?>
-
-                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Rækkevidde', 'car-app'); ?></dt>
-                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'Range') . " ";
-                                    echo __("km", 'car-app');
-                                    ?>
-                                </dd>
-
-                                <?php
-                            } else {
-                                ?>
-
-                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Forbrug', 'car-app'); ?></dt>
-                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                    <?php
-                                    echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
-                                    echo __("km/l", 'car-app');
-                                    ?>
-                                </dd>
-
+                                <dl class="ca-flex ca-flex-col">
+                                    <dt class="ca-font-thin ca-leading-5"><?php _e('Grøn ejerafgift', 'car-app'); ?></dt>
+                                    <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                        <?php echo number_format_i18n($connector->get_field($product->properties, 'GreenTax')); ?>
+                                        <?php
+                                        if ($connector->get_field($product->properties, 'GreenTaxPeriod')) {
+                                            echo "kr. / år";
+                                        }
+                                        ?>
+                                    </dd>
+                                </dl>
                                 <?php
                             }
                             ?>
-                        </dl>
+                            <dl class="ca-flex ca-flex-col">
+                                <?php
+                                if ("El" === $connector->get_field($product->properties, 'Propellant')) {
+                                    ?>
 
-                        <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('HK', 'car-app'); ?></dt>
-                            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                <?php
-                                echo $connector->get_field($product->properties, 'Effect') . " ";
-                                echo __("hk", 'car-app');
-                                ?>
-                            </dd>
-                        </dl>
-                        <dl class="ca-flex ca-flex-col">
-                            <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Registreringsår', 'car-app'); ?></dt>
-                            <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
-                                <?php
-                                $date = $connector->get_field($product->properties, 'RegistrationDate');
-                                if (!empty($date) && $date !== '-') {
-                                    echo date("m/Y", strtotime($date));
+                                    <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Rækkevidde', 'car-app'); ?></dt>
+                                    <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                        <?php
+                                        echo $connector->get_field($product->properties, 'Range') . " ";
+                                        echo __("km", 'car-app');
+                                        ?>
+                                    </dd>
+
+                                    <?php
                                 } else {
-                                    echo $date;
+                                    ?>
+
+                                    <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Forbrug', 'car-app'); ?></dt>
+                                    <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                        <?php
+                                        echo $connector->get_field($product->properties, 'KmPerLiter') . " ";
+                                        echo __("km/l", 'car-app');
+                                        ?>
+                                    </dd>
+
+                                    <?php
                                 }
                                 ?>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="car--info--content__price ca-w-full lg:ca-w-1/4 ca-flex ca-justify-center ca-items-center lg:ca-items-end lg:ca-justify-center ca-flex-col">
-                    <?php
-                    if (!$product->disabled) {
-                        $priceType = $connector->get_field($product->properties, 'PriceType');
+                            </dl>
 
-                        switch ($priceType) {
-                            case 'RetailPriceWithoutTax':
-                                $connector->getTemplatePart('components/price/retailpricewithouttax', $product);
-                                break;
-                            case 'Wholesale':
-                                $connector->getTemplatePart('components/price/wholesale', $product);
-                                break;
-                            case 'CallForPrice':
-                                $connector->getTemplatePart('components/price/callforprice', $product);
-                                break;
-                            case 'Leasing':
-                                $connector->getTemplatePart('components/price/leasing', $product);
-                                break;
-                            case 'RetailPrice':
-                            case null:
-                            default:
-                                $connector->getTemplatePart('components/price/retail', $product);
-                                break;
-                        }
-                    } else {
-                        echo __('Solgt', 'car-app');
-                    }
-                    ?>
-
-                    <?php
-                    $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
-                    if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
-                        ?>
-                        <div class="leasing ca-opacity-50 ca-font-normal ca-text-base">
-                            <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
-                            <?php echo __('DKK. /md.', 'car-app'); ?>
+                            <dl class="ca-flex ca-flex-col">
+                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('HK', 'car-app'); ?></dt>
+                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                    <?php
+                                    echo $connector->get_field($product->properties, 'Effect') . " ";
+                                    echo __("hk", 'car-app');
+                                    ?>
+                                </dd>
+                            </dl>
+                            <dl class="ca-flex ca-flex-col">
+                                <dt class="ca-font-thin font-thin ca-leading-5"><?php _e('Registreringsår', 'car-app'); ?></dt>
+                                <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
+                                    <?php
+                                    $date = $connector->get_field($product->properties, 'RegistrationDate');
+                                    if (!empty($date) && $date !== '-') {
+                                        echo date("m/Y", strtotime($date));
+                                    } else {
+                                        echo $date;
+                                    }
+                                    ?>
+                                </dd>
+                            </dl>
                         </div>
+                    </div>
+                    <div class="car--info--content__price ca-w-full lg:ca-w-1/4 ca-flex ca-justify-center ca-items-center lg:ca-items-end lg:ca-justify-center ca-flex-col">
                         <?php
-                    }
-                    ?>
+                        if (!$product->disabled) {
+                            $priceType = $connector->get_field($product->properties, 'PriceType');
+
+                            switch ($priceType) {
+                                case 'RetailPriceWithoutTax':
+                                    $connector->getTemplatePart('components/price/retailpricewithouttax', $product);
+                                    break;
+                                case 'Wholesale':
+                                    $connector->getTemplatePart('components/price/wholesale', $product);
+                                    break;
+                                case 'CallForPrice':
+                                    $connector->getTemplatePart('components/price/callforprice', $product);
+                                    break;
+                                case 'Leasing':
+                                    $connector->getTemplatePart('components/price/leasing', $product);
+                                    break;
+                                case 'RetailPrice':
+                                case null:
+                                default:
+                                    $connector->getTemplatePart('components/price/retail', $product);
+                                    break;
+                            }
+                        } else {
+                            echo __('Solgt', 'car-app');
+                        }
+                        ?>
+
+                        <?php
+                        $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+                        if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
+                            ?>
+                            <div class="leasing ca-opacity-50 ca-font-normal ca-text-base">
+                                <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
+                                <?php echo __('DKK. /md.', 'car-app'); ?>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
             <?php

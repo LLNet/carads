@@ -21,7 +21,7 @@ $availableFilters = $connector->availableFilters($products);
                      ca-px-4 md:ca-px-8 ca-bg-primary-dark bg-secondary ca-text-white md:ca-mb-4">
                         <div class="car-sorting--sort_by ca-flex ca-order-2 lg:ca-order-1 ca-w-1/2 lg:ca-w-1/5 ca-items-center">
                             <select name="sort_by" id="sort_by" class="ca-h-10 ca-rounded-lg ca-text-text ca-rounded ca-bg-white">
-                                <option disabled unselectable=""><?php echo __('Sorter efter', 'car-app'); ?></option>
+                                <option disabled <?php echo !isset($_GET['sort_by']) ? 'selected' : ''; ?>><?php echo __('Vælg sortering', 'car-app'); ?></option>
                                 <option value="price:asc" <?php echo 'price:asc' == $filters['sort_by'] ? 'selected' : ''; ?>>
                                     <?php echo __('Billigste', 'car-app'); ?>
                                 </option>
