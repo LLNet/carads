@@ -179,7 +179,7 @@ class Connector
         }
     }
 
-    public function getTemplatePart($filename, $product)
+    public function getTemplatePart($filename, $product = false)
     {
         $currentTheme    = get_template_directory();
         $plugin_dir_path = __CAR_ADS_DIR__ . "template-parts/";

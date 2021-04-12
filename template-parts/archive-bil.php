@@ -102,7 +102,6 @@ $availableFilters = $connector->availableFilters($products);
                     <?php
                     if ($products) {
                         foreach ($products->items as $key => $product) {
-
                             include("components/product-" . $view_mode . ".php");
                         }
                     }

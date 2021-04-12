@@ -217,6 +217,7 @@ $currency  = $connector->getCurrency();
                     <div class="ca-block lg:ca-hidden">
                         <?php include("components/single-car-quick-details-card.php"); ?>
                     </div>
+                    <?php do_action('car_ads_below_quick_car_details'); ?>
                     <div class="ca-block lg:ca-hidden ca-w-full">
                         <?php dynamic_sidebar('carads-single-sidebar-1'); ?>
                     </div>

@@ -109,13 +109,25 @@ button.multiselect.dropdown-toggle {
   }
 }
 
+button.multiselect.dropdown-toggle.active span.multiselect-selected-text:before,
+.multiselect .btn-group button.multiselect.active .multiselect-selected-text:before {
+  content: 'LUK' !important;
+  font-family: Sans-serif !important;
+  font-size: 9px;
+  margin-right: 4px;
+}
+
 .multiselect-container.dropdown-menu {
   @apply ca-hidden ca-absolute ca-bg-white ca-shadow ca-z-10 ca-p-2 ca-grid-cols-2 ca-w-full;
 
   &.active {
     @apply ca-grid;
-    max-height: 250px;
-    overflow-y: auto;
+
+    @media all and (min-width: 1024px) {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
   }
 
   /** Buttons within dropdown */
@@ -128,9 +140,10 @@ button.multiselect.dropdown-toggle {
   }
 }
 
-.multiselect-container>.multiselect-option>span {
+.multiselect-container > .multiselect-option > span {
   padding: 0 !important;
 }
+
 .dropdown-item.multiselect-all {
   .form-check-input {
     margin-right: 3px;

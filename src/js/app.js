@@ -196,8 +196,16 @@ jQuery(document).ready(function () {
     jQuery('.multiselect.dropdown-toggle').on('click', function (e) {
         if(jQuery(this).next('.multiselect-container.dropdown-menu').hasClass('active') === true) {
             jQuery(this).next('.multiselect-container.dropdown-menu').removeClass('active');
+            jQuery(this).parent('.btn-group').find('button.multiselect').removeClass('active');
         } else {
+            jQuery('.multiselect-container.dropdown-menu').removeClass('active');
+            jQuery('.btn-group button.multiselect').removeClass('active');
+
+
             jQuery(this).next('.multiselect-container.dropdown-menu').addClass('active');
+            jQuery(this).parent('.btn-group').find('button.multiselect').addClass('active');
+            jQuery(this).next('button.multiselect.dropdown-toggle span.multiselect-selected-text:before').css('content', 'LUK');
+
         }
     });
 

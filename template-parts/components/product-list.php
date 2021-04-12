@@ -307,10 +307,16 @@ $slug .= $car_slug_id;
                     </div>
                 </div>
             </div>
+            <div class="ca-hidden lg:ca-flex">
             <?php
-            do_action('car_ads_archive_list_below_content');
+            do_action('car_ads_archive_list_below_content', $product);
             ?>
+            </div>
         </figcaption>
     </a>
-
+    <div class="ca-relative ca-flex ca-col-span-4 lg:ca-hidden">
+        <?php
+        do_action('car_ads_archive_list_below_content', $product);
+        ?>
+    </div>
 </div>

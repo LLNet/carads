@@ -16,10 +16,18 @@ elseif (!empty($this->get_field($product->customFields, 'findleasingOperational'
     // Operationel price pr month
     if ($price = (int) $this->get_field($product->customFields, 'findleasingOperationelPriceMonthly')) {
         echo number_format_i18n($price) . " " . $this->getCurrency();
-    } else {
+    }
+    else {
         // Fallback to full price
         echo number_format_i18n($product->pricing->{$this->getCurrency()}->price) . " " . $this->getCurrency();
     }
-} else {
+}
+// bilinfo pris
+// LeasingPrice <-- properties
+elseif (!empty($this->get_field($product->properties, 'LeasingPrice')) && $this->get_field($product->properties, 'LeasingPrice') != "-") {
+    $price = $this->get_field($product->properties, 'LeasingPrice');
+    echo number_format_i18n($price) . " " . $this->getCurrency();
+}
+else {
     echo __('Ikke tilgængelig', 'car-app');
 }
