@@ -21,7 +21,7 @@ if (!class_exists('CarAdsAppQuickSearch')) {
         public function render()
         {
             ob_start();
-            $connector        = new Connector();
+            global $connector;
             $products         = $connector->search();
             $availableFilters = $connector->getDropdownValuesForElementor($products);
             ?>
@@ -119,7 +119,7 @@ if (!class_exists('CarAdsAppQuickSearch')) {
         public function carads_quicksearch_get_categories()
         {
 
-            $connector = new Connector();
+            global $connector;
             $response  = $connector->get_brands_categories((string) $_POST['brand']);
 
             print json_encode($response);

@@ -113,7 +113,7 @@ class CarAdsSlider extends Widget_Base
 
 
         /** Car options */
-        $connector        = new Connector();
+        global $connector;
         $products         = $connector->search(true);
         $availableFilters = $connector->getDropdownValuesForElementor($products);
 
@@ -525,7 +525,7 @@ class CarAdsSlider extends Widget_Base
             wp_reset_query();
             wp_reset_postdata();
         } else {
-            $connector = new Connector();
+            global $connector;
 
             $params = [
                 'size'       => $settings['size'] ?? 10,

@@ -59,7 +59,7 @@ class CarAdsListGrid extends Widget_Base
         );
 
         /** Car options */
-        $connector        = new Connector();
+        global $connector;
         $products         = $connector->search(true);
         $availableFilters = $connector->getDropdownValuesForElementor($products);
 
@@ -308,7 +308,7 @@ class CarAdsListGrid extends Widget_Base
         $id_int = substr($this->get_id_int(), 0, 3);
 
         if ($settings['post_type'] === "bil") {
-            $connector    = new Connector();
+            global $connector;
             $params       = [
                 'size'       => $settings['size'] ?? 10,
                 'brands'     => $settings['brands'] ?? null,

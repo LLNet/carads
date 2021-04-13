@@ -8,7 +8,6 @@
             <dt class="ca-font-thin ca-leading-5"><?php _e('Kilometer', 'car-app'); ?></dt>
             <dd class="ca-ml-0 ca-font-medium ca-leading-5 ca-mb-1">
                 <?php
-
                 if ($connector->get_field($product->properties, 'Mileage') != '-') {
                     echo number_format_i18n($connector->get_field($product->properties, 'Mileage'));
                     echo " " . __("km.", 'car-app');
@@ -119,8 +118,8 @@
                         break;
                 }
                 ?>
-            <div class="leasing ca-opacity-50 ca-font-normal ca-text-base ca-text-center"><?php echo $typeText; ?></div>
-            <?php
+                <div class="leasing ca-opacity-50 ca-font-normal ca-text-base ca-text-center"><?php echo $typeText; ?></div>
+                <?php
 
             }
             ?>
@@ -167,40 +166,9 @@
 
     <div class="cta ca-hidden lg:ca-block">
         <?php
-        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
-            ?>
-            <a href=""
-               class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline show-modal"
-               data-target="modalByttepris">
-                <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-app'); ?>
-            </a>
-            <?php
-        }
-        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
-            ?>
-            <a href=""
-               class="ca-bg-primary bg-primary ca-rounded ca-h-10 ca-mb-2 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline show-modal"
-               data-target="modalBestil">
-                <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-app'); ?>
-            </a>
-            <?php
-        }
-        if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
-            ?>
-            <a href="#"
-               class="ca-col-span-1 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline  js-phone-switch"
-               data-href="tel:+45<?php echo $product->location->telephone ?? get_option('car-ads-single-car')['phonenumber']; ?>">
-                <div class="text-cta ca-block" id="cta_before">
-                    <i class="fa fa-fw fa-phone"></i>
-                    <?php echo __('Ring til os', 'car-app'); ?>
-                </div>
-                <div class="text-value ca-hidden" id="cta_after">
-                    <i class="fa fa-fw fa-phone"></i>
-                    <?php echo __('Tlf', 'car-app'); ?> <?php echo $product->location->telephone ?? get_option('car-ads-single-car')['phonenumber']; ?>
-                </div>
-            </a>
-            <?php
-        }
+        $connector->getTemplatePart('components/cta/single-sidebar-byttepris', $product);
+        $connector->getTemplatePart('components/cta/single-sidebar-testdrive', $product);
+        $connector->getTemplatePart('components/cta/single-sidebar-phonenumber', $product);
         ?>
     </div>
 

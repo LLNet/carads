@@ -6,7 +6,6 @@ get_header();
 global $post;
 $car_ads_id = get_post_meta($post->ID, 'carads_id', true);
 
-$connector = new CarAds\Connector();
 $product   = $connector->get_single($car_ads_id);
 $currency  = $connector->getCurrency();
 ?>
@@ -55,76 +54,16 @@ $currency  = $connector->getCurrency();
                 <div class="single-car--header-right header--right ca-p-2 lg:ca-w-1/2 ca-flex ca-items-center ca-justify-end">
                     <div class="ca-hidden md:ca-flex md:ca-justify-end">
                         <?php
-                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
-                            ?>
-                            <a href="#"
-                               class="show-modal ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
-                               data-target="modalByttepris">
-                                <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-app'); ?>
-                            </a>
-                            <?php
-                        }
-                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
-                            ?>
-                            <a href="#"
-                               class="show-modal ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
-                               data-target="modalBestil">
-                                <i class="fa fa-fw fa-car"></i> <?php echo __('Bestil prøvetur', 'car-app'); ?>
-                            </a>
-                            <?php
-                        }
-                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
-                            ?>
-                            <a href="#"
-                               class="ca-no-underline ca-ml-2 ca-px-4 ca-bg-primary bg-primary ca-rounded ca-h-10 ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline js-phone-switch"
-                               data-href="tel:+45<?php echo $product->location->telephone ?? get_option('car-ads-single-car')['phonenumber']; ?>">
-                                <span class="text-cta ca-block" id="cta_before"><i
-                                            class="fa fa-fw fa-phone"></i><?php echo __('Ring til os', 'car-app'); ?></span>
-                                <span class="text-value ca-hidden" id="cta_after"><i
-                                            class="fa fa-fw fa-phone"></i> Tlf <?php echo $product->location->telephone ?? get_option('car-ads-single-car')['phonenumber']; ?></span>
-                            </a>
-                            <?php
-                        }
+                        $connector->getTemplatePart('components/cta/single-header-byttepris-desktop', $product);
+                        $connector->getTemplatePart('components/cta/single-header-testdrive-desktop', $product);
+                        $connector->getTemplatePart('components/cta/single-header-phonenumber-desktop', $product);
                         ?>
                     </div>
                     <div class="ca-flex ca-justify-between ca-w-full md:ca-hidden ca-space-x-1">
                         <?php
-                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['byttepris_shortcode'])) {
-                            ?>
-                            <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
-                                <a href="#"
-                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-10 ca-w-full ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
-                                   data-target="modalByttepris">
-                                    <i class="fa fa-fw fa-calculator"></i> 
-                                    <span class="car-button-label ca-text-white ca-font-medium ca-text-xs md:ca-text-base ca-mx-1 "><?php echo __('Beregn byttepris', 'car-app'); ?></span>
-                                </a>
-
-                            </div>
-                            <?php
-                        }
-                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['testdrive_shortcode'])) {
-                            ?>
-                            <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
-                                <a href="#"
-                                   class="ca-mb-2 show-modal ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-10 ca-w-full ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline"
-                                   data-target="modalBestil">
-                                    <i class="fa fa-fw fa-car"></i>
-                                    <span class="car-button-label ca-text-white ca-font-medium ca-text-xs md:ca-text-base ca-mx-1 "><?php echo __('Bestil prøvetur', 'car-app'); ?></span>
-                                </a>
-                            </div>
-                            <?php
-                        }
-                        if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['phonenumber'])) {
-                            ?>
-                            <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
-                                <a href="tel:+45<?php echo $product->location->telephone ?? get_option('car-ads-single-car')['phonenumber']; ?>"
-                                   class="ca-mb-2 single-car--call-us ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-10 ca-w-full ca-flex ca-items-center ca-justify-center hover:ca-text-white hover:ca-no-underline ca-text-white ">
-                                    <i class="fa fa-fw fa-phone"></i>
-                                    <span class="car-button-label ca-text-white ca-font-medium ca-text-xs md:ca-text-base ca-mx-2 "><?php echo __('Ring til os', 'car-app'); ?></span>
-                                </a>
-                            </div>
-                            <?php
-                        }
+                        $connector->getTemplatePart('components/cta/single-header-byttepris-mobile', $product);
+                        $connector->getTemplatePart('components/cta/single-header-testdrive-mobile', $product);
+                        $connector->getTemplatePart('components/cta/single-header-phonenumber-mobile', $product);
                         ?>
                     </div>
                 </div>
@@ -136,6 +75,7 @@ $currency  = $connector->getCurrency();
 
                 <div class="single-car--col-1 content--col-1 ca-col-span-4 ca-overflow-x-hidden">
                     <?php
+                    // Show back to archive
                     if (get_option('car-ads-single-car')['show_back_to_archive'] === "yes") {
                         ?>
                         <a href="/<?php echo get_option('car-ads')['archive_slug']; ?>"
@@ -145,11 +85,12 @@ $currency  = $connector->getCurrency();
                         </a>
                         <?php
                     }
-
+                    // Show breadcrumb from Yoast if available / activated
                     if (function_exists('yoast_breadcrumb')) {
                         yoast_breadcrumb('<p id="breadcrumbs" class="single-car--breadcrumbs">', '</p>');
                     }
 
+                    // Show main slider
                     if ($product->image->sizes->i1024x768 && $product->images) {
                         ?>
                         <div class="single-car--main-slider carads-main-slider ca-relative ca-min-h-64 ca-mt-4">
@@ -170,7 +111,9 @@ $currency  = $connector->getCurrency();
                             ?>
                         </div>
                         <?php
-                    } else {
+                    }
+                    // Show "no image"
+                    else {
                         ?>
                         <div class="single-car--main-slider ca-relative ca-min-h-64 ca-mt-4">
                             <a href="/wp-content/plugins/car-app/assets/noImageBig.jpg" data-lightbox="gallery"
@@ -181,6 +124,7 @@ $currency  = $connector->getCurrency();
                         <?php
                     }
 
+                    // Thumbslider and image count
                     if (property_exists($product, 'images')) {
                         ?>
                         <div class="ca-h-14 ca-my-4 ca-text-primary ca-font-medium ca-text-center ca-flex ca-items-center ca-justify-between">
@@ -215,7 +159,9 @@ $currency  = $connector->getCurrency();
                     ?>
 
                     <div class="ca-block lg:ca-hidden">
-                        <?php include("components/single-car-quick-details-card.php"); ?>
+                        <?php
+                        $connector->getTemplatePart('components/single-car-quick-details-card', $product);
+                        ?>
                     </div>
                     <?php do_action('car_ads_below_quick_car_details'); ?>
                     <div class="ca-block lg:ca-hidden ca-w-full">
@@ -223,8 +169,9 @@ $currency  = $connector->getCurrency();
                     </div>
                     <div class="ca-block lg:ca-hidden">
                         <?php
+
                         if (!$product->disabled) {
-                            include("components/single-car-santander.php");
+                            $connector->getTemplatePart('components/single-car-santander', $product);
                         }
                         ?>
                     </div>
@@ -259,7 +206,7 @@ $currency  = $connector->getCurrency();
                         </div>
 
                         <?php
-                        do_action('car_ads_accordion_content');
+                        do_action('car_ads_accordion_content', $product);
                         ?>
 
                     </div>
@@ -269,7 +216,9 @@ $currency  = $connector->getCurrency();
                 </div>
                 <div class="single-car--col-2 content--col-2 ca-col-span-2">
                     <div class="ca-hidden lg:ca-flex lg:ca-mt-4">
-                        <?php include("components/single-car-quick-details-card.php"); ?>
+                        <?php
+                        $connector->getTemplatePart('components/single-car-quick-details-card', $product);
+                        ?>
                     </div>
                     <div class="ca-hidden lg:ca-flex">
                         <?php dynamic_sidebar('carads-single-sidebar-1'); ?>
@@ -277,7 +226,7 @@ $currency  = $connector->getCurrency();
                     <div class="ca-hidden lg:ca-flex car-order-1">
                         <?php
                         if (!$product->disabled) {
-                            include("components/single-car-santander.php");
+                            $connector->getTemplatePart('components/single-car-santander', $product);
                         }
                         ?>
                     </div>
@@ -285,9 +234,7 @@ $currency  = $connector->getCurrency();
                         <?php dynamic_sidebar('carads-single-sidebar-2'); ?>
                     </div>
                     <?php
-                    /**
-                     * FindLeasing
-                     */
+                    // FindLeasing - Show financial first, then if financial is not available show operational if available
                     if ($connector->get_field($product->customFields, 'findleasingFinancial') != "" && $connector->get_field($product->customFields, 'findleasingFinancial') != "-") {
                         ?>
                         <div class="single-car--findleasing ca-bg-lightgrey bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4">
@@ -319,6 +266,7 @@ $currency  = $connector->getCurrency();
                         <?php dynamic_sidebar('carads-single-sidebar-3'); ?>
                     </div>
                     <?php
+                    // Contact form
                     if (!$product->disabled && !empty(get_option('car-ads-single-car')) and !empty(get_option('car-ads-single-car')['contactform_shortcode'])) {
                         ?>
                         <div class="single-car--contact-us ca-bg-white bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4">

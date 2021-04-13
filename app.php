@@ -98,6 +98,39 @@ if (!class_exists('CarAdsApp')) {
             // Registrer sidebar widget areas
             add_action('widgets_init', [$this, 'register_sidebar_widget_areas']);
 
+            // Admin styles
+            add_action('admin_head', function() {
+                echo '<style>
+                        
+                        tr.byttepris_link th,
+                        tr.byttepris_elementor_shortcode th,
+                        tr.byttepris_shortcode th,
+                        tr.byttepris_btn_text th,
+                        tr.testdrive_link th,
+                        tr.testdrive_elementor_shortcode th,
+                        tr.testdrive_shortcode th,
+                        tr.testdrive_btn_text th {
+                            font-weight: normal;
+                        }
+
+                        tr[class^="show_back_to_archive"],
+                        tr[class^="phonenumber"],
+                        tr[class^="testdrive_"] {
+                          background-color: #fff;
+                        } 
+                        #car-ads-single-car tr th {
+                            padding-left: 10px;
+                        }
+                        
+                      </style>';
+            });
+
+            // Make $connector global
+            add_action( 'after_setup_theme', function() {
+                global $connector;
+                $connector = new CarAds\Connector();
+            });
+
         }
 
         public function register_sidebar_widget_areas()

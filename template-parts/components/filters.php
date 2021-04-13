@@ -16,7 +16,10 @@ if (!is_post_type_archive('bil')) {
         <label class="free-search-label ca-flex ca-mb-4 ca-w-full ca-h-14 ca-relative" for="search">
             <input type="text" name="search" id="search" value="<?php echo $_GET['search'] ?? ''; ?>"
                    style="max-width: none !important; width: 100% !important;"
-                   placeholder="<?php echo __("Fritekst søgning. Eks: 'Audi A3'", 'car-app'); ?>"
+                   placeholder="<?php
+                   $searchInputPlaceholder      = !empty(get_option('car-ads-archive')['searchInputPlaceholder']) ? get_option('car-ads-archive')['searchInputPlaceholder'] : __("Fritekst søgning. Eks: 'Audi A3'", 'car-app');
+                   echo $searchInputPlaceholder;
+                   ?>"
                    class="free-search ca-w-full ca-mb-4 ca-py-0 ca-px-4 ca-h-14 ca-border-0 ca-rounded "
                    onkeydown="if (event.keyCode === 13) { this.form.submit(); return false; }"
             >

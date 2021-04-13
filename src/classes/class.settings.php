@@ -130,22 +130,95 @@ if (!class_exists('CarAdsSettings')):
                         'type'        => 'textarea',
                         'default'     => '',
                     ],
+
+
+                    /** *************************
+                     * PRØVETUR
+                     ************************* */
+                    [
+                        'name'        => 'testdrive_display',
+                        'label'       => __('BESTIL PRØVETUR KNAP', 'car-ads'),
+                        'desc'        => __('Hvordan skal knappen fungerer?', 'car-ads'),
+                        'type'    => 'select',
+                        'default' => 'default',
+                        'options' => [
+                            'default' => 'Standard (Contact Form 7)',
+                            'elementor' => 'Elementor Popup',
+                            'link' => 'Eksternt link',
+                            'disabled' => 'Skjult'
+                        ]
+                    ],
                     [
                         'name'        => 'testdrive_shortcode',
-                        'label'       => __('Bestil prøvetur shortcode', 'car-ads'),
-                        'desc'        => __('Skriv din Bestil prøvetur shortcode her', 'car-ads'),
+                        'label'       => __('Bestil prøvetur<br>- (Contact Form 7)', 'car-ads'),
+                        'desc'        => __('Skriv din Bestil prøvetur shortcode her (Contact Form 7)', 'car-ads'),
                         'placeholder' => __('[contact-form-7 id=\'5066\' title=\'Book prøvetur\']', 'car-ads'),
-                        'type'        => 'textarea',
+                        'type'        => 'text',
                         'default'     => '',
+                    ],
+                    [
+                        'name'        => 'testdrive_elementor_shortcode',
+                        'label'       => __('Bestil prøvetur<br>- (Elementor Pro Popup)', 'car-ads'),
+                        'desc'        => __('Indtast Elementor Pro Popup ID her', 'car-ads'),
+                        'placeholder' => __('', 'car-ads'),
+                        'type'        => 'number',
+                        'default'     => '',
+                    ],
+                    [
+                        'name'        => 'testdrive_link',
+                        'label'       => __('Bestil prøvetur<br>- (Eksternt link)', 'car-ads'),
+                        'desc'        => __('Skriv din Bestil prøvetur - Ekstern link (husk https://)', 'car-ads'),
+                        'placeholder' => __('https://', 'car-ads'),
+                        'type'        => 'text',
+                        'default'     => '',
+                    ],
+
+
+                    /** *************************
+                     * BYTTEPRIS
+                     ************************* */
+                    [
+                        'name'        => 'byttepris_display',
+                        'label'       => __('BEREGN BYTTEPRIS KNAP', 'car-ads'),
+                        'desc'        => __('Hvordan skal knappen fungerer?', 'car-ads'),
+                        'type'    => 'select',
+                        'default' => 'default',
+                        'options' => [
+                            'default' => 'Standard (Contact Form 7)',
+                            'elementor' => 'Elementor Popup',
+                            'link' => 'Eksternt link',
+                            'disabled' => 'Skjult'
+                        ]
                     ],
                     [
                         'name'        => 'byttepris_shortcode',
-                        'label'       => __('Beregn byttepris shortcode', 'car-ads'),
+                        'label'       => __('Beregn byttepris<br>- (Contact Form 7)', 'car-ads'),
                         'desc'        => __('Skriv din Beregn byttepris shortcode her', 'car-ads'),
                         'placeholder' => __('[contact-form-7 id=\'5066\' title=\'Beregn byttepris\']', 'car-ads'),
-                        'type'        => 'textarea',
+                        'type'        => 'text',
                         'default'     => '',
                     ],
+                    [
+                        'name'        => 'byttepris_elementor_shortcode',
+                        'label'       => __('Beregn byttepris<br>- (Elementor Popup ID)', 'car-ads'),
+                        'desc'        => __('Indtast Elementor Pro Popup ID her', 'car-ads'),
+                        'placeholder' => __('', 'car-ads'),
+                        'type'        => 'number',
+                        'default'     => '',
+                    ],
+                    [
+                        'name'        => 'byttepris_link',
+                        'label'       => __('Beregn byttepris<br>- (Eksternt link)', 'car-ads'),
+                        'desc'        => __('Skriv din Beregn byttepris - Ekstern link (husk https://)', 'car-ads'),
+                        'placeholder' => __('https://', 'car-ads'),
+                        'type'        => 'text',
+                        'default'     => '',
+                    ],
+
+
+                    /** *************************
+                     * BACK TO ARCHIVE
+                     ************************* */
                     [
                         'name'    => 'show_back_to_archive',
                         'label'   => __('Vis link tilbage til oversigten', 'car-ads'),
@@ -220,6 +293,15 @@ if (!class_exists('CarAdsSettings')):
                         'placeholder' => '',
                         'type'        => 'wysiwyg',
                         'default'     => '',
+
+                    ],
+                    [
+                        'name'        => 'searchInputPlaceholder',
+                        'label'       => __('Fritekst søgning - placeholder', 'car-ads'),
+                        'desc'        => __('Placeholder til fritekst søgefeltet', 'car-ads'),
+                        'placeholder' => 'Fritekst søgning - Eks. Audi A3',
+                        'type'        => 'text',
+                        'default'     => 'Fritekst søgning - Eks. Audi A3',
 
                     ],
                 ],

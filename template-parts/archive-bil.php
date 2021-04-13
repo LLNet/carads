@@ -1,6 +1,5 @@
 <?php
 get_header();
-$connector        = new CarAds\Connector();
 $products         = $connector->search();
 $archive_slug     = get_option('car-ads')['archive_slug'] ?? 'biler';
 $single_slug      = get_option('car-ads')['single_slug'] ?? 'bil';

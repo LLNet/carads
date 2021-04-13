@@ -183,7 +183,7 @@ class Connector
     {
         $currentTheme    = get_template_directory();
         $plugin_dir_path = __CAR_ADS_DIR__ . "template-parts/";
-
+        global $connector;
         if (file_exists($currentTheme . "/car-app/" . $filename . ".php")) {
             include $currentTheme . "/car-app/" . $filename . ".php";
         } else {
