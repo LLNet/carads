@@ -52,7 +52,7 @@ $currency  = $connector->getCurrency();
                     </div>
                 </div>
                 <div class="single-car--header-right header--right ca-p-2 lg:ca-w-1/2 ca-flex ca-items-center ca-justify-end">
-                    <div class="ca-hidden md:ca-flex md:ca-justify-end">
+                    <div class="ca-hidden md:ca-flex md:ca-justify-end ca-w-full">
                         <?php
                         $connector->getTemplatePart('components/cta/single-header-byttepris-desktop', $product);
                         $connector->getTemplatePart('components/cta/single-header-testdrive-desktop', $product);
@@ -315,6 +315,8 @@ if (!$product->disabled) {
             jQuery('[name="ca-bil"]').attr("value", car_name);
             jQuery('[name="ca-mileage"').val("<?php echo $connector->get_field($product->properties, 'Mileage'); ?>");
             jQuery('[name="ca-mileage"').attr("value", "<?php echo $connector->get_field($product->properties, 'Mileage'); ?>");
+            jQuery('[name="ca-location"').val("<?php echo $product->location->address->city; ?>");
+            jQuery('[name="ca-location"').attr("value", "<?php echo $product->location->address->city; ?>");
             jQuery('[name="ca-year"').val("<?php echo $connector->get_field($product->properties, 'Year'); ?>");
             jQuery('[name="ca-year"').attr("value", "<?php echo $connector->get_field($product->properties, 'Year'); ?>");
             jQuery('[name="ca-price"').val("<?php echo number_format_i18n($product->pricing->DKK->price, 0); ?>");

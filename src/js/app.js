@@ -177,7 +177,7 @@ jQuery(document).ready(function () {
         options.nonSelectedText = "Årgange";
         jQuery('select#year').multiselect(options);
 
-        options.nonSelectedText = "Gearkassetype";
+        options.nonSelectedText = "Gearkasse";
         jQuery('select#geartype').multiselect(options);
 
         options.nonSelectedText = "Kilometertal";
