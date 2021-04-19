@@ -10,13 +10,17 @@ if (get_option('car-ads-single-car')['byttepris_shortcode']) {
         <div class="ca-mx-10 ca-bg-white ca-rounded ca-shadow-lg ca-w-auto ca-overflow-y-auto ca-max-h-screen">
             <!-- modal header -->
             <div class="ca-border-b ca-px-4 ca-py-2 ca-flex ca-justify-between ca-items-center">
-                <h3 class="ca-font-semibold ca-text-lg"><?php echo __('Beregn byttepris', 'car-app'); ?></h3>
+                <h3 class="ca-font-semibold ca-text-lg">
+                    <?php
+                    echo apply_filters('car_ads_byttepris_model_title', __('Beregn byttepris', 'car-app'));
+                    ?>
+                </h3>
                 <button class="ca-text-black close-modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <!-- modal body -->
             <div class="ca-p-3">
                 <?php
-                echo do_shortcode(get_option('car-ads-single-car')['byttepris_shortcode']);
+                echo do_shortcode(apply_filters('car_ads_single_car_modal_byttepris', get_option('car-ads-single-car')['byttepris_shortcode']));
                 ?>
             </div>
         </div>
