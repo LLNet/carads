@@ -144,12 +144,12 @@ $currency  = $connector->getCurrency();
                         </div>
 
                         <div class="single-car--thumb-slider carads-thumb-slider ca-mb-4">
-                            <img src="<?php echo $product->image->sizes->i1024x768 ?>">
+                            <img src="<?php echo $product->image->sizes->i1024x768 ?>" class="ca-object-cover ca-max-h-20 md:ca-max-h-32 ca-h-full">
                             <?php
                             foreach ($product->images as $key => $image) {
                                 ?>
                                 <img src="<?php echo str_replace('i1024x768', 'i768x400', $image->sizes->i1024x768) ?>"
-                                     loading="lazy">
+                                     loading="lazy" class="ca-object-cover ca-max-h-20 md:ca-max-h-32 ca-h-full">
                                 <?php
                             }
                             ?>
