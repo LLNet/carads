@@ -258,9 +258,32 @@ if (!class_exists('CarAdsSettings')):
                             '30' => '1 måned',
                         ]
                     ],
+
+                    /**
+                     * @TODO : implement
+                     * Image Label Top
+                     */
+//                    [
+//                        'name'        => 'imageLabelTop',
+//                        'label'       => __('Image Label (top)', 'car-ads'),
+//                        'desc'        => __('Visning af label øverst på en bils billede.', 'car-ads'),
+//                        'placeholder' => '',
+//                        'type'        => 'select',
+//                        'default'     => 'none',
+//                        'options'     => [
+//                            'none'  => 'Ingen',
+//                            'location' => 'Placering',
+//                            'type' => 'Bilens type',
+//                        ]
+//                    ],
+
+                    /**
+                     * @TODO : rename
+                     * Image label Bottom
+                     */
                     [
                         'name'        => 'showLocation',
-                        'label'       => __('Image Label?', 'car-ads'),
+                        'label'       => __('Image Label (bund)', 'car-ads'),
                         'desc'        => __('Visning af label nederst på en bils billede.', 'car-ads'),
                         'placeholder' => '',
                         'type'        => 'select',
@@ -272,9 +295,12 @@ if (!class_exists('CarAdsSettings')):
                         ]
                     ],
 
+                    /**
+                     * @TODO add more options
+                     */
                     [
                         'name'        => 'usePriceType',
-                        'label'       => __('Pristype', 'car-ads'),
+                        'label'       => __('Vis Pristype', 'car-ads'),
                         'desc'        => __('Vis kun biler med denne pristype på billisten', 'car-ads'),
                         'type'    => 'multicheck',
                         'default' => 'pricetype-retailprice',
@@ -286,6 +312,26 @@ if (!class_exists('CarAdsSettings')):
                             'pricetype-wholesale'             => 'Engros',
                         )
                     ],
+
+                    /**
+                     * @TODO implement
+                     * @TODO add more options
+
+                    [
+                        'name'        => 'primaryPriceType',
+                        'label'       => __('Primære Pristype', 'car-ads'),
+                        'desc'        => __('Vælg hvilken pristype der er en den primære. Denne pristype bliver brugt i søgefiltret på billisten. <br>Retail er altid fallback. Dvs. har du både valgt Retail og Leasing i "Vis Pristype" vil der altid vises Retail.', 'car-ads'),
+                        'type'    => 'select',
+                        'default' => 'pricetype-retailprice',
+                        'options' => array(
+                            'pricetype-retailprice'           => 'Retail pris',
+                            'pricetype-leasing'               => 'Leasing pris',
+                            'pricetype-retailpricewithouttax' => 'Momsfri pris',
+                            'pricetype-callforprice'          => 'Ring for pris',
+                            'pricetype-wholesale'             => 'Engros',
+                        )
+                    ],
+                     */
                     [
                         'name'        => 'archiveSeoText',
                         'label'       => __('Arkiv SEO Tekst', 'car-ads'),
