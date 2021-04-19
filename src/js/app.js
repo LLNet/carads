@@ -163,7 +163,20 @@ jQuery(document).ready(function () {
             nonSelectedText: "Vælg en mulighed",
             allSelectedText: "Alle valgt",
             nSelectedText: "valgt",
-            selectAllText: 'Vælg alle'
+            selectAllText: 'Vælg alle',
+            preventInputChangeEvent: true,
+            maxHeight: 250,
+            templates: {
+                button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span></button>',
+                container: '<div class="multiselect-container dropdown-menu"></div>',
+                filter: '<div class="multiselect-filter"><div class="input-group input-group-sm p-1"><div class="input-group-prepend"><i class="input-group-text fas fa-search"></i></div><input class="form-control multiselect-search" type="text" /></div></div>',
+                filterClearBtn: '<div class="input-group-append"><button class="multiselect-clear-filter input-group-text" type="button"><i class="fas fa-times"></i></button></div>',
+                option: '<button class="multiselect-option dropdown-item"></button>',
+                divider: '<div class="dropdown-divider"></div>',
+                optionGroup: '<button class="multiselect-group dropdown-item"></button>',
+                resetButton: '<div class="multiselect-reset text-center p-2"><button class="btn btn-sm btn-block btn-outline-secondary"></button></div>'
+            }
+
         };
         options.nonSelectedText = "Mærker";
         jQuery('select#brands').multiselect(options);
@@ -194,7 +207,7 @@ jQuery(document).ready(function () {
     //     jQuery('.multiselect-container.dropdown-menu').removeClass('active')
     // });
     jQuery('.multiselect.dropdown-toggle').on('click', function (e) {
-        if(jQuery(this).next('.multiselect-container.dropdown-menu').hasClass('active') === true) {
+        if (jQuery(this).next('.multiselect-container.dropdown-menu').hasClass('active') === true) {
             jQuery(this).next('.multiselect-container.dropdown-menu').removeClass('active');
             jQuery(this).parent('.btn-group').find('button.multiselect').removeClass('active');
         } else {
@@ -212,8 +225,6 @@ jQuery(document).ready(function () {
     jQuery('.multiselect-container.dropdown-menu').on('click', function (e) {
         e.stopPropagation();
     });
-
-
 
 
     /**
