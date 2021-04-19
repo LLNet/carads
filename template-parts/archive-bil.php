@@ -85,7 +85,7 @@ $availableFilters = $connector->availableFilters($products);
                 }
                 ?>
                 <?php
-                $view_mode = $_COOKIE['car_view'] ?? 'list';
+                $view_mode = $_COOKIE['car_view'] ?? 'grid';
                 if ($view_mode === "list") {
                     ?>
                     <div class="car-row car-list">
