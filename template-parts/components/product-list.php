@@ -141,7 +141,8 @@ $slug .= $car_slug_id;
        class="car--info__title md:ca-col-span-2 lg:ca-col-span-3 ca-no-underline"
        style="color: unset; text-decoration: none !important;"
     >
-        <figcaption class="car--info <?php echo apply_filters('car_ads_archive_list_classes', 'ca-w-full ca-relative ca-flex ca-h-full '); ?>">
+        <figcaption
+                class="car--info <?php echo apply_filters('car_ads_archive_list_classes', 'ca-w-full ca-relative ca-flex ca-h-full '); ?>">
             <div class="car--info-right ca-w-full ca-p-2 md:ca-p-8">
                 <div class="ca-text-2xl ca-font-medium ca-mb-4"><?php echo $product->name; ?></div>
                 <div class="car--info--content lg:ca-flex">
@@ -294,14 +295,16 @@ $slug .= $car_slug_id;
                         ?>
 
                         <?php
-                        $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
-                        if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
-                            ?>
-                            <div class="leasing ca-opacity-50 ca-font-normal ca-text-base">
-                                <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
-                                <?php echo __('DKK. /md.', 'car-app'); ?>
-                            </div>
-                            <?php
+                        if ($connector->get_field($product->customFields, 'santanderDisabled') != '-' && $connector->get_field($product->customFields, 'santanderDisabled') == false) {
+                            $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
+                            if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
+                                ?>
+                                <div class="leasing ca-opacity-50 ca-font-normal ca-text-base">
+                                    <?php echo __('Fra', 'car-app') . " "; ?><?php echo number_format_i18n($connector->get_field($product->customFields, 'santanderPaymentPerMonth')); ?>
+                                    <?php echo __('DKK. /md.', 'car-app'); ?>
+                                </div>
+                                <?php
+                            }
                         }
                         ?>
                     </div>
