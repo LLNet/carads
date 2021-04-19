@@ -1,5 +1,17 @@
 <div class="leasing ca-opacity-50 ca-font-normal ca-text-base"><?php echo __('Leasing pr. md. fra', 'car-app'); ?></div>
-<div class="<?php echo is_single() ? 'ca-text-center' : 'ca-text-center lg:ca-text-right'; ?> ca-text-xl md:ca-text-2xl ca-mt-2 lg:ca-mt-0 ca-font-medium">
+<?php
+$view_mode = $_COOKIE['car_view'] ?? 'grid';
+if(is_single()) {
+    $classes = "ca-text-center";
+} else {
+    if($view_mode == 'grid') {
+        $classes = "ca-text-center";
+    } else {
+        $classes = "ca-text-center lg:ca-text-right";
+    }
+}
+?>
+<div class="<?php echo $classes; ?> ca-text-xl md:ca-text-2xl ca-mt-2 lg:ca-mt-0 ca-font-medium">
 
     <?php
 
