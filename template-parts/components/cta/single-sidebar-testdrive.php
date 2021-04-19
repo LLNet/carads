@@ -1,5 +1,8 @@
 <?php
+$testdrive_sidebar_button = "";
 if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
+
+    ob_start();
     $testdrive_display   = !empty(get_option('car-ads-single-car')['testdrive_display']) ? get_option('car-ads-single-car')['testdrive_display'] : 'default';
     $testdrive_link      = !empty(get_option('car-ads-single-car')['testdrive_link']) ? get_option('car-ads-single-car')['testdrive_link'] : '#';
     $testdrive_elementor = !empty(get_option('car-ads-single-car')['testdrive_elementor_shortcode']) ? get_option('car-ads-single-car')['testdrive_elementor_shortcode'] : '0';
@@ -17,4 +20,7 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
         </a>
         <?php
     }
+    $testdrive_sidebar_button = ob_get_clean();
+
 }
+echo apply_filters('car_ads_testdrive_btn_sidebar', $testdrive_sidebar_button);

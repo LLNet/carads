@@ -1,5 +1,9 @@
 <?php
+$byttepris_sidebar_button = "";
 if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
+
+    ob_start();
+
     $byttepris_display   = !empty(get_option('car-ads-single-car')['byttepris_display']) ? get_option('car-ads-single-car')['byttepris_display'] : 'default';
     $byttepris_link      = !empty(get_option('car-ads-single-car')['byttepris_link']) ? get_option('car-ads-single-car')['byttepris_link'] : '#';
     $byttepris_elementor = !empty(get_option('car-ads-single-car')['byttepris_elementor_shortcode']) ? get_option('car-ads-single-car')['byttepris_elementor_shortcode'] : '0';
@@ -17,4 +21,7 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
         </a>
         <?php
     }
+    $byttepris_sidebar_button = ob_get_clean();
+
 }
+echo apply_filters('car_ads_byttepris_btn_sidebar', $byttepris_sidebar_button);
