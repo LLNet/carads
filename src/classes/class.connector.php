@@ -89,12 +89,12 @@ class Connector
         //add_action('car-ads', [$this, 'clean_up_non_existing_cars']);
 
 
-        if ($_REQUEST['syncmanual'] == "1") {
+        if (isset($_REQUEST['syncmanual']) && $_REQUEST['syncmanual'] == "1") {
             delete_option('_carads_last_updated');
             add_action('init', [$this, 'synchronize']);
             add_action('admin_notices', [$this, 'admin_notice']);
         }
-        if ($_REQUEST['syncmanual'] == "2") {
+        if (isset($_REQUEST['syncmanual']) && $_REQUEST['syncmanual'] == "2") {
             add_action('car-ads', [$this, 'clean_up_non_existing_cars']);
             add_action('admin_notices', [$this, 'admin_notice']);
         }
