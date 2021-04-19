@@ -17,7 +17,7 @@ if (!is_post_type_archive('bil')) {
             <input type="text" name="search" id="search" value="<?php echo $_GET['search'] ?? ''; ?>"
                    style="max-width: none !important; width: 100% !important;"
                    placeholder="<?php
-                   $searchInputPlaceholder      = !empty(get_option('car-ads-archive')['searchInputPlaceholder']) ? get_option('car-ads-archive')['searchInputPlaceholder'] : __("Fritekst søgning. Eks: 'Audi A3'", 'car-app');
+                   $searchInputPlaceholder = !empty(get_option('car-ads-archive')['searchInputPlaceholder']) ? get_option('car-ads-archive')['searchInputPlaceholder'] : __("Fritekst søgning. Eks: 'Audi A3'", 'car-app');
                    echo $searchInputPlaceholder;
                    ?>"
                    class="free-search ca-w-full ca-mb-4 ca-py-0 ca-px-4 ca-h-14 ca-border-0 ca-rounded "
@@ -201,46 +201,114 @@ if (!is_post_type_archive('bil')) {
             </label>
             */
             ?>
-            <div class="ca-bg-white bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4">
-                <?php
-                $min = $products->aggregations->global->pricing->DKK->min;
-                $max = $products->aggregations->global->pricing->DKK->max;
 
-                $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ? $_GET['pricingMinMax'] : '';
-                $sliderValue        = explode(",", $pricingMinMaxValue);
+
+            <?php
+            // Determine Primary Price Type
+            $primaryPriceType = "pricetype-retailprice";
+            if (!empty(get_option('car-ads-archive')) && !empty(get_option('car-ads-archive')['primaryPriceType'])) {
+                $primaryPriceType = get_option('car-ads-archive')['primaryPriceType'];
+            }
+
+            // Is more than one price type enabled?
+            $primaryPriceType = count(get_option('car-ads-archive')['usePriceType']) > 1 ? 'pricetype-retailprice' : $primaryPriceType;
+
+            // Retail pris
+            if ($primaryPriceType == "pricetype-retailprice") {
                 ?>
-                <div class="ca-flex ca-justify-between ca-text-sm">
+                <div class="ca-bg-white bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4">
+                    <?php
+                    $min = $products->aggregations->global->pricing->DKK->min;
+                    $max = $products->aggregations->global->pricing->DKK->max;
+
+                    $pricingMinMaxValue = (isset($_GET['pricingMinMax']) && !empty($_GET['pricingMinMax'])) ?
+                    $_GET['pricingMinMax'] : '';
+                    $sliderValue = explode(",", $pricingMinMaxValue);
+                    ?>
+                    <div class="ca-flex ca-justify-between ca-text-sm">
                     <span class="ca-w-1/3 ca-text-left ca-font-thin"
                           id="apricingMin"><?php echo number_format_i18n(($sliderValue[0]) ? $sliderValue[0] : $min); ?></span>
-                    <span class="ca-w-1/3 ca-text-center">Pris</span>
-                    <span class="ca-w-1/3 ca-text-right ca-font-thin"
-                          id="apricingMax"><?php echo number_format_i18n(($sliderValue[1]) ? $sliderValue[1] : $max); ?></span>
+                        <span class="ca-w-1/3 ca-text-center">Pris</span>
+                        <span class="ca-w-1/3 ca-text-right ca-font-thin"
+                              id="apricingMax"><?php echo number_format_i18n(($sliderValue[1]) ? $sliderValue[1] : $max); ?></span>
+                    </div>
+                    <div class="slider-container">
+                        <input id="pricingMinMax"
+                               name="pricingMinMax"
+                               type="hidden"
+                               class=""
+                               value="<?php echo $pricingMinMaxValue; ?>"
+                               data-slider-min="<?php echo $min; ?>"
+                               data-slider-max="<?php echo $max; ?>"
+                               data-slider-step="10000"
+                               data-slider-focus="true"
+                               data-slider-value="[<?php echo ($sliderValue[0]) ? $sliderValue[0] : $min; ?>,<?php echo ($sliderValue[1]) ? $sliderValue[1] : $max; ?>]"
+                        />
+                    </div>
+                    <script>
+                        jQuery(function () {
+                            const options1 = {style: 'currency', currency: 'DKK'};
+                            const numberFormat1 = new Intl.NumberFormat('da-DK', options1);
+                            jQuery("#pricingMinMax").slider({
+                                tooltip: 'hide',
+                            }).on("change", function (slideEvt) {
+                                jQuery("#apricingMin").text(slideEvt.value.newValue[0].toLocaleString('da-DK'));
+                                jQuery("#apricingMax").text(slideEvt.value.newValue[1].toLocaleString('da-DK'));
+                            });
+                        });
+                    </script>
                 </div>
-                <div class="slider-container">
-                    <input id="pricingMinMax"
-                           name="pricingMinMax"
-                           type="hidden"
-                           class=""
-                           value="<?php echo $pricingMinMaxValue; ?>"
-                           data-slider-min="<?php echo $min; ?>"
-                           data-slider-max="<?php echo $max; ?>"
-                           data-slider-step="10000"
-                           data-slider-value="[<?php echo ($sliderValue[0]) ? $sliderValue[0] : $min; ?>,<?php echo ($sliderValue[1]) ? $sliderValue[1] : $max; ?>]"
-                    />
+                <?php
+            }
+
+            if ($primaryPriceType == "pricetype-leasing") {
+                ?>
+                <div class="ca-bg-white bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4">
+                    <?php
+
+                    $min = $products->aggregations->global->pricing->DKK->min;
+                    $max = $products->aggregations->global->pricing->DKK->max;
+
+                    $pricingLeasingMinMax = (isset($_GET['pricingLeasingMinMax']) && !empty($_GET['pricingLeasingMinMax'])) ?
+                        $_GET['pricingLeasingMinMax'] : '';
+                    $sliderValue = explode(",", $pricingLeasingMinMax);
+                    ?>
+                    <div class="ca-flex ca-justify-between ca-text-sm">
+                    <span class="ca-w-1/3 ca-text-left ca-font-thin"
+                          id="leasingMin"><?php echo number_format_i18n(($sliderValue[0]) ? $sliderValue[0] : $min); ?></span>
+                        <span class="ca-w-1/3 ca-text-center">Leasing Pris</span>
+                        <span class="ca-w-1/3 ca-text-right ca-font-thin"
+                              id="leasingMax"><?php echo number_format_i18n(($sliderValue[1]) ? $sliderValue[1] : $max); ?></span>
+                    </div>
+                    <div class="slider-container">
+                        <input id="pricingLeasingMinMax"
+                               name="pricingLeasingMinMax"
+                               type="hidden"
+                               class=""
+                               value="<?php echo $pricingLeasingMinMax; ?>"
+                               data-slider-min="<?php echo $min; ?>"
+                               data-slider-max="<?php echo $max; ?>"
+                               data-slider-step="1000"
+                               data-slider-value="[<?php echo ($sliderValue[0]) ? $sliderValue[0] : $min; ?>,<?php echo ($sliderValue[1]) ? $sliderValue[1] : $max; ?>]"
+                        />
+                    </div>
                 </div>
                 <script>
                     jQuery(function () {
                         const options1 = {style: 'currency', currency: 'DKK'};
                         const numberFormat1 = new Intl.NumberFormat('da-DK', options1);
-                        jQuery("#pricingMinMax").slider({
+                        jQuery("#pricingLeasingMinMax").slider({
                             tooltip: 'hide',
-                        }).on("slide", function (slideEvt) {
-                            jQuery("#apricingMin").text(slideEvt.value[0].toLocaleString('da-DK'));
-                            jQuery("#apricingMax").text(slideEvt.value[1].toLocaleString('da-DK'));
+                        }).on("change", function (slideEvt) {
+                            jQuery("#leasingMin").text(slideEvt.value.newValue[0].toLocaleString('da-DK'));
+                            jQuery("#leasingMax").text(slideEvt.value.newValue[1].toLocaleString('da-DK'));
                         });
                     });
                 </script>
-            </div>
+                <?php
+            }
+            ?>
+
 
 
             <div class="ca-bg-white bg-white ca-rounded ca-text-text ca-h-14 ca-py-0 ca-px-4 mileage-container">
@@ -266,21 +334,27 @@ if (!is_post_type_archive('bil')) {
                            data-slider-min="<?php echo $mileageMinMaxValues->min; ?>"
                            data-slider-max="<?php echo $mileageMinMaxValues->max; ?>"
                            data-slider-step="1000"
+                           data-slider-focus="true"
                            data-slider-value="[<?php echo ($sliderMileage[0]) ? $sliderMileage[0] : $mileageMinMaxValues->min; ?>,<?php echo ($sliderMileage[1]) ? $sliderMileage[1] : $mileageMinMaxValues->max; ?>]"
                     />
                 </div>
                 <script>
+
+
                     function numberWithDots(x) {
                         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
 
                     jQuery(function () {
+
                         jQuery("#mileageMinMax").slider({
                             tooltip: 'hide',
-                        }).on("slide", function (slideEvt) {
-                            jQuery("#amileageMin").text(numberWithDots(slideEvt.value[0]));
-                            jQuery("#amileageMax").text(numberWithDots(slideEvt.value[1]));
+                        }).on("change", function (slideEvt) {
+                            jQuery("#amileageMin").text(numberWithDots(slideEvt.value.newValue[0]));
+                            jQuery("#amileageMax").text(numberWithDots(slideEvt.value.newValue[1]));
                         });
+
+
                     })
                 </script>
             </div>
