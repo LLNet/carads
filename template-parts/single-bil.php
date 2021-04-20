@@ -317,6 +317,8 @@ if (!$product->disabled) {
             jQuery('[name="ca-mileage"').attr("value", "<?php echo $connector->get_field($product->properties, 'Mileage'); ?>");
             jQuery('[name="ca-location"').val("<?php echo $product->location->address->city; ?>");
             jQuery('[name="ca-location"').attr("value", "<?php echo $product->location->address->city; ?>");
+            jQuery('[name="ca-department-email"').val("<?php echo $product->location->email; ?>");
+            jQuery('[name="ca-department-email"').attr("value", "<?php echo $product->location->email; ?>");
             jQuery('[name="ca-year"').val("<?php echo $connector->get_field($product->properties, 'Year'); ?>");
             jQuery('[name="ca-year"').attr("value", "<?php echo $connector->get_field($product->properties, 'Year'); ?>");
             jQuery('[name="ca-price"').val("<?php echo number_format_i18n($product->pricing->DKK->price, 0); ?>");
