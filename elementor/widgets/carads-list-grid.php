@@ -180,10 +180,10 @@ class CarAdsListGrid extends Widget_Base
                     'name:desc'                 => 'Navn (Å-A)',
                     'customFields.mileage:asc'  => 'Kilometer (lav til høj)',
                     'customFields.mileage:desc' => 'Kilometer (høj til lav)',
-                    'updated:desc'               => 'Opdateret (Nyeste først)',
-                    'updated:asc'              => 'Opdateret (Ældste først)',
-                    'created:desc'               => 'Oprettet (Nyeste først)',
-                    'created:asc'              => 'Oprettet (Ældste først)',
+                    'updated:desc'              => 'Opdateret (Nyeste først)',
+                    'updated:asc'               => 'Opdateret (Ældste først)',
+                    'created:desc'              => 'Oprettet (Nyeste først)',
+                    'created:asc'               => 'Oprettet (Ældste først)',
                 ],
                 'default'   => 'name:asc',
                 'condition' => [
@@ -384,14 +384,14 @@ class CarAdsListGrid extends Widget_Base
                                         <div class="ca-mb-4 ca-px-4 ca-text-base ca-text-center ca-font-thin">
                                             <?php echo get_field('stilling', get_the_ID()); ?>
                                             <?php
-                                            if(get_field('underkategori_stilling', get_the_ID())) {
-                                                echo "<br>".get_field('underkategori_stilling', get_the_ID());
+                                            if (get_field('underkategori_stilling', get_the_ID())) {
+                                                echo "<br>" . get_field('underkategori_stilling', get_the_ID());
                                             }
-                                            if(get_field('e-mail', get_the_ID())) {
-                                                echo "<br><a href='mailto:". get_field('e-mail', get_the_ID()) ."'>".get_field('e-mail', get_the_ID()). "</a>";
+                                            if (get_field('e-mail', get_the_ID())) {
+                                                echo "<br><a href='mailto:" . get_field('e-mail', get_the_ID()) . "'>" . get_field('e-mail', get_the_ID()) . "</a>";
                                             }
-                                            if(get_field('telefon', get_the_ID())) {
-                                                echo " - <a href='tel:". get_field('telefon', get_the_ID()) ."'>".get_field('telefon', get_the_ID()). "</a>";
+                                            if (get_field('telefon', get_the_ID())) {
+                                                echo " - <a href='tel:" . get_field('telefon', get_the_ID()) . "'>" . get_field('telefon', get_the_ID()) . "</a>";
                                             }
                                             ?>
                                         </div>

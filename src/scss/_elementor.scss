@@ -1,3 +1,5 @@
+/* purgecss start ignore */
+
 /* the slides */
 .car-ads-slider {
   .slick-slide {
@@ -5,8 +7,20 @@
   }
   /* the parent */
   .slick-list {
-    margin: 0 -16px;
+              margin: 0 -16px;
+            }
+          }
+
+
+          .carads-main-slider {
+  .slick-list {
+    .slick-track {
+      .slick-slide {
+        aspect-ratio: 12/9;
+      }
+    }
   }
 }
+/* purgecss end ignore */
 
 

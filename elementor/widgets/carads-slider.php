@@ -210,10 +210,10 @@ class CarAdsSlider extends Widget_Base
                     'name:desc'                 => 'Navn (Å-A)',
                     'customFields.mileage:asc'  => 'Kilometer (lav til høj)',
                     'customFields.mileage:desc' => 'Kilometer (høj til lav)',
-                    'updated:desc'               => 'Opdateret (Nyeste først)',
-                    'updated:asc'              => 'Opdateret (Ældste først)',
-                    'created:desc'               => 'Oprettet (Nyeste først)',
-                    'created:asc'              => 'Oprettet (Ældste først)',
+                    'updated:desc'              => 'Opdateret (Nyeste først)',
+                    'updated:asc'               => 'Opdateret (Ældste først)',
+                    'created:desc'              => 'Oprettet (Nyeste først)',
+                    'created:asc'               => 'Oprettet (Ældste først)',
                 ],
                 'default'   => 'name:asc',
             ]
@@ -222,18 +222,18 @@ class CarAdsSlider extends Widget_Base
         $this->add_control(
             'price_type',
             [
-                'label'     => __('Pris Type'),
-                'type'      => \Elementor\Controls_Manager::SELECT2,
-                'multiple'  => true,
-                'options'   => [
+                'label'       => __('Pris Type'),
+                'type'        => \Elementor\Controls_Manager::SELECT2,
+                'multiple'    => true,
+                'options'     => [
                     'pricetype-retailprice'           => 'Retail pris',
                     'pricetype-leasing'               => 'Leasing pris',
                     'pricetype-retailpricewithouttax' => 'Momsfri pris',
                     'pricetype-callforprice'          => 'Ring for pris',
                     'pricetype-wholesale'             => 'Engros',
                 ],
-                'default'   => 'pricetype-retailprice',
-                'condition' => [
+                'default'     => 'pricetype-retailprice',
+                'condition'   => [
                     'post_type' => ['bil'],
                 ],
                 'description' => 'Filtrer på pristype. Hvis ingen er valgt = vises alle typer.'
@@ -484,15 +484,15 @@ class CarAdsSlider extends Widget_Base
                                         <div class="mb-4 px-4 text-base text-center font-thin">
                                             <?php echo get_field('stilling', get_the_ID()); ?>
                                             <?php
-                                            if(get_field('underkategori_stilling', get_the_ID())) {
-                                                echo "<br>".get_field('underkategori_stilling', get_the_ID());
+                                            if (get_field('underkategori_stilling', get_the_ID())) {
+                                                echo "<br>" . get_field('underkategori_stilling', get_the_ID());
                                             }
-                                            if(get_field('e-mail', get_the_ID())) {
-                                                echo "<br><a href='mailto:". get_field('e-mail', get_the_ID()) ."'>".get_field('e-mail', get_the_ID()). "</a>";
+                                            if (get_field('e-mail', get_the_ID())) {
+                                                echo "<br><a href='mailto:" . get_field('e-mail', get_the_ID()) . "'>" . get_field('e-mail', get_the_ID()) . "</a>";
                                             }
-                                            if(get_field('telefon', get_the_ID())) {
+                                            if (get_field('telefon', get_the_ID())) {
                                                 echo get_field('e-mail', get_the_ID()) ? " - " : "";
-                                                echo "<a href='tel:". get_field('telefon', get_the_ID()) ."'>".get_field('telefon', get_the_ID()). "</a>";
+                                                echo "<a href='tel:" . get_field('telefon', get_the_ID()) . "'>" . get_field('telefon', get_the_ID()) . "</a>";
                                             }
                                             ?>
                                         </div>

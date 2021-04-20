@@ -122,12 +122,12 @@ button.multiselect.dropdown-toggle.active span.multiselect-selected-text:before,
 
   &.active {
     @apply ca-grid;
-
+/*
     @media all and (min-width: 1024px) {
       max-height: 250px;
-      overflow-y: auto;
+      overflow-y: scroll;
     }
-
+*/
   }
 
   /** Buttons within dropdown */
@@ -269,3 +269,40 @@ Single car
   }
 }
 
+.multiselect-container {
+  grid-gap: 5px;
+
+  @media all and (max-width: 576px) {
+      grid-template-columns: repeat(1, 1fr) !important;;
+
+      .multiselect-option {
+        display: inline-flex !important;
+        max-width: 60%;
+        background: rgba(0,0,0,0.05);
+        border-radius: 10px;
+  }
+}
+
+
+}
+
+
+.multiselect-container::-webkit-scrollbar-track
+{
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+border-radius: 10px;
+background-color: #F5F5F5;
+}
+
+.multiselect-container::-webkit-scrollbar
+{
+width: 12px;
+background-color: #F5F5F5;
+}
+
+.multiselect-container::-webkit-scrollbar-thumb
+{
+border-radius: 10px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+background-color: #555;
+}

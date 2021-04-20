@@ -325,7 +325,7 @@ if (!$product->disabled) {
             jQuery('[name="ca-price"').attr("value", "<?php echo number_format_i18n($product->pricing->DKK->price, 0); ?>");
             jQuery('[name="ca-url"').val("<?php echo $actual_link; ?>");
             jQuery('[name="ca-url"').attr("value", "<?php echo $actual_link; ?>");
-
+gu
             /**
              * Fixed head on scroll
              */

@@ -58,24 +58,25 @@ $slug .= $car_slug_id;
                     </div>
                     <?php
                 }
-            } /** Engros label inside photo */
-            elseif ($connector->get_field($product->properties, 'PriceType') === "Wholesale") {
-                ?>
-                <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
-                    <?php
-                    echo __('Engros', 'car-app');
+                /** Engros label inside photo */
+                elseif ($connector->get_field($product->properties, 'PriceType') === "Wholesale") {
                     ?>
-                </div>
-                <?php
-            } /** Uden afgift label inside photo */
-            elseif ($connector->get_field($product->properties, 'PriceType') === "RetailPriceWithoutTax") {
-                ?>
-                <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+                    <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+                        <?php
+                        echo __('Engros', 'car-app');
+                        ?>
+                    </div>
                     <?php
-                    echo __('Uden afgift', 'car-app');
+                } /** Uden afgift label inside photo */
+                elseif ($connector->get_field($product->properties, 'PriceType') === "RetailPriceWithoutTax") {
                     ?>
-                </div>
-                <?php
+                    <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
+                        <?php
+                        echo __('Uden afgift', 'car-app');
+                        ?>
+                    </div>
+                    <?php
+                }
             }
             ?>
             <img src="<?php echo str_replace("i1024x768", "500x250", $product->image->sizes->i1024x768); ?>"
