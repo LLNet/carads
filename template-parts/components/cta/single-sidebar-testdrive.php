@@ -23,4 +23,4 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
     $testdrive_sidebar_button = ob_get_clean();
 
 }
-echo apply_filters('car_ads_testdrive_btn_sidebar', $testdrive_sidebar_button);
+echo apply_filters('car_ads_testdrive_btn_sidebar', $testdrive_sidebar_button, $product);

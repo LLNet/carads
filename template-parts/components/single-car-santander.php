@@ -3,7 +3,11 @@
  * Only show santander is car has a santanderPaymentPerMonth value
  * and is not santanderDisabled = true/1
  */
-if ($connector->get_field($product->customFields, 'santanderDisabled') != '-' && $connector->get_field($product->customFields, 'santanderDisabled') == false) {
+$showSantander = true;
+if($connector->get_field($product->customFields, 'santanderDisabled') != '-' && $connector->get_field($product->customFields, 'santanderDisabled') == true) {
+    $showSantander = false;
+}
+if ($showSantander) {
     if ($connector->get_field($product->customFields, 'santanderPaymentPerMonth') != '-' && $connector->get_field($product->customFields, 'santanderPaymentPerMonth') >= 0 && $connector->get_field($product->properties, 'PriceType') !== "CallForPrice") {
         ?>
         <div class="single-car--santander ca-bg-santander ca-w-full ca-p-4 ca-border ca-border-santander ca-text-white ca-border-solid ca-mb-4">

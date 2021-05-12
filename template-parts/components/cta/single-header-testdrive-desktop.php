@@ -9,7 +9,7 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
 
     if ($testdrive_display != "disabled") {
         ?>
-        <div class="ca-flex ca-flex-col ca-items-center ca-justify-center ca-w-1/3">
+        <div class="ca-flex ca-flex-col ca-items-center ca-justify-center">
             <a
                     href="<?php echo $testdrive_display == "link" ? $testdrive_link : '#'; ?>" <?php echo $testdrive_display == "link" ? 'target="_blank"' : ''; ?>
                 <?php echo $testdrive_display == "elementor" ? 'onClick="elementorProFrontend.modules.popup.showPopup( { id: ' . $testdrive_elementor . ' } );"' : ''; ?>
@@ -24,4 +24,4 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
     $testdrive_btn = ob_get_clean();
 }
 
-echo apply_filters('car_ads_testdrive_btn', $testdrive_btn);
+echo apply_filters('car_ads_testdrive_btn', $testdrive_btn, $product);

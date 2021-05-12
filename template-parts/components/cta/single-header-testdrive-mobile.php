@@ -15,7 +15,6 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
                 class="ca-mb-2 ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-10 ca-w-full ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline <?php echo $testdrive_display == "default" ? 'show-modal' : ''; ?>"
                 <?php echo $testdrive_display == "default" ? 'data-target="modalBestil"' : ''; ?>
             >
-                <i class="fa fa-fw fa-car"></i>
                 <span class="car-button-label ca-text-white ca-font-medium ca-text-xs md:ca-text-base ca-mx-1 "><?php echo __('Bestil prøvetur', 'car-app'); ?></span>
             </a>
         </div>
@@ -24,4 +23,4 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
     $testdrive_btn_mobile = ob_get_clean();
 }
 
-echo apply_filters('car_ads_testdrive_btn_mobile', $testdrive_btn_mobile);
+echo apply_filters('car_ads_testdrive_btn_mobile', $testdrive_btn_mobile, $product);

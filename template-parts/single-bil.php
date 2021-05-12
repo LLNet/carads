@@ -6,22 +6,22 @@ get_header();
 global $post;
 $car_ads_id = get_post_meta($post->ID, 'carads_id', true);
 
-$product   = $connector->get_single($car_ads_id);
-$currency  = $connector->getCurrency();
+$product  = $connector->get_single($car_ads_id);
+$currency = $connector->getCurrency();
 ?>
     <div class="outer-wrapper" id="car-ads-top">
         <div class="single-bil--header ca-bg-secondary bg-secondary ca-sticky ca-top-0 ca-z-30">
             <div class="ca-container ca-mx-auto lg:ca-flex">
                 <div class="single-car--header-left header--left ca-p-2 lg:ca-w-1/2 ca-flex lg:ca-flex lg:ca-flex-col lg:ca-justify-center">
                     <div class="ca-flex-grow">
-                        <h3 class="name car_name ca-text-2xl ca-font-medium ca-overflow-ellipsis ca-overflow-hidden ca-transition-all ca-duration-300 ca-ease-in-out"><?php echo $product->name; ?></h3>
-                        <p class="price ca-text-sm">
+                        <h3 class="name car_name ca-text-2xl ca-font-medium ca-overflow-ellipsis ca-overflow-hidden ca-transition-all ca-duration-300 ca-ease-in-out ca-my-0"><?php echo $product->name; ?></h3>
+                        <p class="price ca-text-sm ca-p-0 ca-my-0">
                             <?php
                             if (!$product->disabled) {
                                 $priceType = $connector->get_field($product->properties, 'PriceType');
-                                switch($priceType) {
+                                switch ($priceType) {
                                     case 'RetailPriceWithoutTax':
-                                        echo __('Uden afgift', 'car-app') . " ". number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                                        echo __('Uden afgift', 'car-app') . " " . number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
                                         break;
                                     case 'Wholesale':
                                         echo __('Engros', 'car-app') . " " . number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
@@ -35,7 +35,7 @@ $currency  = $connector->getCurrency();
                                     case 'RetailPrice':
                                     case null:
                                     default:
-                                        echo __('Kontant pris', 'car-app') . " ". number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
+                                        echo __('Kontant pris', 'car-app') . " " . number_format_i18n($product->pricing->{$connector->getCurrency()}->price) . " " . $connector->getCurrency();
                                         break;
                                 }
                             } else {
@@ -59,7 +59,7 @@ $currency  = $connector->getCurrency();
                         $connector->getTemplatePart('components/cta/single-header-phonenumber-desktop', $product);
                         ?>
                     </div>
-                    <div class="ca-flex ca-justify-between ca-w-full md:ca-hidden ca-space-x-1">
+                    <div class="ca-flex ca-justify-end ca-w-full md:ca-hidden ca-space-x-1">
                         <?php
                         $connector->getTemplatePart('components/cta/single-header-byttepris-mobile', $product);
                         $connector->getTemplatePart('components/cta/single-header-testdrive-mobile', $product);
@@ -87,32 +87,45 @@ $currency  = $connector->getCurrency();
                     }
                     // Show breadcrumb from Yoast if available / activated
                     if (function_exists('yoast_breadcrumb')) {
-                        yoast_breadcrumb('<p id="breadcrumbs" class="single-car--breadcrumbs">', '</p>');
+                        yoast_breadcrumb('<p id="breadcrumbs" class="single-car--breadcrumbs ca-p-2 md:ca-p-0">', '</p>');
                     }
 
                     // Show main slider
                     if ($product->image->sizes->i1024x768 && $product->images) {
                         ?>
-                        <div class="single-car--main-slider carads-main-slider ca-relative ca-min-h-64 ca-mt-4">
-                            <a href="<?php echo $product->image->sizes->i1024x768 ?>" data-lightbox="gallery"
-                               data-title="<?php echo $product->name; ?>">
-                                <img src="<?php echo $product->image->sizes->i1024x768 ?>">
-                            </a>
+                        <div class="ca-relative">
                             <?php
-                            if (property_exists($product, 'images')) {
-                                foreach ($product->images as $key => $image) {
-                                    ?>
-                                    <a href="<?php echo $image->sizes->i1024x768 ?>" data-lightbox="gallery"
-                                       data-title="<?php echo $product->name; ?>"><img
-                                                src="<?php echo $image->sizes->i1024x768 ?>" loading="lazy"></a>
-                                    <?php
-                                }
+                            if (!empty(get_option('car-ads-theming')['locations'])) {
+                                ?>
+                                <div class="car--placement ca-absolute ca-top-0 ca-left-0 ca-w-full ca-flex ca-items-center ca-justify-center ca-h-10 ca-bg-white ca-bg-opacity-50 ca-text-black ca-text-sm ca-z-30">
+                                    <?php echo __('Placering', 'car-app'); ?>
+                                    : <?php echo $product->location->address->city; ?>
+                                </div>
+                                <?php
                             }
                             ?>
+                            <div class="single-car--main-slider carads-main-slider ca-relative ca-min-h-64 ca-mt-4">
+
+                                <a href="<?php echo $product->image->sizes->i1024x768 ?>" data-lightbox="gallery"
+                                   data-title="<?php echo $product->name; ?>">
+                                    <img src="<?php echo $product->image->sizes->i1024x768 ?>">
+                                </a>
+                                <?php
+                                if (property_exists($product, 'images')) {
+                                    foreach ($product->images as $key => $image) {
+                                        ?>
+                                        <a href="<?php echo $image->sizes->i1024x768 ?>" data-lightbox="gallery"
+                                           data-title="<?php echo $product->name; ?>"><img
+                                                    src="<?php echo $image->sizes->i1024x768 ?>" loading="lazy"></a>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </div>
                         </div>
+
                         <?php
-                    }
-                    // Show "no image"
+                    } // Show "no image"
                     else {
                         ?>
                         <div class="single-car--main-slider ca-relative ca-min-h-64 ca-mt-4">
@@ -144,7 +157,8 @@ $currency  = $connector->getCurrency();
                         </div>
 
                         <div class="single-car--thumb-slider carads-thumb-slider ca-mb-4">
-                            <img src="<?php echo $product->image->sizes->i1024x768 ?>" class="ca-object-cover ca-max-h-20 md:ca-max-h-32 ca-h-full">
+                            <img src="<?php echo $product->image->sizes->i1024x768 ?>"
+                                 class="ca-object-cover ca-max-h-20 md:ca-max-h-32 ca-h-full">
                             <?php
                             foreach ($product->images as $key => $image) {
                                 ?>
@@ -178,7 +192,8 @@ $currency  = $connector->getCurrency();
                     <div class="ca-block lg:ca-hidden ">
                         <?php dynamic_sidebar('carads-single-sidebar-2'); ?>
                     </div>
-                    <div class="car-ads--accordion" x-data="{<?php echo apply_filters('car_ads_accordion_tabs', 'description:1, specifications:1'); ?>}">
+                    <div class="car-ads--accordion"
+                         x-data="{<?php echo apply_filters('car_ads_accordion_tabs', 'description:1, specifications:1'); ?>}">
                         <div class="ca-mb-4">
                             <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
                                  id="Beskrivelse" @click="description !== 1 ? description = 1 : description = 0">
@@ -194,7 +209,8 @@ $currency  = $connector->getCurrency();
 
                         <div class="ca-mb-4">
                             <div class="car-ads--accordion-title ca-bg-text bg-secondary ca-py-4 ca-px-4 ca-cursor-pointer ca-text-xl ca-text-white ca-font-medium ca-flex ca-justify-between ca-items-center"
-                                 id="specifications" @click="specifications !== 1 ? specifications = 1 : specifications = 0">
+                                 id="specifications"
+                                 @click="specifications !== 1 ? specifications = 1 : specifications = 0">
                                 <span><?php echo __('Specifikationer', 'car-app'); ?></span>
                                 <i class="fa fa-chevron-down" x-show="specifications != 1"></i>
                                 <i class="fa fa-chevron-up" x-show="specifications == 1"></i>
@@ -248,7 +264,7 @@ $currency  = $connector->getCurrency();
                         </div>
                         <?php
 
-                    } elseif($connector->get_field($product->customFields, 'findleasingOperational') != "" && $connector->get_field($product->customFields, 'findleasingOperational') != "-") {
+                    } elseif ($connector->get_field($product->customFields, 'findleasingOperational') != "" && $connector->get_field($product->customFields, 'findleasingOperational') != "-") {
                         ?>
                         <div class="single-car--findleasing ca-bg-lightgrey bg-lightgrey ca-p-4 ca-border ca-border-lightgrey ca-border-solid ca-mb-4">
                             <div id="findleasing-sliders-embed-div"
@@ -325,10 +341,10 @@ if (!$product->disabled) {
             jQuery('[name="ca-price"').attr("value", "<?php echo number_format_i18n($product->pricing->DKK->price, 0); ?>");
             jQuery('[name="ca-url"').val("<?php echo $actual_link; ?>");
             jQuery('[name="ca-url"').attr("value", "<?php echo $actual_link; ?>");
-gu
             /**
              * Fixed head on scroll
              */
+
             let single_car_quick_details = jQuery(".single-car--quick-details")
             let single_car_header_right = jQuery(".single-car--header-right")
             let single_car_quick_details_top = single_car_quick_details.offset().top;

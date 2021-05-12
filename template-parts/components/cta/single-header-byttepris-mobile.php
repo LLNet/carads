@@ -15,8 +15,7 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
                 class="ca-mb-2 show-modal ca-no-underline ca-bg-primary bg-primary ca-rounded-full ca-text-xl ca-h-10 ca-w-full ca-flex ca-items-center ca-justify-center ca-text-white hover:ca-text-white hover:ca-no-underline  <?php echo $byttepris_display == "default" ? 'show-modal' : ''; ?>"
                 <?php echo $byttepris_display == "default" ? 'data-target="modalByttepris"' : ''; ?>
             >
-                <i class="fa fa-fw fa-calculator"></i>
-                <span class="car-button-label ca-text-white ca-font-medium ca-text-xs md:ca-text-base ca-mx-1 "><?php echo __('Beregn byttepris', 'car-app'); ?></span>
+                <span class="car-button-label ca-text-white ca-font-medium ca-text-xs md:ca-text-base ca-mx-1 "><?php echo __('Få byttepris', 'car-app'); ?></span>
             </a>
         </div>
         <?php
@@ -24,4 +23,4 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
     $byttepris_btn_mobile = ob_get_clean();
 }
 
-echo apply_filters('car_ads_byttepris_btn_mobile', $byttepris_btn_mobile);
+echo apply_filters('car_ads_byttepris_btn_mobile', $byttepris_btn_mobile, $product);

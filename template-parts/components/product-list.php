@@ -296,7 +296,11 @@ $slug .= $car_slug_id;
                         ?>
 
                         <?php
-                        if ($connector->get_field($product->customFields, 'santanderDisabled') != '-' && $connector->get_field($product->customFields, 'santanderDisabled') == false) {
+                        $showSantander = true;
+                        if($connector->get_field($product->customFields, 'santanderDisabled') != '-' && $connector->get_field($product->customFields, 'santanderDisabled') == true) {
+                            $showSantander = false;
+                        }
+                        if ($showSantander) {
                             $santanderPrice = $connector->get_field($product->customFields, 'santanderPaymentPerMonth');
                             if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
                                 ?>

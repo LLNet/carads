@@ -55,8 +55,7 @@ $slug .= $car_slug_id;
                         ?>
                     </div>
                     <?php
-                }
-                /** Engros label inside photo  */
+                } /** Engros label inside photo  */
                 elseif ($connector->get_field($product->properties, 'PriceType') === "Wholesale") {
                     ?>
                     <div class="carads-leasing-price ca-absolute ca-top-0 ca-right-0 ca-py-1 ca-px-2 ca-bg-primary ca-text-white">
@@ -176,7 +175,11 @@ $slug .= $car_slug_id;
                 <?php _e('kontantpris inkl. moms', 'car-app'); ?>
             </div>
             <?php
-            if ($connector->get_field($product->customFields, 'santanderDisabled') != '-' && $connector->get_field($product->customFields, 'santanderDisabled') == false) {
+            $showSantander = true;
+            if ($connector->get_field($product->customFields, 'santanderDisabled') != '-' && $connector->get_field($product->customFields, 'santanderDisabled') == true) {
+                $showSantander = false;
+            }
+            if ($showSantander) {
                 if (!empty($santanderPrice) && $santanderPrice != "-" && !$product->disabled && $priceType !== "CallForPrice") {
                     ?>
                     <div class="ca-text-center ca-text-base ca-opacity-50 ca-font-medium ca-mb-0 mb-0">

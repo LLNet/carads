@@ -17,11 +17,11 @@ if (!$product->disabled && !empty(get_option('car-ads-single-car'))) {
                         <?php echo $byttepris_display == "default" ? 'show-modal' : ''; ?>"
             <?php echo $byttepris_display == "default" ? 'data-target="modalByttepris"' : ''; ?>
         >
-            <i class="fa fa-fw fa-calculator"></i> <?php echo __('Beregn byttepris', 'car-app'); ?>
+            <i class="fa fa-fw fa-calculator"></i> <?php echo __('Få byttepris', 'car-app'); ?>
         </a>
         <?php
     }
     $byttepris_sidebar_button = ob_get_clean();
 
 }
-echo apply_filters('car_ads_byttepris_btn_sidebar', $byttepris_sidebar_button);
+echo apply_filters('car_ads_byttepris_btn_sidebar', $byttepris_sidebar_button, $product);
