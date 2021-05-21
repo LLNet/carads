@@ -669,10 +669,34 @@ class Connector
 
         }
 
+
         $products = $this->headless->get("/products?size=1" . $search . $this->includeOptions() . $this->includePriceType());
         if (property_exists($products, 'error')) {
             print $products->error;
         } else {
+            /* @FIXME
+            foreach($products->aggregations->filtered->categories as $category) {
+
+            }
+            $return = [
+              'count' =>   $products->summary->totalItems,
+              'brands' => [
+                  [
+                      'slug' => '',
+                      'count' => '',
+                      'title' => '',
+                  ],
+                  [
+                      'slug' => '',
+                      'count' => '',
+                      'title' => '',
+                  ]
+              ],
+              'categories' => [],
+
+            ];
+            print json_encode($return);
+            */
             print $products->summary->totalItems;
         }
         wp_die();

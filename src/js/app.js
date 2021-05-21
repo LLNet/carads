@@ -56,10 +56,18 @@ jQuery(document).ready(function () {
                 data: {action: "pre_search", data: formValues},
                 success: function (response) {
                     // console.log(formValues)
+
                     if (response > 0) {
+
                         jQuery('button.filter')
                             .prop("disabled", false)
-                            .text(" Vis " + response + " biler");
+                            .text(" Vis " + response + " biler"); // response.count
+
+                        // Loop igennem categories
+                        // Slet indhold af select#categories
+                        // Fyld nyt i
+                        // Re-initialiseres med bootstrap multiselect
+
                     } else {
                         jQuery('button.filter')
                             .prop("disabled", true)
