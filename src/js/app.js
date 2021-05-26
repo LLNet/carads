@@ -1,9 +1,11 @@
 jQuery(document).ready(function () {
-
+    var userAgent = navigator.userAgent.toLowerCase();
+    var android = /android/i.test(userAgent);
+    var iphone = /iphone|ipad/i.test(userAgent);
     /**
      * Car filters
      */
-    jQuery('.car-filters .car-filters-form .auto-submit').on('change', function () {
+    jQuery('.car-filters .car-filters-form .auto-submit').on('change', function() {
         jQuery('.car-filters .car-filters-form').submit();
     });
 
@@ -15,7 +17,6 @@ jQuery(document).ready(function () {
         let target_input = jQuery('[value="' + target + '"]');
         jQuery(target_input).removeAttr('selected').val('');
         jQuery('form.car-filters-form').submit();
-
     });
 
     jQuery('.toggle-filters').on('click', function (e) {
@@ -27,7 +28,6 @@ jQuery(document).ready(function () {
             jQuery('.car-filters').toggleClass('show');
             jQuery('.car-active-filters').toggleClass('show');
         }
-
     });
     jQuery('#scroll-to-top').on('click', function (e) {
         e.preventDefault();
@@ -53,21 +53,27 @@ jQuery(document).ready(function () {
             jQuery.ajax({
                 type: "post",
                 url: indexed.ajaxurl,
+                dataType: "json",
                 data: {action: "pre_search", data: formValues},
                 success: function (response) {
                     // console.log(formValues)
-
-                    if (response > 0) {
+                    if (response.total > 0) {
 
                         jQuery('button.filter')
                             .prop("disabled", false)
-                            .text(" Vis " + response + " biler"); // response.count
+                            .text(" Vis " + response.total + " biler"); // response.count
 
-                        // Loop igennem categories
-                        // Slet indhold af select#categories
-                        // Fyld nyt i
-                        // Re-initialiseres med bootstrap multiselect
+                        var oldValue = jQuery("select#categories").val();
+                        jQuery("select#categories option").each(function(){
+                            jQuery(this).remove();
+                        })
 
+                        jQuery.each(response.categories, function(v,k){
+                            jQuery("select#categories").append('<option value="' + k + '">' + k + '</option>');
+                        });
+
+                        jQuery("select#categories").val(oldValue);
+                        jQuery("select#categories").multiselect('rebuild');
                     } else {
                         jQuery('button.filter')
                             .prop("disabled", true)
@@ -186,11 +192,20 @@ jQuery(document).ready(function () {
             }
 
         };
-        options.nonSelectedText = "Mærker";
-        jQuery('select#brands').multiselect(options);
+
+        // if iphone or android - we using build selector from os!
+        if(!(android || iphone))
+        {
+            options.nonSelectedText = "Mærker";
+            jQuery('select#brands').multiselect(options);
+        }
+        else{
+            jQuery('select#brands').removeClass('multiselect');
+        }
 
         options.nonSelectedText = "Modeller";
         jQuery('select#categories').multiselect(options);
+
 
         options.nonSelectedText = "Drivmiddel";
         jQuery('select#propellant').multiselect(options);
@@ -203,6 +218,12 @@ jQuery(document).ready(function () {
 
         options.nonSelectedText = "Kilometertal";
         jQuery('select#mileage').multiselect(options);
+
+        console.log('DEBUG!!!');
+
+        jQuery('.form-check-input').click(function(e){
+            e.preventDefault();
+        })
 
         // jQuery('.attributes .btn-group').on('focusin', function () {
         //     jQuery('.attributes .btn-group').removeClass('open');

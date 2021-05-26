@@ -151,6 +151,8 @@ button.multiselect.dropdown-toggle.active span.multiselect-selected-text:before,
 }
 
 select.multiselect {
+  // as i understand, client wish for using ios build multiselect.
+  // so in that case i think we need to remove this.
   @apply ca-hidden;
 }
 

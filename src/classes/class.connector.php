@@ -674,6 +674,17 @@ class Connector
         if (property_exists($products, 'error')) {
             print $products->error;
         } else {
+            $json = new \stdClass;
+            $json->total = (int) $products->summary->totalItems;
+            $json->categories = [];
+
+            foreach($products->aggregations->filtered->categories as $category) {
+                if ($category->count > 0)
+                {
+                    $json->categories[$category->item->id] = $category->item->name;
+                }
+            }
+
             /* @FIXME
             foreach($products->aggregations->filtered->categories as $category) {
 
@@ -697,7 +708,7 @@ class Connector
             ];
             print json_encode($return);
             */
-            print $products->summary->totalItems;
+            print json_encode($json);
         }
         wp_die();
 
