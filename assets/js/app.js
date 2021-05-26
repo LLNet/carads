@@ -184,9 +184,9 @@ jQuery(document).ready(function () {
         container: '<div class="multiselect-container dropdown-menu"></div>',
         filter: '<div class="multiselect-filter"><div class="input-group input-group-sm p-1"><div class="input-group-prepend"><i class="input-group-text fas fa-search"></i></div><input class="form-control multiselect-search" type="text" /></div></div>',
         filterClearBtn: '<div class="input-group-append"><button class="multiselect-clear-filter input-group-text" type="button"><i class="fas fa-times"></i></button></div>',
-        option: '<button class="multiselect-option dropdown-item"></button>',
+        option: '<button type="button" class="multiselect-option dropdown-item"></button>',
         divider: '<div class="dropdown-divider"></div>',
-        optionGroup: '<button class="multiselect-group dropdown-item"></button>',
+        optionGroup: '<button type="button" class="multiselect-group dropdown-item"></button>',
         resetButton: '<div class="multiselect-reset text-center p-2"><button class="btn btn-sm btn-block btn-outline-secondary"></button></div>'
       }
     }; // if iphone or android - we using build selector from os!
@@ -208,10 +208,7 @@ jQuery(document).ready(function () {
     jQuery('select#geartype').multiselect(options);
     options.nonSelectedText = "Kilometertal";
     jQuery('select#mileage').multiselect(options);
-    console.log('DEBUG!!!');
-    jQuery('.form-check-input').click(function (e) {
-      e.preventDefault();
-    }); // jQuery('.attributes .btn-group').on('focusin', function () {
+    console.log('DEBUG!!!'); // jQuery('.attributes .btn-group').on('focusin', function () {
     //     jQuery('.attributes .btn-group').removeClass('open');
     //     jQuery(this).toggleClass('open');
     // });

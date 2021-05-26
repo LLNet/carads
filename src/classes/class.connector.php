@@ -681,33 +681,10 @@ class Connector
             foreach($products->aggregations->filtered->categories as $category) {
                 if ($category->count > 0)
                 {
-                    $json->categories[$category->item->id] = $category->item->name;
+                    $json->categories[$category->item->slug] = $category->item->name . '&nbsp;(' . $category->count .')';
                 }
             }
 
-            /* @FIXME
-            foreach($products->aggregations->filtered->categories as $category) {
-
-            }
-            $return = [
-              'count' =>   $products->summary->totalItems,
-              'brands' => [
-                  [
-                      'slug' => '',
-                      'count' => '',
-                      'title' => '',
-                  ],
-                  [
-                      'slug' => '',
-                      'count' => '',
-                      'title' => '',
-                  ]
-              ],
-              'categories' => [],
-
-            ];
-            print json_encode($return);
-            */
             print json_encode($json);
         }
         wp_die();
